@@ -1,0 +1,29 @@
+{
+  "name": "gams2web",
+  "description": "Interactive web interface to GAMS models",
+  "version": "0.1.0",
+  "homepage": "https://github.com/sgaliano/gams2web",
+  "license": "GPLv3",
+  "keywords": [
+    "gams"
+  ],
+  "authors": [
+    "Sebastián Galiano <sgaliano@gmail.com>",
+    "Luis Ignacio Larrateguy <lilarrateguy@gmail.com>"
+  ],
+  "dependencies": {
+    "normalize-scss": "~2.1.2",
+    "modernizr": "~2.6.2",
+    "knockout.js": "~2.3.0",
+    "jquery": "~2.0.3",
+    "sass-bootstrap": "~3.0.0",
+    "respond": "~1.2.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
