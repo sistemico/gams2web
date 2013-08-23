@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block page_title %}{% endblock %}</title>
+
+    {% assets "stylesheets" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" />
+    {% endassets %}
+
+    {% assets "header_scripts" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+</head>
+<body>
+    {% block navbar %}{% endblock %}
+    {% block main_content %}{% endblock %}
+    {% block footer %}{% endblock %}
+
+    {% assets "body_scripts" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+</body>
+</html>
