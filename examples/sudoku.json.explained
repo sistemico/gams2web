@@ -1,0 +1,22 @@
+/* No es un json real ya que contiene comentarios. Es una idea de como configurar la UI para general el modelo. */
+{
+   "nombre": "Sudoku solver",
+   "descripcion": "Este modelo permite resolver un soduku",
+   "instrucciones" : "Llene las celdas con los números fijos de su Susoku 9x9",
+   "params" : [
+		{ 
+			"param": "y.fx('1','1','%d')=1;",  // usar %d o formatters python para "meter" el numero.
+			"label": "Fila 1 Columna 1", 
+			"comentario" : "En este campo ponga el primer número. Debe estar comprendido entre 1 y 9",
+			"default" : "1",
+			"validador" : { "tipo": "integer", "rango": { "low": 1, "high": 9} }
+		},
+		{ 
+			"param": "y.fx('1','2','%d')=1;", 
+			"label": "Fila 1 Columna 2", 
+			// sin default significa que no se incluye en la ecuación si viene vacío.
+			"validador" : { "tipo": "integer", "rango": { "low": 1, "high": 9} }
+		}
+   ]
+
+}
