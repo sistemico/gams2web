@@ -1,0 +1,5 @@
+Flask==0.10.1
+Flask-Assets==0.8
+Flask-Babel==0.9
+Flask-Bootstrap==3.0.0.1
+flask-appconfig==0.5
