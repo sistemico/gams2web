@@ -1,0 +1,26 @@
+[
+    {
+        "model": "Sodoku",
+        "instance": "sudoku-1",
+        "status": "Running",
+        "remainingTime": "in 5 minutes"
+    },
+    {
+        "model": "Sodoku",
+        "instance": "sudoku-2",
+        "status": "Queued",
+        "remainingTime": "in 30 minutes"
+    },
+    {
+        "model": "Transportation Problem",
+        "instance": "trnsport-1",
+        "status": "Queued",
+        "remainingTime": "in 1 hour"
+    },
+    {
+        "model": "Sodoku",
+        "instance": "sudoku-3",
+        "status": "Queued",
+        "remainingTime": "in 2 hours"
+    }
+]

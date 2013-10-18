@@ -1,0 +1,22 @@
+[
+    {
+        "name": "sudoku",
+        "title": "Sudoku",
+        "description": "Sudoku Solver"
+    },
+    {
+        "name": "abel",
+        "title": "Macro Economics",
+        "description": "Linear Quadratic Control Problem"
+    },
+    {
+        "name": "bid",
+        "title": "Micro Economics",
+        "description": "Bid Evaluation"
+    },
+    {
+        "name": "trnsport",
+        "title": "Transportation Problem",
+        "description": "A transportation problem with discretized economies of scale"
+    }
+]
