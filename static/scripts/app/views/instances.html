@@ -1,0 +1,41 @@
+﻿<section>
+    <div class="page-header">
+        <h2>
+            <span>Instances</span> <small>all instances</small>
+        </h2>
+    </div>
+
+    <div class="panel panel-default">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Instance</th>
+                <th>Model</th>
+                <th>Status</th>
+                <th>ETA</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody data-bind="foreach: instances">
+            <tr>
+                <td data-bind="text: instance"></td>
+                <td data-bind="text: model"></td>
+                <td data-bind="text: status"></td>
+                <td data-bind="text: remainingTime"></td>
+                <td>
+                    <div class="btn-group btn-group-xs">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a>Pause</a></li>
+                            <li><a>Stop</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
