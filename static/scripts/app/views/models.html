@@ -1,12 +1,14 @@
 ﻿<section>
     <div class="page-header">
         <h2>
-            <span>Models</span> <small>all models</small>
+            <span>Models</span>
+            <small>available models</small>
         </h2>
     </div>
     <div class="list-group" data-bind="foreach: {data: $data.models, as: 'model' }">
-        <a href="#" class="list-group-item" data-bind="attr: { href: '#models/' + model.name }">
+        <a href="#" class="list-group-item" data-bind="attr: { title: 'Click to create a new instance of execution for ' + model.title }, click: $parent.select">
             <h4 class="list-group-item-heading" data-bind="text: model.title"></h4>
+
             <p class="list-group-item-text" data-bind="text: model.description"></p>
         </a>
     </div>

@@ -9,18 +9,18 @@
         "model": "Sodoku",
         "instance": "sudoku-2",
         "status": "Queued",
-        "remainingTime": "in 30 minutes"
+        "remainingTime": "estimating..."
     },
     {
         "model": "Transportation Problem",
         "instance": "trnsport-1",
         "status": "Queued",
-        "remainingTime": "in 1 hour"
+        "remainingTime": "estimating..."
     },
     {
         "model": "Sodoku",
         "instance": "sudoku-3",
         "status": "Queued",
-        "remainingTime": "in 2 hours"
+        "remainingTime": "estimating..."
     }
 ]

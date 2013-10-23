@@ -39,7 +39,8 @@ def get_locale():
 assets = Environment(app)
 
 css = Bundle('stylesheets/css/normalize.css',
-             'stylesheets/css/bootstrap.css')
+             'stylesheets/css/bootstrap.css',
+             'stylesheets/css/font-awesome.css')
 assets.register('stylesheets', css)
 
 js = Bundle('scripts/vendor/modernizr.js')

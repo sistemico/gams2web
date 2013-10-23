@@ -1,8 +1,9 @@
 ﻿<section>
     <div class="page-header">
         <h2>
-            <span>Instances</span> <small>all instances</small>
+            <span>Instances</span> <small>execution queue</small>
         </h2>
+
     </div>
 
     <div class="panel panel-default">
@@ -13,26 +14,30 @@
                 <th>Model</th>
                 <th>Status</th>
                 <th>ETA</th>
-                <th></th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody data-bind="foreach: instances">
             <tr>
-                <td data-bind="text: instance"></td>
+                <td>
+                    <a class="btn-xs" href="#" title="Info" data-bind="text: instance"></a>
+                </td>
                 <td data-bind="text: model"></td>
-                <td data-bind="text: status"></td>
+                <td data-bind="text: $index() ? 'Queued' : 'Running'"></td>
                 <td data-bind="text: remainingTime"></td>
                 <td>
-                    <div class="btn-group btn-group-xs">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            Actions
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a>Pause</a></li>
-                            <li><a>Stop</a></li>
-                        </ul>
-                    </div>
+                    <button type="button" class="btn btn-default btn-xs" title="Up execution priority" data-bind="disable: $index() < 2, click: function() { $parent.instances.splice($index() - 1, 0, $parent.instances.splice($index(), 1)[0]) }">
+                        <i class="icon-caret-up"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs" title="Down execution priority" data-bind="disable: $index() < 1 || $index() === $parent.instances().length - 1, click: function() { $parent.instances.splice($index() + 1, 0, $parent.instances.splice($index(), 1)[0]) }">
+                        <i class="icon-caret-down"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs" title="Dequeue instance" data-bind="visible: $index() > 0, click: function() { $parent.instances.remove($data) }">
+                        <i class="icon-remove"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs" title="Cancel execution" data-bind="visible: $index() === 0, click: function() { $parent.instances.remove($data) }">
+                        <i class="icon-off"></i>
+                    </button>
                 </td>
             </tr>
             </tbody>
