@@ -1,4 +1,4 @@
-﻿define(['plugins/http', 'durandal/app', 'knockout'], function (http, app, ko) {
+﻿define(['plugins/http', 'plugins/router', 'durandal/app', 'viewmodels/instances', 'knockout'], function (http, router, app, instances, ko) {
     return {
         models: ko.observableArray([]),
 
@@ -15,13 +15,12 @@
         },
 
         canDeactivate: function () {
-            //return app.showMessage('Are you sure you want to leave this page?', 'Navigate', ['Yes', 'No']);
             return true
         },
 
-        select: function(item) {
-            //item.viewUrl = 'views/detail';
-            //app.showDialog(item);
+        select: function(model) {
+            instances.addInstance(model);
+            router.navigate("instances");
         }
     };
 });
