@@ -1,0 +1,22 @@
+[
+    {
+        "name": "sudoku",
+        "title": "Sudoku",
+        "description": "Solución para el Sudoku"
+    },
+    {
+        "name": "abel",
+        "title": "Macro Economía",
+        "description": "Problema de control LQ"
+    },
+    {
+        "name": "bid",
+        "title": "Micro Economía",
+        "description": "Evaluación de ofertas"
+    },
+    {
+        "name": "trnsport",
+        "title": "Problema de Transporte",
+        "description": "Problema de transporte con economías de escala discretizadas"
+    }
+]

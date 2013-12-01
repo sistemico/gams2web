@@ -1,4 +1,4 @@
-﻿define(['plugins/http', 'plugins/router', 'durandal/app', 'viewmodels/instances', 'knockout'], function (http, router, app, instances, ko) {
+﻿define(['plugins/http', 'plugins/router', 'durandal/app', 'viewmodels/instances', 'knockout', 'i18next'], function (http, router, app, instances, ko, i18n) {
     return {
         models: ko.observableArray([]),
 
@@ -9,7 +9,7 @@
                 return;
             }
 
-            return http.get('/api/models').then(function(data) {
+            return http.get('/api/models', { lang: i18n.lng() }).then(function(data) {
                 self.models(data.models);
             });
         },

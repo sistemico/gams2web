@@ -1,7 +1,8 @@
 ﻿<section>
     <div class="page-header">
         <h2>
-            <span>Instances</span> <small>execution queue</small>
+            <span data-i18n="views.instances.title"></span>
+            <small data-i18n="views.instances.subtitle"></small>
         </h2>
 
     </div>
@@ -10,11 +11,10 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Instance</th>
-                <th>Model</th>
-                <th>Status</th>
-                <th>ETA</th>
-                <th>Actions</th>
+                <th data-i18n="views.instances.columns.instance"></th>
+                <th data-i18n="views.instances.columns.model"></th>
+                <th data-i18n="views.instances.columns.status"></th>
+                <th data-i18n="views.instances.columns.actions"></th>
             </tr>
             </thead>
             <tbody data-bind="foreach: instances">
@@ -23,19 +23,21 @@
                     <a class="btn-xs" href="#" title="Info" data-bind="text: instance"></a>
                 </td>
                 <td data-bind="text: model"></td>
-                <td data-bind="text: $index() ? 'Queued' : 'Running'"></td>
-                <td data-bind="text: remainingTime"></td>
                 <td>
-                    <button type="button" class="btn btn-default btn-xs" title="Up execution priority" data-bind="disable: $index() < 2, click: function() { $parent.instances.splice($index() - 1, 0, $parent.instances.splice($index(), 1)[0]) }">
+                    <span data-bind="attr: { 'data-i18n': 'views.instances.status.' + ($index() === 0 ? 'running' : 'queued') }"></span>
+                    <span data-bind="if: $index() === 0 && remainingTime">(ETA)</span>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default btn-xs" data-bind="attr: { 'data-i18n': '[title]views.instances.actions.up' }, disable: $index() < 2, click: function() { $parent.instances.splice($index() - 1, 0, $parent.instances.splice($index(), 1)[0]) }">
                         <i class="icon-caret-up"></i>
                     </button>
-                    <button type="button" class="btn btn-default btn-xs" title="Down execution priority" data-bind="disable: $index() < 1 || $index() === $parent.instances().length - 1, click: function() { $parent.instances.splice($index() + 1, 0, $parent.instances.splice($index(), 1)[0]) }">
+                    <button type="button" class="btn btn-default btn-xs" data-bind="attr: { 'data-i18n': '[title]views.instances.actions.up' }, disable: $index() < 1 || $index() === $parent.instances().length - 1, click: function() { $parent.instances.splice($index() + 1, 0, $parent.instances.splice($index(), 1)[0]) }">
                         <i class="icon-caret-down"></i>
                     </button>
-                    <button type="button" class="btn btn-default btn-xs" title="Dequeue instance" data-bind="visible: $index() > 0, click: function() { $parent.instances.remove($data) }">
+                    <button type="button" class="btn btn-default btn-xs" data-bind="attr: { 'data-i18n': '[title]views.instances.actions.dequeue' }, visible: $index() > 0, click: function() { $parent.instances.remove($data) }">
                         <i class="icon-remove"></i>
                     </button>
-                    <button type="button" class="btn btn-default btn-xs" title="Cancel execution" data-bind="visible: $index() === 0, click: function() { $parent.instances.remove($data) }">
+                    <button type="button" class="btn btn-default btn-xs" data-bind="attr: { 'data-i18n': '[title]views.instances.actions.cancel' }, visible: $index() === 0, click: function() { $parent.instances.remove($data) }">
                         <i class="icon-off"></i>
                     </button>
                 </td>

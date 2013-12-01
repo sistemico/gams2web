@@ -1,0 +1,50 @@
+{
+    "site": {
+        "title": "GAMS Web Interface"
+    },
+
+    "menu": {
+        "title": "GAMS Web",
+        "models": "Models",
+        "instances": "Instances",
+        "about": "About",
+        "contact": "Contact",
+        "toggleNavigation": "Toggle navigation"
+    },
+
+    "views": {
+        "models": {
+            "title": "Models",
+            "subtitle": "available models"
+        },
+
+        "instances": {
+            "title": "Instances",
+            "subtitle": "execution queue",
+            "columns": {
+                "instance": "Instance",
+                "model": "Model",
+                "status": "Status",
+                "actions": "Actions"
+            },
+            "status": {
+                "queued": "Queued",
+                "running": "Running"
+            },
+            "actions": {
+                "up": "Up execution priority",
+                "down": "Down execution priority",
+                "dequeue": "Dequeue instance",
+                "cancel": "Cancel execution"
+            }
+        },
+
+        "about": {
+            "title": "About GAMS Web Interface"
+        },
+
+        "contact": {
+            "title": "Contact Information"
+        }
+    }
+}

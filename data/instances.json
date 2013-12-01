@@ -2,25 +2,25 @@
     {
         "model": "Sodoku",
         "instance": "sudoku-1",
-        "status": "Running",
-        "remainingTime": "in 5 minutes"
+        "order": "0",
+        "remainingTime": "00:05"
     },
     {
         "model": "Sodoku",
         "instance": "sudoku-2",
-        "status": "Queued",
-        "remainingTime": "estimating..."
+        "order": "1",
+        "remainingTime": ""
     },
     {
         "model": "Transportation Problem",
         "instance": "trnsport-1",
-        "status": "Queued",
-        "remainingTime": "estimating..."
+        "order": "2",
+        "remainingTime": ""
     },
     {
         "model": "Sodoku",
         "instance": "sudoku-3",
-        "status": "Queued",
-        "remainingTime": "estimating..."
+        "order": "3",
+        "remainingTime": ""
     }
 ]
