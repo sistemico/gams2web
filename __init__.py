@@ -5,7 +5,6 @@ import os
 from flask import Flask, render_template, g, request, jsonify, abort
 from flask.ext.appconfig import AppConfig
 from flask.ext.assets import Environment, Bundle
-from flask.ext.babel import Babel
 
 
 app = Flask(__name__)
@@ -16,23 +15,6 @@ APP_STATIC = os.path.join(APP_ROOT, 'static')
 
 # Configuration
 config = AppConfig(app)     #app.config['MODELS_SETTINGS'] = 'static/models.cfg'
-
-# Localization (i18n)
-babel = Babel(app)
-
-
-@babel.localeselector
-def get_locale():
-    # If a user is logged in, use the locale from the user settings
-    user = getattr(g, 'user', None)
-
-    if user is not None:
-        return user.locale
-
-    # Otherwise try to guess the language from the user accept
-    # header the browser transmits.  We support de/fr/en in this
-    # example.  The best match wins.
-    return request.accept_languages.best_match(['es', 'en'])
 
 
 # Asset
@@ -73,7 +55,8 @@ def data_from_json(filename, root=APP_DATA):
 @app.route('/api/models', methods=["GET"])
 def get_models():
     try:
-        return jsonify(models=data_from_json('models.json'))
+        lang = 'en' if not request.args.get('lang') else request.args.get('lang')
+        return jsonify(models=data_from_json('models-' + lang + '.json'))
     except IOError:
         return abort(404)
 
