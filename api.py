@@ -5,6 +5,7 @@ import os
 from flask import request, jsonify, abort
 
 import settings
+import tasks
 
 
 # Reads JSON file
@@ -56,6 +57,12 @@ def get_model_instance(model, task_id):
         return abort(404)
 
 
-#
+# Simulate model execution (stub)
 def run_model_instance(model):
-    return jsonify(json.loads(request.data))
+    from random import randint
+
+    # Wait a random time from 1 to 20 minutes
+    random_delay = randint(60, 60 * 20)
+    task = tasks.run_model.apply_async(model, random_delay)
+
+    return jsonify({'task_id': task.task_id, 'delay': random_delay}), 202
