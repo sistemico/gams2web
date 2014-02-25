@@ -14,22 +14,16 @@
         {% block extra_metadata %}{% endblock %}
     {% endblock %}
 
-    {% assets "stylesheets" %}
-        <link rel="stylesheet" href="{{ ASSET_URL }}"/>
-    {% endassets %}
+    {% block stylesheets %}{% endblock %}
     {% block extra_stylesheets %}{% endblock %}
 
-    {% assets "header_scripts" %}
-        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-    {% endassets %}
-    {% block bodyextra_header_scripts %}{% endblock %}
+    {% block header_scripts %}{% endblock %}
+    {% block extra_header_scripts %}{% endblock %}
 </head>
 <body {% block body_attribs %}{% endblock %}>
 {% block content %}{% endblock %}
 
-{% assets "body_scripts" %}
-    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{% endassets %}
-{% block extra_header_scripts %}{% endblock %}
+{% block body_scripts %}{% endblock %}
+{% block extra_body_scripts %}{% endblock %}
 </body>
 </html>
