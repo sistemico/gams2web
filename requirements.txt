@@ -1,2 +1,5 @@
 Flask==0.10.1
 Flask-Assets==0.9
+Celery==3.1.9
+Redis==2.9.1
+Flower==0.6.0
