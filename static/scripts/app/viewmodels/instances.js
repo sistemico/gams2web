@@ -22,7 +22,6 @@
             this.instances.push({
                 "model": model.title,
                 "instance": model.name + "-" + (modelInstances.length + 1),
-                "status": "Queued",
                 "remainingTime": "estimating..."
             });
         },

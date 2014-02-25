@@ -24,8 +24,7 @@
                 </td>
                 <td data-bind="text: model"></td>
                 <td>
-                    <span data-bind="attr: { 'data-i18n': 'views.instances.status.' + ($index() === 0 ? 'running' : 'queued') }"></span>
-                    <span data-bind="if: $index() === 0 && remainingTime">(ETA)</span>
+                    <span class="label" data-bind="attr: { 'data-i18n': 'views.instances.status.' + ($index() ? 'queued' : 'running') }, css: { 'label-success': !$index(), 'label-warning': $index() }"></span>
                 </td>
                 <td>
                     <button type="button" class="btn btn-default btn-xs" data-bind="attr: { 'data-i18n': '[title]views.instances.actions.up' }, disable: $index() < 2, click: function() { $parent.instances.splice($index() - 1, 0, $parent.instances.splice($index(), 1)[0]) }">

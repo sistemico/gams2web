@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('GAMS Web Interface') }}{% endblock %}
+
+{% block stylesheets %}
+    {% assets "stylesheets/css/normalize.css", "stylesheets/css/bootstrap.css", "stylesheets/css/font-awesome.css" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}"/>
+    {% endassets %}
+{% endblock %}
+
+{% block header_scripts %}
+    {% assets "scripts/vendor/modernizr.js" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+{% endblock %}
+
+{% block extra_body_scripts %}
+    <script src="static/scripts/vendor/require/require.js" data-main="static/scripts/app/main"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="applicationHost"></div>
+{% endblock %}
