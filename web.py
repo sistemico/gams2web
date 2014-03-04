@@ -2,13 +2,12 @@ from flask import Flask, render_template
 
 from flask.ext.assets import Environment
 
-import settings
 import api
 
 
 # Flask app
 app = Flask(__name__)
-app.config.from_object(settings)
+app.config.from_pyfile('settings.py')
 
 # Resources
 assets = Environment(app)
@@ -20,7 +19,7 @@ app.add_url_rule('/api/models/<model>', 'model.get', api.get_model, methods=['GE
 app.add_url_rule('/api/models/<model>/instances', 'model.instances', api.get_model_instances, methods=['GET'])
 app.add_url_rule('/api/instances', 'instances.all', api.get_instances, methods=['GET'])
 app.add_url_rule('/api/models/<model>/instances/<task_id>', 'instances.get', api.get_model_instance, methods=['GET'])
-app.add_url_rule('/api/models/<model>', 'model.run', api.run_model_instance, methods=['POST', 'PUT'])
+app.add_url_rule('/api/models/<model>/run', 'model.run', api.run_model_instance, methods=['POST', 'PUT'])
 
 
 # Start local web server
