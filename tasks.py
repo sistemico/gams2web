@@ -1,16 +1,13 @@
-from time import sleep
+import time
 
-from celery import Celery
-
-import settings
+from huey import RedisHuey
 
 
-# Celery app
-queue = Celery(settings.APP_NAME, broker=settings.CELERY_BROKER_URL, config_source=settings)
+queue = RedisHuey('testing', host='localhost', port=6379)
 
 
-# Simulate task delay
-@queue.task(trail=True)
-def run_model(model, delay):
-    sleep(delay)
-    return delay
+@queue.task()
+def run_model(delay):
+    print 'Waiting %s seconds...' % delay
+    time.sleep(delay)
+    print '%s seconds passed' % delay
