@@ -28,16 +28,16 @@
                 </td>
                 <td>
                     <button type="button" class="btn btn-default btn-xs" data-bind="attr: { 'data-i18n': '[title]views.instances.actions.up' }, disable: $index() < 2, click: function() { $parent.instances.splice($index() - 1, 0, $parent.instances.splice($index(), 1)[0]) }">
-                        <i class="icon-caret-up"></i>
+                        <i class="fa fa-caret-up"></i>
                     </button>
                     <button type="button" class="btn btn-default btn-xs" data-bind="attr: { 'data-i18n': '[title]views.instances.actions.up' }, disable: $index() < 1 || $index() === $parent.instances().length - 1, click: function() { $parent.instances.splice($index() + 1, 0, $parent.instances.splice($index(), 1)[0]) }">
-                        <i class="icon-caret-down"></i>
+                        <i class="fa fa-caret-down"></i>
                     </button>
                     <button type="button" class="btn btn-default btn-xs" data-bind="attr: { 'data-i18n': '[title]views.instances.actions.dequeue' }, visible: $index() > 0, click: function() { $parent.instances.remove($data) }">
-                        <i class="icon-remove"></i>
+                        <i class="fa fa-times"></i>
                     </button>
                     <button type="button" class="btn btn-default btn-xs" data-bind="attr: { 'data-i18n': '[title]views.instances.actions.cancel' }, visible: $index() === 0, click: function() { $parent.instances.remove($data) }">
-                        <i class="icon-off"></i>
+                        <i class="fa fa-power-off"></i>
                     </button>
                 </td>
             </tr>
