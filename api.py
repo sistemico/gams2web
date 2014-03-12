@@ -3,62 +3,48 @@ import json
 import os
 
 from flask import request, jsonify, abort
+from flask.ext.socketio import emit
 
 import settings
 from tasks import run_model
 
 
 # Reads JSON file
-def _data_from_json(filename, root=settings.GAMS2WEB_DATA):
+def _load_from_json(filename, root=settings.GAMS2WEB_DATA):
     with codecs.open(os.path.join(root, filename), 'rU', 'utf-8') as json_file:
         return json.load(json_file)
 
 
-# Gets the all models
-def get_models():
-    try:
-        lang = 'en' if not request.args.get('lang') else request.args.get('lang')
-        return jsonify(models=_data_from_json('models-' + lang + '.json'))
-    except IOError:
-        return abort(404)
+def connect():
+    all_tasks()
+    all_models()
 
 
-# Gets information for of a particular model
-def get_model(model):
-    try:
-        return jsonify(_data_from_json(model + '.json'))
-    except IOError:
-        return abort(404)
+# Gets the list of all models
+def all_models():
+    lang = 'en' if not request.args.get('lang') else request.args.get('lang')
+    models = _load_from_json('models-' + lang + '.json') or []
+    emit('models.all', {'models': models, 'count': len(models)})
+
+
+# Gets information for  a particular model
+def get_model_info(name):
+    pass
 
 
 # Gets all instances
-def get_instances():
-    try:
-        return jsonify(instances=_data_from_json('instances.json'))
-    except IOError:
-        return abort(503)
+def all_tasks():
+    tasks = _load_from_json('instances.json') or []
+    emit('tasks.all', {'tasks': tasks, 'count': len(tasks)})
 
 
 # Get all running instances for a given model
 def get_model_instances(model):
-    try:
-        all_instances = _data_from_json('instances.json')
-        return jsonify(instances=[i for i in all_instances if i["instance"].startswith(model)])
-    except IOError:
-        return abort(404)
-
-
-#
-def get_model_instance(model, task_id):
-    try:
-        all_instances = _data_from_json('instances.json')
-        return jsonify(instances=[i for i in all_instances if i["instance"] == model + '-' + task_id])
-    except IOError:
-        return abort(404)
+    pass
 
 
 # Simulate model execution (stub)
-def run_model_instance(model):
+def run_model(model):
     from random import randint
 
     # Wait a random time from 1 to 20 minutes
@@ -67,4 +53,4 @@ def run_model_instance(model):
     # Execute model
     t = run_model(random_delay)
 
-    return jsonify(dict(id=t.task.task_id, model=model, delay=random_delay)), 202
+    emit('', {'id': t.task.task_id,'model': model, 'delay': random_delay})

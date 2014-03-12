@@ -1,17 +1,9 @@
-﻿define(['plugins/http', 'plugins/router', 'durandal/app', 'viewmodels/instances', 'knockout', 'i18next'], function (http, router, app, instances, ko, i18n) {
+﻿define(['plugins/http', 'plugins/router', 'durandal/app', 'viewmodels/instances', 'data', 'knockout', 'i18next'], function (http, router, app, instances, data, ko, i18n) {
     return {
-        models: ko.observableArray([]),
+        models: data.models,
 
         activate: function () {
-            var self = this;
-
-            if (this.models().length > 0) {
-                return;
-            }
-
-            return http.get('/api/models', { lang: i18n.lng() }).then(function(data) {
-                self.models(data.models);
-            });
+            if (this.models.length > 0) return;
         },
 
         canDeactivate: function () {

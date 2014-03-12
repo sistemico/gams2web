@@ -1,17 +1,9 @@
-﻿define(['plugins/http', 'plugins/router', 'knockout'], function (http, router, ko) {
+﻿define(['plugins/http', 'plugins/router', 'data', 'knockout'], function (http, router, data, ko) {
     return {
-        instances: ko.observableArray([]),
+        instances: data.instances,
 
         activate: function () {
-            var self = this;
-
-            if (this.instances().length > 0) {
-                return;
-            }
-
-            return http.get('/api/instances').then(function (data) {
-                self.instances(data.instances);
-            });
+            if (data.instances().length > 0) return;
         },
 
         addInstance: function (model) {

@@ -17,7 +17,7 @@
     }
 });
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/binder', 'i18next', 'bootstrap'], function (system, app, viewLocator, binder, i18n) {
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/binder', 'i18next', 'bootstrap', 'data'], function (system, app, viewLocator, binder, i18n) {
     var i18NOptions = {
         lng: (window.navigator.userLanguage || window.navigator.language).split('-')[0] || 'es',
         fallbackLng: false,
