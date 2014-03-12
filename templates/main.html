@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block header_scripts %}
-    {% assets "scripts/vendor/modernizr.js" %}
+    {% assets "scripts/vendor/modernizr.js", "scripts/vendor/socket.io/socket.io.js" %}
         <script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {% endassets %}
 {% endblock %}
