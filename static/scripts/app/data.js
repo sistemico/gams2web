@@ -1,17 +1,15 @@
-define(['knockout'], function (ko) {
+define(['knockout', 'backend'], function (ko, backend) {
     var context = {
-        instances: ko.observableArray(),
-        models: ko.observableArray()
+        models: ko.observableArray(),
+        instances: ko.observableArray()
     };
 
-    var socket = io.connect('/api');
-
-    socket.on('connect', function() {
-        socket.on('models.all', function(data) {
+    backend.connect().then(function() {
+        backend.on('models.all', function(data) {
             context.models(data['models']);
         });
 
-        socket.on('tasks.all', function(data) {
+        backend.on('tasks.all', function(data) {
             context.instances(data['tasks']);
         });
     });
