@@ -1,13 +1,19 @@
 ﻿requirejs.config({
+    baseUrl: '/static',
     paths: {
-        'text': '../vendor/require/text',
-        'durandal': '../vendor/durandal',
-        'plugins': '../vendor/durandal/plugins',
-        'transitions': '../vendor/durandal/transitions',
-        'knockout': '../vendor/knockout/knockout-2.3.0',
-        'bootstrap': '../vendor/bootstrap/bootstrap',
-        'jquery': '../vendor/jquery/jquery-2.0.3',
-        'i18next': '../vendor/i18next/i18next.amd.withJQuery-1.7.1'
+        // Libraries
+        'text': 'vendor/requirejs-text/text',
+        'durandal': 'vendor/durandal/js',
+        'plugins': 'vendor/durandal/js/plugins',
+        'transitions': 'vendor/durandal/js/transitions',
+        'knockout': 'vendor/knockout.js/knockout',
+        'bootstrap': 'vendor/bootstrap/dist/js/bootstrap',
+        'jquery': 'vendor/jquery/jquery',
+        'i18next': 'vendor/i18next/i18next.amd.withJQuery',
+
+        // App
+        'viewmodels': 'app/viewmodels',
+        'views': 'app/views'
     },
     shim: {
         'bootstrap': {
@@ -17,7 +23,7 @@
     }
 });
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/binder', 'i18next', 'bootstrap', 'data'], function (system, app, viewLocator, binder, i18n) {
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/binder', 'i18next', 'bootstrap', 'app/data'], function (system, app, viewLocator, binder, i18n) {
     var i18NOptions = {
         lng: (window.navigator.userLanguage || window.navigator.language).split('-')[0] || 'es',
         fallbackLng: false,
@@ -25,7 +31,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/bin
         detectLngQS: 'lang',
         useCookie: true,
         cookieName: 'lang',
-        resGetPath: 'static/scripts/app/locales/__lng__.json'
+        resGetPath: 'static/app/locales/__lng__.json'
     };
 
     //>>excludeStart("build", true);

@@ -1,4 +1,4 @@
-﻿define(['plugins/http', 'plugins/router', 'data', 'knockout'], function (http, router, data, ko) {
+﻿define(['plugins/http', 'plugins/router', 'app/data', 'knockout'], function (http, router, data, ko) {
     return {
         instances: data.instances,
 
