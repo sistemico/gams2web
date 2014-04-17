@@ -1,4 +1,4 @@
-define(['knockout', 'backend'], function (ko, backend) {
+define(['knockout', 'app/backend'], function (ko, backend) {
     var context = {
         models: ko.observableArray(),
         instances: ko.observableArray()

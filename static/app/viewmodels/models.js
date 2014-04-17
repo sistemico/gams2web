@@ -1,4 +1,4 @@
-﻿define(['plugins/http', 'plugins/router', 'durandal/app', 'viewmodels/instances', 'data', 'knockout', 'i18next'], function (http, router, app, instances, data, ko, i18n) {
+﻿define(['plugins/http', 'plugins/router', 'durandal/app', 'viewmodels/instances', 'app/data', 'knockout', 'i18next'], function (http, router, app, instances, data, ko, i18n) {
     return {
         models: data.models,
 

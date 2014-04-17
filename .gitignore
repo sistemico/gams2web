@@ -42,6 +42,7 @@ nosetests.xml
 
 ### Bower ###
 bower_components
+vendor
 
 ### SASS ###
 *.sass-cache
