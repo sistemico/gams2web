@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GAMS Web Interface</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+
+    <link rel="stylesheet" href="vendor/normalize-css/normalize.css"/>
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css"/>
+
+    <link rel="stylesheet" href="styles/main.css"/>
+
+    <script type="text/javascript" src="vendor/modernizr/modernizr.js"></script>
+    <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/angular/angular.min.js"></script>
+    <script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="vendor/i18next/i18next.min.js"></script>
+    <script type="text/javascript" src="vendor/ng-i18next/dist/ng-i18next.min.js"></script>
+    <script type="text/javascript" src="vendor/socket.io-client/dist/socket.io.min.js"></script>
+
+    <script type="text/javascript" src="app/main.js"></script>
+</head>
+<body ng-app="gams2web">
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" ng-click="menuVisible = !menuVisible">
+            <span class="sr-only" ng-i18next="menu.toggleNavigation"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" ui-sref="home" ng-i18next="branding">gams2web</a>
+    </div>
+    <div class="navbar-collapse" collapse="!menuVisible">
+        <ul class="nav navbar-nav">
+            <li ui-sref-active="active"><a ui-sref="home" ng-i18next="menu.home">Home</a></li>
+            <li ui-sref-active="active"><a ui-sref="about" ng-i18next="menu.about">About</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div ui-view></div>
+</div>
+</body>
+</html>

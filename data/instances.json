@@ -1,26 +1,24 @@
 [
     {
         "model": "Sodoku",
-        "instance": "sudoku-1",
         "order": "0",
         "remainingTime": "00:05"
     },
     {
         "model": "Sodoku",
-        "instance": "sudoku-2",
-        "order": "1",
-        "remainingTime": ""
+        "order": "2",
+        "submitDate": "2014-04-13T14:13:00.000Z"
     },
     {
         "model": "Transportation Problem",
-        "instance": "trnsport-1",
-        "order": "2",
-        "remainingTime": ""
+        "order": "1",
+        "submitDate": "2014-04-10T04:27:00.000Z"
     },
     {
         "model": "Sodoku",
         "instance": "sudoku-3",
         "order": "3",
-        "remainingTime": ""
+        "remainingTime": "",
+        "submitDate": "2014-04-04T03:01:00.000Z"
     }
 ]

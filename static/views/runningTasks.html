@@ -1,0 +1,44 @@
+<div class="text-center" ng-if="!data.tasks.length">
+    <span>No models running</span>
+</div>
+
+<div ng-if="data.tasks.length">
+    <table class="table">
+        <thead>
+        <th width="15em">#</th>
+        <th width="40%">Model</th>
+        <th class="hidden-xs">Date</th>
+        <th width="30%">Status</th>
+        <th><span class="sr-only">Actions</span></th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="task in data.tasks | orderBy:'order'">
+            <td>
+                {{ $index }}
+            </td>
+            <td>
+                <a href="/models/{{ task.id }}">{{ task.model }}</a>
+            </td>
+            <td class="hidden-xs">
+                {{ task.submitDate | date: 'medium' }}
+            </td>
+            <td>
+                <progressbar ng-if="task.remainingTime" value="100" type="success" animate="false"
+                             class="progress-striped active">
+                    Running <span ng-if="task.remainingTime">(ETA {{ task.remainingTime }})</span>
+                </progressbar>
+
+                <progressbar ng-if="!task.remainingTime" value="100" type="warning" animate="false">
+                    Queued
+                </progressbar>
+            </td>
+            <td width="1em">
+                <button class="close " title="Cancel task" type="button" ng-click="cancelTask($index)">×</button>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot ng-init="messages = []">
+        <alert ng-repeat="message in messages">{{ message }}</alert>
+        </tfoot>
+    </table>
+</div>

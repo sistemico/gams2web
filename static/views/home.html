@@ -1,0 +1,36 @@
+<section>
+    <div class="well well-sm text-right">
+        <button type="button" class="btn btn-default btn-xs sr-only" ng-click="$event.stopPropagation();">
+            <span>Refresh list</span>
+        </button>
+        <button type="button" class="btn btn-primary btn-xs" ng-click="openRunModelDialog(); $event.stopPropagation();">
+            <span class="glyphicon glyphicon-plus"></span> <span>Run model</span>
+        </button>
+    </div>
+
+    <accordion close-others="false">
+        <accordion-group is-open="runningExpanded" ng-init="runningExpanded=true">
+            <accordion-heading>
+                <div class="clearfix">
+                    <span>Running models</span>
+                    <i class="pull-right glyphicon"
+                       ng-class="{'glyphicon-chevron-down': runningExpanded, 'glyphicon-chevron-right': !runningExpanded}"></i>
+                </div>
+            </accordion-heading>
+            <ng-include src="'views/runningTasks.html'"></ng-include>
+        </accordion-group>
+
+        <accordion-group is-open="recentExpanded">
+            <accordion-heading class="text-center">
+                <div class="clearfix">
+                    <span>Results</span>
+                    <i class="pull-right glyphicon"
+                       ng-class="{'glyphicon-chevron-down': recentExpanded, 'glyphicon-chevron-right': !recentExpanded}"></i>
+                </div>
+            </accordion-heading>
+            <div class="text-center">
+                <span>No recent tasks</span>
+            </div>
+        </accordion-group>
+    </accordion>
+</section>
