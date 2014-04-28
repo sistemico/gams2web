@@ -3,14 +3,32 @@
         "name": "trnsport",
         "title": "Problema de Transporte",
         "description": "Problema de transporte con economías de escala discretizadas",
-        "model": "trnsport.gms",
-        "data": ""
+        "flags": ["nuevo"]
     },
     {
         "name": "sudoku",
         "title": "Sudoku",
-        "description": "Solución para el Sudoku",
-        "model": "sudoku.gms",
-        "data": ""
+        "description": "Solución del Sudoku mediante programación lineal",
+        "instructions": [
+            "Completar cada casilla vacía con un solo número del 1 al 9.",
+            "En una misma fila no puede haber números repetidos.",
+            "En una misma columna no puede haber números repetidos.",
+            "En una misma región 3x3 no puede haber números repetidos."
+        ],
+        "params": [
+            {
+                "id": "board",
+                "label": "Tablero",
+                "helpText": "Rellene las casillas vacías con los números [1-9]",
+                "type": "matrix",
+                "options": {
+                    "rows": 9,
+                    "columns": 9,
+                    "length": 1,
+                    "min": 1,
+                    "max": 9
+                }
+            }
+        ]
     }
 ]

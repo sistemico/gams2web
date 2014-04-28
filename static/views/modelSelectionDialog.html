@@ -1,0 +1,27 @@
+<div class="modal-title">
+    <alert close="cancel()">
+        <h3>Model Selection</h3>
+
+        <p>Select the model you want to run from the following list</p>
+    </alert>
+</div>
+
+<div class="modal-body">
+    <div class="list-group">
+        <a href="#" class="list-group-item" ng-repeat="model in models | orderBy:'title'" ng-click="select(model)">
+            <div ng-repeat="flag in model.flags | reverse" class="pull-right hidden-xs">
+                <span class="label label-{{ flag.type || 'default' }}">
+                    {{ flag.label || flag }}
+                </span>
+            </div>
+
+            <h4 class="list-group-item-heading">{{ model.title }}</h4>
+
+            <p class="list-group-item-text">{{ model.description }}</p>
+        </a>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+</div>

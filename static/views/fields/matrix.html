@@ -1,0 +1,16 @@
+<table class="table-condensed">
+    <tbody>
+    <tr ng-repeat="i in rows">
+        <td class="text-center">
+            <small>{{ i }}</small>
+        </td>
+        <td ng-repeat="j in columns" ng-transclude></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td ng-repeat="j in columns" class="text-center">
+            <small>{{ j }}</small>
+        </td>
+    </tr>
+    </tbody>
+</table>

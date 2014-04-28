@@ -1,63 +1,162 @@
-﻿requirejs.config({
-    baseUrl: '/static',
-    paths: {
-        // Libraries
-        'text': 'vendor/requirejs-text/text',
-        'durandal': 'vendor/durandal/js',
-        'plugins': 'vendor/durandal/js/plugins',
-        'transitions': 'vendor/durandal/js/transitions',
-        'knockout': 'vendor/knockout.js/knockout',
-        'bootstrap': 'vendor/bootstrap/dist/js/bootstrap',
-        'jquery': 'vendor/jquery/jquery',
-        'i18next': 'vendor/i18next/i18next.amd.withJQuery',
+﻿//
+// GAMS Web Interface
+//
 
-        // App
-        'viewmodels': 'app/viewmodels',
-        'views': 'app/views'
-    },
-    shim: {
-        'bootstrap': {
-            deps: ['jquery'],
-            exports: 'jQuery'
+var gams2web = angular.module('gams2web', [ 'ui.router', 'ui.bootstrap', 'jm.i18next']);
+
+// Matrix field type
+gams2web.directive('matrix', function () {
+    return {
+        templateUrl: 'views/fields/matrix.html',
+        restrict: 'E',
+        replace: true,
+        transclude: true,
+        scope: { nrows: '@', ncols: '@', val: '=value' },
+
+        link: function (scope, element, attrs) {
+            var range = function (upper) {
+                return Array.apply(null, Array(parseInt(upper))).map(function (_, i) {
+                    return i + 1 + '';
+                });
+            };
+
+            scope.rows = range(attrs.nrows);
+            scope.columns = range(attrs.ncols);
+
+            scope.value = {};
+
+            angular.forEach(scope.rows, function (row) {
+                scope.value[row] = {};
+
+                angular.forEach(scope.columns, function (column) {
+                    scope.value[row][column] = null;
+                });
+            });
         }
     }
 });
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/binder', 'i18next', 'bootstrap', 'app/data'], function (system, app, viewLocator, binder, i18n) {
-    var i18NOptions = {
-        lng: (window.navigator.userLanguage || window.navigator.language).split('-')[0] || 'es',
-        fallbackLng: false,
-        detectFromHeaders: false,
+
+// Create a copy of the array and reverse the order of the items
+gams2web.filter('reverse', function () {
+    return function (items) {
+        return items && items.slice().reverse() || [];
+    };
+});
+
+
+// App
+gams2web.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $i18nextProvider) {
+    $locationProvider.html5Mode(true);
+
+    $i18nextProvider.options = {
+        lng: 'en',
+        fallbackLng: 'es',
         detectLngQS: 'lang',
-        useCookie: true,
-        cookieName: 'lang',
-        resGetPath: 'static/app/locales/__lng__.json'
+        resGetPath: '../locales/__lng__/__ns__.json',
+        useCookie: false,
+        useLocalStorage: false
     };
 
-    //>>excludeStart("build", true);
-    system.debug(true);
-    //>>excludeEnd("build");
+    $stateProvider
+        .state('home', {
+            url: '/',
+            templateUrl: 'views/home.html',
+            controller: function ($scope, $rootScope, $modal, $log, $i18next) {
+                var addTask = $scope.addTask = function (model) {
+                    $rootScope.data.tasks.push({
+                        model: model.title,
+                        status: 'Queued'
+                    });
+                };
 
-    app.configurePlugins({
-        router: true,
-        dialog: true,
-        widget: true
-    });
+                $scope.cancelTask = function (index) {
+                    $rootScope.data.tasks.splice(index, 1);
+                };
 
-    app.start().then(function () {
-        i18n.init(i18NOptions, function () {
-            app.title =  i18n.t('site.title');
+                $scope.openRunModelDialog = function () {
+                    var modelSelectionDialog = $modal.open({
+                        templateUrl: 'views/modelSelectionDialog.html',
+                        controller: function ($scope, $modalInstance, models) {
+                            $scope.models = models;
 
-            binder.bindingComplete = function (obj, view) {
-                $(view).i18n();
-            };
+                            $scope.select = function (selectedModel) {
+                                $modalInstance.close(selectedModel);
 
-            // Replace 'viewmodels' in the moduleId with 'views' to locate the view.
-            // Look for partial views in a 'views' folder in the root.
-            viewLocator.useConvention();
+                                var modelParameterDialog = $modal.open({
+                                    templateUrl: 'views/modelParameterDialog.html',
+                                    backdrop: 'static',
+                                    windowClass: 'model-parameter-dialog',
+                                    controller: function ($scope, $modalInstance, model) {
+                                        $scope.model = model;
 
-            // Show the app by setting the root view model for our application.
-            app.setRoot('viewmodels/shell');
+                                        $scope.cancel = function () {
+                                            $modalInstance.dismiss('cancel');
+                                        }
+
+                                        $scope.run = function () {
+                                            $modalInstance.close(model);
+                                        }
+                                    },
+                                    resolve: {
+                                        model: function () {
+                                            return selectedModel;
+                                        }
+                                    }
+                                });
+
+                                modelParameterDialog.result.then(function (result) {
+                                    addTask(result);
+                                }, function () {
+                                    $log.info('Modal dismissed at: ' + new Date());
+                                });
+                            }
+
+                            $scope.cancel = function () {
+                                $modalInstance.dismiss('cancel');
+                            }
+                        },
+                        resolve: {
+                            models: function () {
+                                return $rootScope.data.models;
+                            }
+                        }
+                    });
+                };
+            }
+        })
+
+        .state('about', {
+            url: '/about',
+            templateUrl: 'views/about.html'
+        });
+
+    $urlRouterProvider.otherwise('/');
+});
+
+gams2web.run(function ($rootScope) {
+    $rootScope.data = {
+        models: [],
+        tasks: []
+    };
+
+    var socket = io.connect('/api');
+
+    socket.on('connect', function () {
+        socket.on('models.all', function (data) {
+            $rootScope.$apply(function () {
+                angular.forEach(data['models'], function (model) {
+                    $rootScope.data.models.push(model);
+                });
+            });
+        });
+
+        socket.on('tasks.all', function (data) {
+            $rootScope.$apply(function () {
+                angular.forEach(data['tasks'], function (task) {
+                    $rootScope.data.tasks.push(task);
+                });
+            });
         });
     });
 });
