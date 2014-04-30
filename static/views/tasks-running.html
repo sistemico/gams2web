@@ -5,15 +5,15 @@
 <div ng-if="data.tasks.length">
     <table class="table">
         <thead>
-        <th width="15em">#</th>
-        <th width="40%">Model</th>
+        <th width="3em" class="visible-lg">#</th>
+        <th>Model</th>
         <th class="hidden-xs">Date</th>
-        <th width="30%">Status</th>
+        <th width="40%">Status</th>
         <th><span class="sr-only">Actions</span></th>
         </thead>
         <tbody>
         <tr ng-repeat="task in data.tasks | orderBy:'order'">
-            <td>
+            <td class="visible-lg">
                 {{ $index }}
             </td>
             <td>
@@ -25,7 +25,7 @@
             <td>
                 <progressbar ng-if="task.remainingTime" value="100" type="success" animate="false"
                              class="progress-striped active">
-                    Running <span ng-if="task.remainingTime">(ETA {{ task.remainingTime }})</span>
+                    Running <span ng-if="task.remainingTime" class="hidden-xs">(ETA {{ task.remainingTime }})</span>
                 </progressbar>
 
                 <progressbar ng-if="!task.remainingTime" value="100" type="warning" animate="false">
@@ -33,7 +33,7 @@
                 </progressbar>
             </td>
             <td width="1em">
-                <button class="close " title="Cancel task" type="button" ng-click="cancelTask($index)">×</button>
+                <button class="close " title="Cancel task" type="button" ng-click="data.removeTask($index)">×</button>
             </td>
         </tr>
         </tbody>

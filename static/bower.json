@@ -9,6 +9,7 @@
         "modernizr": "~2.7.2",
         "ng-i18next": "0.3.1",
         "normalize-css": "~3.0.1",
+        "requirejs": "~2.1.11",
         "socket.io-client": "~0.9.16"
     }
 }
