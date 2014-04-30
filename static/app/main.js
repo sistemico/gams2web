@@ -1,11 +1,11 @@
 ﻿define(['angular', 'angular-ui-router', 'angular-bootstrap', 'ng-i18next', 'app/data'], function (angular, uiRouter, uiBootstrap, i18next, data) {
-    angular.module('gams2web', [ 'ui.router', 'ui.bootstrap', 'jm.i18next'])
+    angular.module('gams2web', [ 'ui.router', 'ui.bootstrap'/*, 'jm.i18next'*/])
 
         .run(function ($rootScope) {
             $rootScope.data = data;
         })
 
-        .config(function ($locationProvider, $stateProvider, $urlRouterProvider, $i18nextProvider) {
+        .config(function ($locationProvider, $stateProvider, $urlRouterProvider/*, $i18nextProvider*/) {
             $locationProvider.html5Mode(true);
             $urlRouterProvider.otherwise('/');
 
@@ -59,14 +59,14 @@
                     }
                 });
 
-            $i18nextProvider.options = {
+            /*$i18nextProvider.options = {
                 lng: 'en',
                 fallbackLng: 'es',
                 detectLngQS: 'lang',
                 resGetPath: '../locales/__lng__/__ns__.json',
                 useCookie: false,
                 useLocalStorage: false
-            };
+            };*/
         })
 
         // WebSocket API
