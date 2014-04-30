@@ -17,10 +17,10 @@
                 {{ $index }}
             </td>
             <td>
-                <a href="/models/{{ task.id }}">{{ task.model }}</a>
+                <a href="#">{{ task.model }}</a>
             </td>
             <td class="hidden-xs">
-                {{ task.submitDate | date: 'medium' }}
+                {{ task.submitDate | date: 'short' }}
             </td>
             <td>
                 <progressbar ng-if="task.remainingTime" value="100" type="success" animate="false"
