@@ -1,4 +1,4 @@
-﻿define(['angular', 'angular-ui-router', 'angular-bootstrap', 'ng-i18next', 'app/data', 'app/controllers'], function (angular, uiRouter, uiBootstrap, i18next, data, controllers) {
+﻿define(['angular', 'angular-ui-router', 'angular-bootstrap', 'ng-i18next', 'app/data'], function (angular, uiRouter, uiBootstrap, i18next, data) {
     angular.module('gams2web', [ 'ui.router', 'ui.bootstrap', 'jm.i18next'])
 
         .run(function ($rootScope) {
