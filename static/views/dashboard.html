@@ -1,0 +1,29 @@
+<section class="row">
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <div class="pull-left">
+                    <span class="panel-title">Running models</span>
+                </div>
+                <div id="actions" class="pull-right">
+                    <button type="button" class="btn btn-primary btn-xs " ng-click="showModelListDialog()">
+                        <span class="glyphicon glyphicon-play"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <ng-include src="'views/tasks-running.html'"></ng-include>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="panel-title">Results</span>
+            </div>
+            <div class="panel-body">
+                <ng-include src="'views/tasks-recent.html'"></ng-include>
+            </div>
+        </div>
+    </div>
+</section>

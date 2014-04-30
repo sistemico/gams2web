@@ -1,10 +1,7 @@
-/* Accordion: title */
-.accordion-toggle {
-    cursor: pointer;
-}
 
-.accordion-toggle:hover {
-    text-decoration: none;
+/* When application is loading */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
 }
 
 /* Table: Progress bar in cell */

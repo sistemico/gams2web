@@ -1,0 +1,42 @@
+<form ng-if="model" class="form-horizontal" role="form" name="form" ng-submit="run()">
+    <div class="page-header">
+        <h2>
+            <span>{{ model.title }}</span>
+        </h2>
+
+        <p>{{ model.description }}</p>
+    </div>
+    <div ng-if="model.instructions" class="form-group">
+        <label class="col-sm-2 control-label">Instructions</label>
+
+        <div class="col-sm-10">
+            <ul>
+                <li ng-repeat="item in model.instructions" class="form-control-static">{{ item }}</li>
+            </ul>
+        </div>
+    </div>
+    <hr ng-repeat-start="field in model.params">
+    <div class="form-group" ng-repeat-end>
+        <label class="col-sm-2 control-label">{{ field.label }}</label>
+
+        <div class="col-sm-10">
+            <p ng-if="field.type == 'text' && field.options.disabled"
+               class="form-control-static">{{ field.options.default }}</p>
+
+            <matrix ng-if="field.type == 'matrix'" nrows="{{ field.options.rows }}"
+                    ncols="{{ field.options.columns }}" val="mat">
+                <input class="form-control input-sm text-center" name="{{ field.id }}[{{ i }}][{{ j }}]"
+                       ng-model="value[i][j]" type="number" min="1" max="9" minlength="{{ field.options.length }}"
+                       maxlength="{{ field.options.length }}"/>
+            </matrix>
+
+            <span class="help-block">{{ field.helpText }}</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Run model</button>
+        </div>
+    </div>
+</form>
