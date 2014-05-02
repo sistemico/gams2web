@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default" role="navigation" ng-cloak>
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" ng-click="menuVisible = !menuVisible">
@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" ui-sref="root.home" ng-i18next="branding">gams2web</a>
+            <a class="navbar-brand" ui-sref="home" ng-i18next="branding">gams2web</a>
         </div>
         <div class="navbar-collapse" collapse="!menuVisible">
             <ul class="nav navbar-nav">
@@ -17,22 +17,20 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li ng-repeat="model in data.models | orderBy:'title'" role="presentation">
-                            <a ui-sref="root.run({ model: model.name })" tabindex="-1">{{ model.title }}</a>
+                            <a ui-sref="model({ modelName: model.name })" tabindex="-1">{{ model.title }}</a>
                         </li>
                     </ul>
                 </li>
-
                 <li>
-                    <a ui-sref="root.about" ng-i18next="menu.about">About</a>
+                    <a href ng-i18next="menu.about" ng-click="showAboutDialog()">About</a>
                 </li>
             </ul>
             <p ng-if="data" class="navbar-text navbar-right visible-md visible-lg">
-                <a ui-sref="root.home" class="navbar-link" title="Status">
-                    <span ng-if="data.tasks.length === 0">no model running</span>
-                    <span ng-if="data.tasks.length === 1">1 model running</span>
-                    <span ng-if="data.tasks.length > 1">{{ data.tasks.length }} models running</span>
+                <a ui-sref="home" class="navbar-link" title="Status" ng-switch="data.tasks.length">
+                    <span ng-switch-when="0">no model running</span>
+                    <span ng-switch-when="1">1 model running</span>
+                    <span ng-switch-default>{{ data.tasks.length }} models running</span>
                 </a>
-
             </p>
         </div>
     </div>

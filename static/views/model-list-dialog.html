@@ -8,7 +8,7 @@
 
 <div class="modal-body">
     <div class="list-group">
-        <a ng-repeat="model in data.models | orderBy:'title'" ui-sref="root.run({ model: model.name })" class="list-group-item"
+        <a ng-repeat="model in data.models | orderBy:'title'" ui-sref="model({ modelName: model.name })" class="list-group-item"
            ng-click="$close()">
             <div ng-repeat="flag in model.flags | reverse" class="pull-right hidden-xs">
                 <span class="label label-{{ flag.type || 'default' }}">
