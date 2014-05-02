@@ -1,0 +1,41 @@
+<div class="modal-title">
+    <alert close="$close()">
+        <h3 ng-i18next="sections.about.title">About GAMS Web Interface</h3>
+
+        <p>Contact information and credits</p>
+    </alert>
+</div>
+
+<div class="modal-body">
+    <address>
+        <strong>INGAR, Instituto de Desarrollo y Diseño</strong><br>
+        Avellaneda 3657<br>
+        Santa Fe, Argentina<br>
+        <br>
+        <abbr title="Phone" ng-i18next="sections.about.phone">Phone</abbr>: (54-342) 453-5568 / 455-4809 /
+        455-5229<br>
+        <abbr title="Fax" ng-i18next="sections.about.fax">Fax</abbr>: (54-342) 455-3439
+    </address>
+
+    <address>
+        <strong>John Doe</strong><br>
+        <a href="mailto:#">john.doe@example.com</a>
+    </address>
+
+    <address>
+        <strong>Juan Pérez</strong><br>
+        <a href="mailto:#">juan.perez@example.com</a>
+    </address>
+
+</div>
+
+<div class="modal-footer">
+    <a class="btn btn-default pull-left" href="https://github.com/sgaliano/gams2web" target="_blank"
+       title="Go to website">
+        <i class="glyphicon glyphicon-new-window"></i>
+    </a>
+
+    <div class="btn-group">
+        <button class="btn btn-default" ng-click="$close()">Close</button>
+    </div>
+</div>
