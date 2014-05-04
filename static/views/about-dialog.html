@@ -1,8 +1,8 @@
 <div class="modal-title">
     <alert close="$close()">
-        <h3 ng-i18next="sections.about.title">About GAMS Web Interface</h3>
+        <h3 translate="VIEWS.ABOUT.TITLE"></h3>
 
-        <p>Contact information and credits</p>
+        <p translate="VIEWS.ABOUT.SUBTITLE"></p>
     </alert>
 </div>
 
@@ -12,9 +12,10 @@
         Avellaneda 3657<br>
         Santa Fe, Argentina<br>
         <br>
-        <abbr title="Phone" ng-i18next="sections.about.phone">Phone</abbr>: (54-342) 453-5568 / 455-4809 /
-        455-5229<br>
-        <abbr title="Fax" ng-i18next="sections.about.fax">Fax</abbr>: (54-342) 455-3439
+        <abbr title="{{ 'VIEWS.ABOUT.PHONE' | translate }}" translate="VIEWS.ABOUT.PHONE">
+            Phone</abbr>: (54-342) 453-5568 / 455-4809 / 455-5229<br>
+        <abbr title="{{ 'VIEWS.ABOUT.FAX' | translate }}" translate="VIEWS.ABOUT.FAX">
+            Fax</abbr>: (54-342) 455-3439
     </address>
 
     <address>
@@ -31,11 +32,11 @@
 
 <div class="modal-footer">
     <a class="btn btn-default pull-left" href="https://github.com/sgaliano/gams2web" target="_blank"
-       title="Go to website">
+       title="{{ 'MESSAGES.GO_TO_DEV' | translate }}">
         <i class="glyphicon glyphicon-new-window"></i>
     </a>
 
     <div class="btn-group">
-        <button class="btn btn-default" ng-click="$close()">Close</button>
+        <button class="btn btn-default" ng-click="$close()" translate="VIEWS.ABOUT.CLOSE"></button>
     </div>
 </div>

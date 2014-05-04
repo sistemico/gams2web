@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GAMS Web Interface</title>
+    <title translate="SITE.TITLE"></title>
 
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,9 +18,12 @@
     <script type="text/javascript" src="vendor/modernizr/modernizr.js"></script>
 </head>
 <body ng-controller="MainCtrl" ng-cloak>
-<header ui-view="header"></header>
-<div class="container" ui-view="content"></div>
-<footer ui-view="footer"></footer>
+<header role="banner" ui-view="header"></header>
+
+<section class="container" role="main" ui-view="content"></section>
+
+<footer role="contentinfo" ui-view="footer"></footer>
+
 <script type="text/javascript" src="vendor/requirejs/require.js" data-main="app/config"></script>
 </body>
 </html>
