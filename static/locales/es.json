@@ -1,0 +1,54 @@
+{
+    "SITE": {
+        "TITLE": "GAMS Web",
+        "BRANDING": "<small>GAMS<sup>web</sup></small>"
+    },
+
+    "MENU": {
+        "HOME": "Principal",
+        "ABOUT": "Créditos",
+        "MODELS": "Modelos",
+        "TOGGLE_NAV": "Mostrar/ocultar menú"
+    },
+
+    "MESSAGES": {
+        "CANCEL_TASK": "Cancelar tarea",
+        "CLOSE": "Cerrar",
+        "COUNT_MODEL_RUNNING": "{{ count }} modelos en ejecución",
+        "GO_TO_DEV": "Ir al sitio web de desarrollo",
+        "NO_MODEL_RUNNING": "No hay modelos en ejecución",
+        "NO_RECENT_TASKS": "No hay tareas recientes",
+        "ONE_MODEL_RUNNING": "1 modelo en ejecución",
+        "RUN_MODEL": "Ejecutar modelo",
+        "SELECT_MODEL": "Seleccione de la lista el modelo que desea ejecutar"
+    },
+
+    "VIEWS": {
+        "ABOUT": {
+            "TITLE": "Créditos",
+            "SUBTITLE": "Información de contacto",
+            "PHONE": "Teléfono",
+            "FAX": "Fax",
+            "CLOSE": "@:MESSAGES.CLOSE"
+        },
+
+        "RUNNING_MODELS": {
+            "TITLE": "Modelos en ejecución",
+            "COLUMNS": {
+                "ID": "#",
+                "MODEL": "Modelo",
+                "DATE": "Fecha",
+                "STATUS": {
+                    "STATUS": "Estado",
+                    "RUNNING": "En ejecución",
+                    "QUEUED": "En cola"
+                },
+                "ACTIONS": "Acciones"
+            }
+        },
+
+        "RESULTS": {
+            "TITLE": "Resultados"
+        }
+    }
+}

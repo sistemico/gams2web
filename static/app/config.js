@@ -4,27 +4,31 @@ requirejs.config({
         'angular': 'vendor/angular/angular.min',
         'angular-ui-router': 'vendor/angular-ui-router/release/angular-ui-router.min',
         'angular-bootstrap': 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
-        'i18next': 'vendor/i18next/i18next.min',
-        'ng-i18next': 'vendor/ng-i18next/dist/ng-i18next'
+        'angular-cookies': 'vendor/angular-cookies/angular-cookies.min',
+        'angular-translate': 'vendor/angular-translate/angular-translate',
+        'angular-translate-loader': 'vendor/angular-translate-loader-static-files/angular-translate-loader-static-files'
     },
     shim: {
         'angular': {
             exports: 'angular'
         },
+        'angular-bootstrap': {
+            deps: ['angular']
+        },
+        'angular-cookies': {
+            deps: ['angular']
+        },
         'angular-ui-router': {
-            deps: ['angular'],
-            exports: 'angular'
+            deps: ['angular']
         },
         'angular-bootstrap': {
-            deps: ['angular'],
-            exports: 'angular'
+            deps: ['angular']
         },
-        'i18next': {
-            exports: 'i18n'
+        'angular-translate': {
+            deps: ['angular']
         },
-        'ng-i18next': {
-            deps: ['angular', 'i18next'],
-            exports: 'angular'
+        'angular-translate-loader': {
+            deps: ['angular-translate']
         }
     }
 });

@@ -1,20 +1,20 @@
 <div class="text-center" ng-if="!data.tasks.length">
-    <span>No models running</span>
+    <span>{{ 'MESSAGES.NO_MODEL_RUNNING' | translate }}</span>
 </div>
 
 <div ng-if="data.tasks.length">
     <table class="table">
         <thead>
-        <th width="3em" class="visible-lg">#</th>
-        <th>Model</th>
-        <th class="hidden-xs">Date</th>
-        <th width="40%">Status</th>
-        <th><span class="sr-only">Actions</span></th>
+        <th width="3em" class="visible-lg" translate="VIEWS.RUNNING_MODELS.COLUMNS.ID"></th>
+        <th translate="VIEWS.RUNNING_MODELS.COLUMNS.MODEL"></th>
+        <th class="hidden-xs" translate="VIEWS.RUNNING_MODELS.COLUMNS.DATE"></th>
+        <th width="40%" translate="VIEWS.RUNNING_MODELS.COLUMNS.STATUS"></th>
+        <th><span class="sr-only" translate="VIEWS.RUNNING_MODELS.COLUMNS.ACTIONS"></span></th>
         </thead>
         <tbody>
         <tr ng-repeat="task in data.tasks | orderBy:'order'">
             <td class="visible-lg text-muted">
-                {{ $index }}
+                {{ $index + 1 }}
             </td>
             <td>
                 <a href="#">{{ task.model }}</a>
@@ -23,22 +23,22 @@
                 {{ task.submitDate | date: 'short' }}
             </td>
             <td>
-                <progressbar ng-if="task.remainingTime" value="100" type="success" animate="false"
-                             class="progress-striped active">
-                    Running <span ng-if="task.remainingTime" class="hidden-xs">(ETA {{ task.remainingTime }})</span>
+                <progressbar class="progress-striped active" type="success" value="100" ng-if="task.remainingTime">
+                    {{ 'VIEWS.RUNNING_MODELS.COLUMNS.STATUS.RUNNING' | translate }}
+                    <span ng-if="task.remainingTime" class="hidden-xs">(ETA {{ task.remainingTime }})</span>
                 </progressbar>
 
                 <progressbar ng-if="!task.remainingTime" value="100" type="warning" animate="false">
-                    Queued
+                    {{ 'VIEWS.RUNNING_MODELS.COLUMNS.STATUS.QUEUED' | translate }}
                 </progressbar>
             </td>
             <td width="1em">
-                <button class="close " title="Cancel task" type="button" ng-click="data.removeTask($index)">×</button>
+                <button class="close" type="button" title="{{ 'MESSAGES.CANCEL_TASK' | translate }}"
+                        ng-click="data.removeTask($index)">
+                    ×
+                </button>
             </td>
         </tr>
         </tbody>
-        <tfoot ng-init="messages = []">
-        <alert ng-repeat="message in messages">{{ message }}</alert>
-        </tfoot>
     </table>
 </div>

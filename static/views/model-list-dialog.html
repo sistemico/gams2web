@@ -1,14 +1,15 @@
 <div class="modal-title">
     <alert close="$close()">
-        <h3>Run model</h3>
+        <h3 translate="MESSAGES.RUN_MODEL">Run model</h3>
 
-        <p>Select the model you want to run from the following list</p>
+        <p translate="MESSAGES.SELECT_MODEL"></p>
     </alert>
 </div>
 
 <div class="modal-body">
     <div class="list-group">
-        <a ng-repeat="model in data.models | orderBy:'title'" ui-sref="model({ modelName: model.name })" class="list-group-item"
+        <a ng-repeat="model in data.models | orderBy:'title'" ui-sref="model({ model: model.name })"
+           class="list-group-item"
            ng-click="$close()">
             <div ng-repeat="flag in model.flags | reverse" class="pull-right hidden-xs">
                 <span class="label label-{{ flag.type || 'default' }}">
@@ -21,7 +22,4 @@
             <p class="list-group-item-text">{{ model.description }}</p>
         </a>
     </div>
-</div>
-<div class="modal-footer visible-md visible-lg sr-only">
-    <button class="btn btn-default" ng-click="$dismiss()">Cancel</button>
 </div>

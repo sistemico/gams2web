@@ -36,7 +36,9 @@
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Run model</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
+                {{ 'MESSAGES.RUN_MODEL' | translate }}
+            </button>
         </div>
     </div>
 </form>

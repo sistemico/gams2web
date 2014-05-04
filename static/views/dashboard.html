@@ -3,10 +3,11 @@
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <div class="pull-left">
-                    <span class="panel-title">Running models</span>
+                    <span class="panel-title" translate="VIEWS.RUNNING_MODELS.TITLE"></span>
                 </div>
                 <div id="actions" class="pull-right">
-                    <button type="button" class="btn btn-primary btn-xs" title="Run model" ng-click="showModelListDialog()">
+                    <button type="button" class="btn btn-primary btn-xs" title="{{ 'MESSAGES.RUN_MODEL' | translate }}"
+                            ng-click="showModelListDialog()">
                         <span class="glyphicon glyphicon-play"></span>
                     </button>
                 </div>
@@ -19,7 +20,7 @@
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span class="panel-title">Results</span>
+                <span class="panel-title" translate="VIEWS.RESULTS.TITLE"></span>
             </div>
             <div class="panel-body">
                 <ng-include src="'views/tasks-recent.html'"></ng-include>
