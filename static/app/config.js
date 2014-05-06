@@ -1,12 +1,13 @@
 requirejs.config({
-    baseUrl: '/',
+    baseUrl: '/assets',
     paths: {
-        'angular': 'vendor/angular/angular.min',
-        'angular-ui-router': 'vendor/angular-ui-router/release/angular-ui-router.min',
-        'angular-bootstrap': 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
-        'angular-cookies': 'vendor/angular-cookies/angular-cookies.min',
+        'angular': 'vendor/angular/angular',
+        'angular-ui-router': 'vendor/angular-ui-router/release/angular-ui-router',
+        'angular-bootstrap': 'vendor/angular-bootstrap/ui-bootstrap-tpls',
+        'angular-cookies': 'vendor/angular-cookies/angular-cookies',
         'angular-translate': 'vendor/angular-translate/angular-translate',
-        'angular-translate-loader': 'vendor/angular-translate-loader-static-files/angular-translate-loader-static-files'
+        'angular-translate-loader': 'vendor/angular-translate-loader-static-files/angular-translate-loader-static-files',
+        'socket.io-client': 'vendor/socket.io-client/dist/socket.io'
     },
     shim: {
         'angular': {
