@@ -1,4 +1,4 @@
-$title 'sudoku pio';
+$title '{{ title }}';
 $inlinecom /* */
 
 sets
@@ -52,6 +52,15 @@ y.fx('8','6','6')=1;      y.fx('8','8','8')=1;   y.fx('8','9','4')=1;
 y.fx('9','3','9')=1;      y.fx('9','5','4')=1;   y.fx('9','6','5')=1;
 y.fx('9','7','6')=1;
 $offtext
+
+{# TODO: Render parameters
+{% for row in rows %}
+    {% for column in columns %}
+        y.fx('{{ row }}','{{ column }}','{{ value[row][column] }}')=1;
+    {% endfor %}
+{% endfor %}
+#}
+
 y.fx('1','1','2')=1;      y.fx('1','4','3')=1;   y.fx('1','8','8')=1;
 y.fx('2','1','5')=1;      y.fx('2','4','6')=1;   y.fx('2','8','7')=1;
 y.fx('3','1','9')=1;      y.fx('3','4','8')=1;   y.fx('3','8','1')=1;

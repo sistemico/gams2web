@@ -10,20 +10,20 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="format-detection" content="telephone=no"/>
 
-    <link rel="stylesheet" href="vendor/normalize-css/normalize.css"/>
-    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/assets/vendor/normalize-css/normalize.css"/>
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/dist/css/bootstrap.css"/>
 
-    <link rel="stylesheet" href="styles/main.css"/>
+    <link rel="stylesheet" href="/assets/styles/main.css"/>
 
-    <script type="text/javascript" src="vendor/modernizr/modernizr.js"></script>
+    <script type="text/javascript" src="/assets/vendor/modernizr/modernizr.js"></script>
 </head>
 <body ng-controller="MainCtrl" ng-cloak>
 <header role="banner" ui-view="header"></header>
 
-<section class="container" role="main" ui-view="content"></section>
+<section id="content" class="container" role="main" ui-view="content"></section>
 
 <footer role="contentinfo" ui-view="footer"></footer>
 
-<script type="text/javascript" src="vendor/requirejs/require.js" data-main="app/config"></script>
+<script type="text/javascript" src="/assets/vendor/requirejs/require.js" data-main="/assets/app/config.js"></script>
 </body>
 </html>

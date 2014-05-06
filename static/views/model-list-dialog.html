@@ -1,6 +1,6 @@
 <div class="modal-title">
     <alert close="$close()">
-        <h3 translate="MESSAGES.RUN_MODEL">Run model</h3>
+        <h3 translate="MESSAGES.RUN_MODEL"></h3>
 
         <p translate="MESSAGES.SELECT_MODEL"></p>
     </alert>
@@ -8,7 +8,7 @@
 
 <div class="modal-body">
     <div class="list-group">
-        <a ng-repeat="model in data.models | orderBy:'title'" ui-sref="model({ model: model.name })"
+        <a ng-repeat="model in data.models.all() | orderBy:'title'" ui-sref="runModel({ model: model.name })"
            class="list-group-item"
            ng-click="$close()">
             <div ng-repeat="flag in model.flags | reverse" class="pull-right hidden-xs">

@@ -1,8 +1,8 @@
-<div class="text-center" ng-if="!data.tasks.length">
+<div class="text-center" ng-if="data.tasks.empty()">
     <span>{{ 'MESSAGES.NO_MODEL_RUNNING' | translate }}</span>
 </div>
 
-<div ng-if="data.tasks.length">
+<div ng-if="data.tasks.notEmpty()">
     <table class="table">
         <thead>
         <th width="3em" class="visible-lg" translate="VIEWS.RUNNING_MODELS.COLUMNS.ID"></th>
@@ -12,12 +12,12 @@
         <th><span class="sr-only" translate="VIEWS.RUNNING_MODELS.COLUMNS.ACTIONS"></span></th>
         </thead>
         <tbody>
-        <tr ng-repeat="task in data.tasks | orderBy:'order'">
+        <tr ng-repeat="task in data.tasks.all() | orderBy:'order'">
             <td class="visible-lg text-muted">
                 {{ $index + 1 }}
             </td>
             <td>
-                <a href="#">{{ task.model }}</a>
+                <a href title="{{ task.id }}">{{ task.model }}</a>
             </td>
             <td class="hidden-xs">
                 {{ task.submitDate | date: 'short' }}
@@ -34,7 +34,7 @@
             </td>
             <td width="1em">
                 <button class="close" type="button" title="{{ 'MESSAGES.CANCEL_TASK' | translate }}"
-                        ng-click="data.removeTask($index)">
+                        ng-click="cancelTask(task)">
                     ×
                 </button>
             </td>

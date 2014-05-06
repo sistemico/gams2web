@@ -11,7 +11,7 @@
         </div>
         <div class="navbar-collapse" collapse="!menuVisible">
             <p ng-if="data" class="navbar-text navbar-left visible-md visible-lg">
-                <a ui-sref="home" class="navbar-link" title="Status" ng-switch="data.tasks.length">
+                <a ui-sref="home" class="navbar-link" title="Status" ng-switch="data.tasks.count()">
                     <span ng-switch-when="0">
                         {{ 'MESSAGES.NO_MODEL_RUNNING' | translate }}
                     </span>
@@ -19,7 +19,7 @@
                         {{ 'MESSAGES.ONE_MODEL_RUNNING' | translate }}
                     </span>
                     <span ng-switch-default>
-                        {{ 'MESSAGES.COUNT_MODEL_RUNNING' | translate: { count: data.tasks.length } }}
+                        {{ 'MESSAGES.COUNT_MODEL_RUNNING' | translate: { count: data.tasks.count() } }}
                     </span>
                 </a>
             </p>
@@ -27,15 +27,15 @@
                 <li ui-sref-active="active">
                     <a ui-sref="home" ui- translate="MENU.HOME"></a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <li ng-class="{ 'disabled': data.models.empty() }">
+                    <a class="dropdown-toggle" href ng-class="{ 'disabled': data.models.empty() }">
                         <span translate="MENU.MODELS"></span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li ui-sref-active="active" ng-repeat="model in data.models | orderBy:'title'"
+                        <li ui-sref-active="active" ng-repeat="model in data.models.all() | orderBy:'title'"
                             role="presentation">
-                            <a ui-sref="model({ model: model.name })" tabindex="-1">{{ model.title }}</a>
+                            <a tabindex="-1" ui-sref="runModel({ model: model.name })">{{ model.title }}</a>
                         </li>
                     </ul>
                 </li>
