@@ -53,6 +53,30 @@
 
         "RESULTS": {
             "TITLE": "Resultados"
+        },
+        "models": {
+            "sudoku": {
+                "title": "Sudoku",
+                "description": "Solución del Sudoku mediante programación lineal",
+                "instructions": [
+                    "Completar cada casilla vacía con un solo número del 1 al 9.",
+                    "En una misma fila no puede haber números repetidos.",
+                    "En una misma columna no puede haber números repetidos.",
+                    "En una misma región 3x3 no puede haber números repetidos."
+                ],
+                "params": {
+                    "board": {
+                        "label": "Tablero",
+                        "helpText": "Rellene las casillas vacías con los números [1-9]"
+                    }
+                }
+            },
+            "trnsport": {
+                "title": "Problema de Transporte",
+                "description": "Problema de transporte con economías de escala discretizadas",
+                "flags": ["nuevo"],
+                "params": {}
+            }
         }
     }
 }
