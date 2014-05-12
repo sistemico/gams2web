@@ -1,4 +1,9 @@
+/* Always show browser scrollbar to prevent page jumping */
+html {
+    overflow-y: scroll;
+}
 
+/* Fixed navbar margin */
 #content {
     padding-top: 65px;
     padding-bottom: 90px;
