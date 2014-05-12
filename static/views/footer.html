@@ -6,9 +6,9 @@
             </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li ng-repeat="(lang, code) in languages" ng-class="{ active: currentLanguage() === code }">
-                <a class="text-muted" href ng-click="changeLanguage(code)">
-                    <small>{{ lang }}</small>
+            <li ng-repeat="lang_code in languages" ng-class="{ active: currentLanguage() === lang_code }">
+                <a class="text-muted" href ng-click="changeLanguage(lang_code)">
+                    <small>{{ 'SITE.LANGUAGES.' + lang_code | translate }}</small>
                 </a>
             </li>
         </ul>

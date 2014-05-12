@@ -1,7 +1,11 @@
 {
     "SITE": {
         "TITLE": "GAMS Web",
-        "BRANDING": "<small>GAMS<sup>web</sup></small>"
+        "BRANDING": "<small>GAMS<sup>web</sup></small>",
+        "LANGUAGES": {
+            "en": "English",
+            "es": "Español"
+        }
     },
 
     "MENU": {

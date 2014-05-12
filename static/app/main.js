@@ -59,10 +59,7 @@
         // Main controller
         .controller('MainCtrl', ['$scope', '$state', '$translate', '$modal', 'backend',
             function ($scope, $state, $translate, $modal, backend) {
-                $scope.languages = {
-                    'English': 'en',
-                    'Español': 'es'
-                };
+                $scope.languages = ['en', 'es'];
 
                 $scope.changeLanguage = function (lang) {
                     $translate.use(lang);
