@@ -1,0 +1,15 @@
+{
+    "params": [
+        {
+            "id": "board",
+            "type": "matrix",
+            "options": {
+                "rows": 9,
+                "columns": 9,
+                "length": 1,
+                "min": 1,
+                "max": 9
+            }
+        }
+    ]
+}
