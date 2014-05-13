@@ -15,7 +15,9 @@ for filename in listdir(DATA_PATH):
 
     if isfile(file_path) and filename.endswith('.json'):
         with codecs.open(file_path, 'rU', 'utf-8') as json_file:
-            _models[filename[:-5]] = json.load(json_file)
+            model_name = filename[:-5]
+            _models[model_name] = json.load(json_file)
+            _models[model_name]['name'] = model_name
 
 
 # Returns a list of all models available to run

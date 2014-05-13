@@ -37,46 +37,60 @@
         },
 
         "RUNNING_MODELS": {
-            "TITLE": "Modelos en ejecución",
-            "COLUMNS": {
-                "ID": "#",
-                "MODEL": "Modelo",
-                "DATE": "Fecha",
-                "STATUS": {
-                    "STATUS": "Estado",
-                    "RUNNING": "En ejecución",
-                    "QUEUED": "En cola"
-                },
-                "ACTIONS": "Acciones"
-            }
+            "TITLE": "Modelos en ejecución"
         },
 
         "RESULTS": {
             "TITLE": "Resultados"
         },
-        "models": {
-            "sudoku": {
-                "title": "Sudoku",
-                "description": "Solución del Sudoku mediante programación lineal",
-                "instructions": [
-                    "Completar cada casilla vacía con un solo número del 1 al 9.",
-                    "En una misma fila no puede haber números repetidos.",
-                    "En una misma columna no puede haber números repetidos.",
-                    "En una misma región 3x3 no puede haber números repetidos."
-                ],
-                "params": {
-                    "board": {
-                        "label": "Tablero",
-                        "helpText": "Rellene las casillas vacías con los números [1-9]"
-                    }
-                }
-            },
-            "trnsport": {
-                "title": "Problema de Transporte",
-                "description": "Problema de transporte con economías de escala discretizadas",
-                "flags": ["nuevo"],
-                "params": {}
+
+        "report": {
+            "title": "Informe de ejecución"
+        }
+    },
+
+    "properties": {
+        "model": {
+            "name": "Nombre",
+            "title": "Título",
+            "description": "Descripción"
+        },
+        "task": {
+            "model_title": "Modelo",
+            "created": "Fecha",
+            "status": {
+                "status": "Estado",
+                "pending": "En cola",
+                "started": "En ejecución",
+                "success": "Listo",
+                "failure": "fallida",
+                "retry": "Reintentando",
+                "revoked": "Cancelada"
             }
+        }
+    },
+
+    "models": {
+        "sudoku": {
+            "title": "Sudoku",
+            "description": "Solución del Sudoku mediante programación lineal",
+            "instructions": {
+                "label": "Instrucciones",
+                "value": "<ul><li>Completar cada casilla vacía con un solo número del 1 al 9.</li><li>En una misma fila no puede haber números repetidos. </li><li>En una misma columna no puede haber números repetidos.</li><li>En una misma región 3x3 no puede haber números repetidos.</li>"
+            },
+            "params": {
+                "board": {
+                    "label": "Tablero",
+                    "helpText": "Rellene las casillas vacías con los números [1-9]"
+                }
+            }
+        },
+
+        "transport": {
+            "title": "Problema de Transporte",
+            "description": "Problema de transporte con economías de escala discretizadas",
+            "flags": ["nuevo"],
+            "params": {}
         }
     }
 }

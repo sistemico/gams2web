@@ -37,46 +37,60 @@
         },
 
         "RUNNING_MODELS": {
-            "TITLE": "Running models",
-            "COLUMNS": {
-                "ID": "#",
-                "MODEL": "Model",
-                "DATE": "Date",
-                "STATUS": {
-                    "STATUS": "Status",
-                    "RUNNING": "Running",
-                    "QUEUED": "Queued"
-                },
-                "ACTIONS": "Actions"
-            }
+            "TITLE": "Running models"
         },
 
         "RESULTS": {
             "TITLE": "Results"
         },
 
-        "models": {
-            "sudoku": {
-                "title": "Sudoku",
-                "description": "Sudoku solver using linear programming",
-                "instructions": [
-                    "Within any column of the 9x9 grid, each of the numbers 1 to 9 must be found.",
-                    "Within any row of the 9x9 grid, each of the numbers 1 to 9 must be found.",
-                    "Within any of the 9 individual 3x3 boxes, each of the numbers 1 to 9 must be found."
-                ],
-                "params": {
-                    "board": {
-                        "label": "Board",
-                        "helpText": "Fill empty squares with the numbers [1–9]"
-                    }
-                }
-            },
-            "trnsport": {
-                "title": "Transportation Problem",
-                "description": "A transportation problem with discretized economies of scale",
-                "flags": ["new"],
-                "params": {}
+        "report": {
+            "title": "Execution report"
+        }
+    },
+
+    "properties": {
+        "model": {
+            "name": "Name",
+            "title": "Title",
+            "description": "Description"
+        },
+        "task": {
+            "model_title": "Model",
+            "created": "Date",
+            "status": {
+                "status": "Status",
+                "pending": "Pending",
+                "started": "In progress",
+                "success": "Ready",
+                "failure": "Failed",
+                "retry": "Retrying",
+                "revoked": "Canceled"
             }
+        }
+    },
+
+    "models": {
+        "sudoku": {
+            "title": "Sudoku",
+            "description": "Sudoku solver using linear programming",
+            "instructions": {
+                "label": "Instructions",
+                "value": "<ul><li>Within any column of the 9x9 grid, each of the numbers 1 to 9 must be found.</li><li>Within any row of the 9x9 grid, each of the numbers 1 to 9 must be found.</li><li>Within any of the 9 individual 3x3 boxes, each of the numbers 1 to 9 must be found.</li><\/ul>"
+            },
+            "params": {
+                "board": {
+                    "label": "Board",
+                    "helpText": "Fill empty squares with the numbers [1–9]"
+                }
+            }
+        },
+
+        "transport": {
+            "title": "Transportation Problem",
+            "description": "A transportation problem with discretized economies of scale",
+            "flags": ["new"],
+            "params": {}
         }
     }
 }
