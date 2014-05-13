@@ -1,50 +1,50 @@
 {
-    "SITE": {
-        "TITLE": "GAMS Web",
-        "BRANDING": "<small>GAMS<sup>web</sup></small>",
-        "LANGUAGES": {
+    "site": {
+        "title": "GAMS Web",
+        "branding": "<small>GAMS<sup>web</sup></small>",
+        "languages": {
             "en": "English",
             "es": "Español"
         }
     },
 
-    "MENU": {
-        "HOME": "Home",
-        "ABOUT": "About",
-        "MODELS": "Models",
-        "TOGGLE_NAV": "Toggle navigation"
+    "menu": {
+        "home": "Home",
+        "about": "About",
+        "models": "Models",
+        "toggle_nav": "Toggle navigation"
     },
 
-    "MESSAGES": {
-        "CANCEL_TASK": "Cancel task",
-        "CLOSE": "Close",
-        "COUNT_MODEL_RUNNING": "{{ count }} models running",
-        "GO_TO_DEV": "Go to development page",
-        "NO_MODEL_RUNNING": "No models running",
-        "NO_RECENT_TASKS": "No recent tasks",
-        "ONE_MODEL_RUNNING": "1 model running",
-        "RUN_MODEL": "Run model",
-        "SELECT_MODEL": "Select the model you want to run from the following list"
+    "messages": {
+        "cancel_task": "Cancel task",
+        "close": "Close",
+        "go_to_dev": "Go to development page",
+        "active_tasks_plural": "{{ count }} active tasks",
+        "active_tasks_singular": "1 active task",
+        "no_active_tasks": "No active tasks",
+        "no_recent_tasks": "No recent tasks",
+        "run_model": "Run model",
+        "select_model": "Select the model you want to run from the following list"
     },
 
-    "VIEWS": {
-        "ABOUT": {
-            "TITLE": "About GAMS Web Interface",
-            "SUBTITLE": "Contact information and credits",
-            "PHONE": "Phone",
-            "FAX": "Fax",
-            "CLOSE": "@:MESSAGES.CLOSE"
+    "sections": {
+        "about": {
+            "title": "About GAMS Web Interface",
+            "subtitle": "Contact information and credits",
+            "phone": "Phone",
+            "fax": "Fax",
+            "close": "@:messages.close"
         },
 
-        "RUNNING_MODELS": {
-            "TITLE": "Running models"
+        "active_tasks": {
+            "title": "Active tasks"
         },
 
-        "RESULTS": {
-            "TITLE": "Results"
+        "task_results": {
+            "title": "Results"
         },
 
-        "report": {
+        "task_report": {
             "title": "Execution report"
         }
     },

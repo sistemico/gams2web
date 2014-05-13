@@ -2,34 +2,35 @@
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" ng-click="menuVisible = !menuVisible">
-                <span class="sr-only" translate="MENU.TOGGLE_NAV"></span>
+                <span class="sr-only" translate="menu.toggle_nav"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" ui-sref="app.home" translate="SITE.TITLE"></a>
+            <a class="navbar-brand" ui-sref="app.home" translate="site.title"></a>
         </div>
         <div class="navbar-collapse" collapse="!menuVisible">
             <p class="navbar-text navbar-left visible-md visible-lg">
-                <a ui-sref="home" class="navbar-link" title="{{ 'properties.task.status' | translate }}" ng-switch="tasks.count()">
+                <a ui-sref="app.home" class="navbar-link" title="{{ 'properties.task.status' | translate }}"
+                   ng-switch="tasks.count()">
                     <span ng-switch-when="0">
-                        {{ 'MESSAGES.NO_MODEL_RUNNING' | translate }}
+                        {{ 'messages.no_active_tasks' | translate }}
                     </span>
                     <span ng-switch-when="1">
-                        {{ 'MESSAGES.ONE_MODEL_RUNNING' | translate }}
+                        {{ 'messages.active_tasks_singular' | translate }}
                     </span>
                     <span ng-switch-default>
-                        {{ 'MESSAGES.COUNT_MODEL_RUNNING' | translate: { count: tasks.count() } }}
+                        {{ 'messages.active_tasks_plural' | translate: { count: tasks.count() } }}
                     </span>
                 </a>
             </p>
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active">
-                    <a ui-sref="app.home" translate="MENU.HOME"></a>
+                    <a ui-sref="app.home" translate="menu.home"></a>
                 </li>
                 <li ng-class="{ 'disabled': data.models.empty() }">
                     <a class="dropdown-toggle" href ng-class="{ 'disabled': models.empty() }">
-                        <span translate="MENU.MODELS"></span>
+                        <span translate="menu.models"></span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" role="menu">
@@ -42,7 +43,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href ng-click="showAboutDialog()" translate="MENU.ABOUT"></a>
+                    <a href ng-click="showAboutDialog()" translate="menu.about"></a>
                 </li>
             </ul>
         </div>

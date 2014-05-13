@@ -1,50 +1,50 @@
 {
-    "SITE": {
-        "TITLE": "GAMS Web",
-        "BRANDING": "<small>GAMS<sup>web</sup></small>",
-        "LANGUAGES": {
+    "site": {
+        "title": "GAMS Web",
+        "branding": "<small>GAMS<sup>web</sup></small>",
+        "languages": {
             "en": "English",
             "es": "Español"
         }
     },
 
-    "MENU": {
-        "HOME": "Principal",
-        "ABOUT": "Créditos",
-        "MODELS": "Modelos",
-        "TOGGLE_NAV": "Mostrar/ocultar menú"
+    "menu": {
+        "home": "Principal",
+        "about": "Créditos",
+        "models": "Modelos",
+        "toggle_nav": "Mostrar/ocultar menú"
     },
 
-    "MESSAGES": {
-        "CANCEL_TASK": "Cancelar tarea",
-        "CLOSE": "Cerrar",
-        "COUNT_MODEL_RUNNING": "{{ count }} modelos en ejecución",
-        "GO_TO_DEV": "Ir al sitio web de desarrollo",
-        "NO_MODEL_RUNNING": "No hay modelos en ejecución",
-        "NO_RECENT_TASKS": "No hay tareas recientes",
-        "ONE_MODEL_RUNNING": "1 modelo en ejecución",
-        "RUN_MODEL": "Ejecutar modelo",
-        "SELECT_MODEL": "Seleccione de la lista el modelo que desea ejecutar"
+    "messages": {
+        "cancel_task": "Cancelar tarea",
+        "close": "Cerrar",
+        "go_to_dev": "Ir al sitio web de desarrollo",
+        "active_tasks_plural": "{{ count }} tareas activas",
+        "active_tasks_singular": "1 tarea activa",
+        "no_active_tasks": "No hay tareas activas",
+        "no_recent_tasks": "No hay tareas recientes",
+        "run_model": "Ejecutar modelo",
+        "select_model": "Seleccione de la lista el modelo que desea ejecutar"
     },
 
-    "VIEWS": {
-        "ABOUT": {
-            "TITLE": "Créditos",
-            "SUBTITLE": "Información de contacto",
-            "PHONE": "Teléfono",
-            "FAX": "Fax",
-            "CLOSE": "@:MESSAGES.CLOSE"
+    "sections": {
+        "about": {
+            "title": "Créditos",
+            "subtitle": "Información de contacto",
+            "phone": "Teléfono",
+            "fax": "Fax",
+            "close": "@:messages.close"
         },
 
-        "RUNNING_MODELS": {
-            "TITLE": "Modelos en ejecución"
+        "active_tasks": {
+            "title": "Tareas activas"
         },
 
-        "RESULTS": {
-            "TITLE": "Resultados"
+        "task_results": {
+            "title": "Resultados"
         },
 
-        "report": {
+        "task_report": {
             "title": "Informe de ejecución"
         }
     },
