@@ -3,27 +3,27 @@
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <div class="pull-left">
-                    <span class="panel-title" translate="VIEWS.RUNNING_MODELS.TITLE"></span>
+                    <span class="panel-title" translate="sections.active_tasks.title"></span>
                 </div>
                 <div id="actions" class="pull-right">
-                    <button type="button" class="btn btn-primary btn-xs" title="{{ 'MESSAGES.RUN_MODEL' | translate }}"
+                    <button type="button" class="btn btn-primary btn-xs" title="{{ 'messages.run_model' | translate }}"
                             ng-click="showModelListDialog()">
                         <span class="glyphicon glyphicon-play"></span>
                     </button>
                 </div>
             </div>
             <div class="panel-body">
-                <ng-include src="'/assets/views/tasks-running.html'"></ng-include>
+                <ng-include src="'/assets/views/active-tasks.html'"></ng-include>
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span class="panel-title" translate="VIEWS.RESULTS.TITLE"></span>
+                <span class="panel-title" translate="sections.task_results.title"></span>
             </div>
             <div class="panel-body">
-                <ng-include src="'/assets/views/tasks-recent.html'"></ng-include>
+                <ng-include src="'/assets/views/recent-tasks.html'"></ng-include>
             </div>
         </div>
     </div>
