@@ -17,12 +17,12 @@
 
     <script type="text/javascript" src="/assets/vendor/modernizr/modernizr.js"></script>
 </head>
-<body ng-controller="MainCtrl" ng-cloak>
+<body ng-cloak>
 <header role="banner" ui-view="header"></header>
 
 <section id="content" class="container" role="main" ui-view="content"></section>
 
-<footer role="contentinfo" ui-view="footer"></footer>
+<footer role="contentinfo" ui-view="footer" ng-cloak></footer>
 
 <script type="text/javascript" src="/assets/vendor/requirejs/require.js" data-main="/assets/app/config.js"></script>
 </body>

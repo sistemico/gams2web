@@ -8,7 +8,7 @@
 
 <div class="modal-body">
     <div class="list-group">
-        <a ng-repeat="model in data.models.all() | orderBy:'title'" ui-sref="runModel({ model: model.name })"
+        <a ng-repeat="(_, model) in models.all" ui-sref="app.runModel({ model: model.name })"
            class="list-group-item"
            ng-click="$close()">
             <div ng-repeat="flag in model.flags | reverse" class="pull-right hidden-xs">
@@ -17,9 +17,13 @@
                 </span>
             </div>
 
-            <h4 class="list-group-item-heading">{{ model.title }}</h4>
+            <h4 class="list-group-item-heading">
+                {{ 'models.' + model.name + '.title' | translate }}
+            </h4>
 
-            <p class="list-group-item-text">{{ model.description }}</p>
+            <p class="list-group-item-text">
+                {{ 'models.' + model.name + '.description' | translate }}
+            </p>
         </a>
     </div>
 </div>

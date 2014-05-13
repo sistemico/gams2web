@@ -1,4 +1,7 @@
 {
+    "options": {
+        "showInstructions": true
+    },
     "params": [
         {
             "id": "board",

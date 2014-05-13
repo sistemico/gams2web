@@ -1,42 +1,60 @@
-<div class="text-center" ng-if="data.tasks.empty()">
+<div ng-if="tasks.isEmpty()" class="text-center">
     <span>{{ 'MESSAGES.NO_MODEL_RUNNING' | translate }}</span>
 </div>
 
-<div ng-if="data.tasks.notEmpty()">
+<div ng-if="!tasks.isEmpty()">
     <table class="table">
         <thead>
-        <th width="3em" class="visible-lg" translate="VIEWS.RUNNING_MODELS.COLUMNS.ID"></th>
-        <th translate="VIEWS.RUNNING_MODELS.COLUMNS.MODEL"></th>
-        <th class="hidden-xs" translate="VIEWS.RUNNING_MODELS.COLUMNS.DATE"></th>
-        <th width="40%" translate="VIEWS.RUNNING_MODELS.COLUMNS.STATUS"></th>
-        <th><span class="sr-only" translate="VIEWS.RUNNING_MODELS.COLUMNS.ACTIONS"></span></th>
+        <th translate="properties.task.model_title"></th>
+        <th class="hidden-xs" translate="properties.task.created"></th>
+        <th width="40%" translate="properties.task.status"></th>
+        <th></th>
         </thead>
         <tbody>
-        <tr ng-repeat="task in data.tasks.all() | orderBy:'order'">
-            <td class="visible-lg text-muted">
-                {{ $index + 1 }}
-            </td>
+        <tr ng-repeat="task in tasks.list()">
             <td>
-                <a href title="{{ task.id }}">{{ task.model }}</a>
+                <a ui-sref="app.report({ taskId: task.id })">
+                    {{ 'models.' + task.model + '.title' | translate }}
+                </a>
             </td>
             <td class="hidden-xs">
-                {{ task.submitDate | date: 'short' }}
+                {{ task.created | date: 'short' }}
             </td>
-            <td>
-                <progressbar class="progress-striped active" type="success" value="100" ng-if="task.remainingTime">
-                    {{ 'VIEWS.RUNNING_MODELS.COLUMNS.STATUS.RUNNING' | translate }}
-                    <span ng-if="task.remainingTime" class="hidden-xs">(ETA {{ task.remainingTime }})</span>
-                </progressbar>
+            <td ng-switch="task.status">
+                <div ng-switch-default>
+                    <progressbar type="info" value="100" animate="false">
+                        {{ 'properties.task.status.' + task.status | lowercase | translate }}
+                    </progressbar>
+                </div>
 
-                <progressbar ng-if="!task.remainingTime" value="100" type="warning" animate="false">
-                    {{ 'VIEWS.RUNNING_MODELS.COLUMNS.STATUS.QUEUED' | translate }}
-                </progressbar>
+                <div ng-switch-when="STARTED">
+                    <progressbar type="warning" value="100" class="progress-striped active">
+                        {{ 'properties.task.status.' + task.status | lowercase | translate }}
+                        <span ng-if="task.remainingTime" class="hidden-xs">(ETA {{ task.remainingTime }})</span>
+                    </progressbar>
+                </div>
+
+                <div ng-switch-when="SUCCESS">
+                    <progressbar type="success" value="100" animate="false">
+                        {{ 'properties.task.status.' + task.status | lowercase | translate }}
+                        <span ng-if="task.remainingTime" class="hidden-xs">(ETA {{ task.remainingTime }})</span>
+                    </progressbar>
+                </div>
+
+                <div ng-switch-when="FAILED">
+                    <progressbar type="danger" value="100" animate="false">
+                        {{ 'properties.task.status.' + task.status | lowercase | translate }}
+                    </progressbar>
+                </div>
+
+                <div ng-switch-when="REVOKED">
+                    <progressbar type="danger" value="100" animate="false">
+                        {{ 'properties.task.status.' + task.status | lowercase | translate }}
+                    </progressbar>
+                </div>
             </td>
             <td width="1em">
-                <button class="close" type="button" title="{{ 'MESSAGES.CANCEL_TASK' | translate }}"
-                        ng-click="cancelTask(task)">
-                    ×
-                </button>
+                <button class="close sr-only" type="button" title="{{ 'messages.cancel_task' | translate }}">×</button>
             </td>
         </tr>
         </tbody>

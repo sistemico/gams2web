@@ -1,23 +1,23 @@
 <form ng-if="model" class="form-horizontal" role="form" name="form" ng-submit="runModel(model)">
     <div class="page-header">
         <h2>
-            <span>{{ model.title }}</span>
+            <span>{{ 'models.' + model.name + '.title' | translate }}</span>
         </h2>
 
-        <p>{{ model.description }}</p>
+        <p>{{ 'models.' + model.name + '.description' | translate }}</p>
     </div>
-    <div ng-if="model.instructions" class="form-group">
-        <label class="col-sm-2 control-label">Instructions</label>
+    <div ng-if="model.options.showInstructions" class="form-group">
+        <label class="col-sm-2 control-label">
+            {{ 'models.' + model.name + '.instructions.label' | translate }}
+        </label>
 
-        <div class="col-sm-10">
-            <ul>
-                <li ng-repeat="item in model.instructions" class="form-control-static">{{ item }}</li>
-            </ul>
-        </div>
+        <div class="col-sm-10" translate="{{ 'models.' + model.name + '.instructions.value' }}"></div>
     </div>
     <hr ng-repeat-start="field in model.params">
     <div class="form-group" ng-repeat-end>
-        <label class="col-sm-2 control-label">{{ field.label }}</label>
+        <label class="col-sm-2 control-label">
+            {{ 'models.' + model.name + '.params.' + field.id + '.label' | translate }}
+        </label>
 
         <div class="col-sm-10">
             <p ng-if="field.type == 'text' && field.options.disabled"

@@ -7,11 +7,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" ui-sref="home" translate="SITE.TITLE"></a>
+            <a class="navbar-brand" ui-sref="app.home" translate="SITE.TITLE"></a>
         </div>
         <div class="navbar-collapse" collapse="!menuVisible">
-            <p ng-if="data" class="navbar-text navbar-left visible-md visible-lg">
-                <a ui-sref="home" class="navbar-link" title="Status" ng-switch="data.tasks.count()">
+            <p class="navbar-text navbar-left visible-md visible-lg">
+                <a ui-sref="home" class="navbar-link" title="{{ 'properties.task.status' | translate }}" ng-switch="tasks.count()">
                     <span ng-switch-when="0">
                         {{ 'MESSAGES.NO_MODEL_RUNNING' | translate }}
                     </span>
@@ -19,23 +19,25 @@
                         {{ 'MESSAGES.ONE_MODEL_RUNNING' | translate }}
                     </span>
                     <span ng-switch-default>
-                        {{ 'MESSAGES.COUNT_MODEL_RUNNING' | translate: { count: data.tasks.count() } }}
+                        {{ 'MESSAGES.COUNT_MODEL_RUNNING' | translate: { count: tasks.count() } }}
                     </span>
                 </a>
             </p>
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active">
-                    <a ui-sref="home" ui- translate="MENU.HOME"></a>
+                    <a ui-sref="app.home" translate="MENU.HOME"></a>
                 </li>
                 <li ng-class="{ 'disabled': data.models.empty() }">
-                    <a class="dropdown-toggle" href ng-class="{ 'disabled': data.models.empty() }">
+                    <a class="dropdown-toggle" href ng-class="{ 'disabled': models.empty() }">
                         <span translate="MENU.MODELS"></span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li ui-sref-active="active" ng-repeat="model in data.models.all() | orderBy:'title'"
+                        <li ui-sref-active="active" ng-repeat="(_, model) in models.all"
                             role="presentation">
-                            <a tabindex="-1" ui-sref="runModel({ model: model.name })">{{ model.title }}</a>
+                            <a tabindex="-1" ui-sref="app.runModel({ model: model.name })">
+                                {{ 'models.' + model.name + '.title' | translate }}
+                            </a>
                         </li>
                     </ul>
                 </li>

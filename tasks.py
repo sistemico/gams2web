@@ -41,7 +41,7 @@ def get_pending_tasks():
             'id': meta['properties'].get('correlation_id'),
             'model': meta['headers'].get('model'),
             'status': states.PENDING,
-            'created': meta['headers'].get('time_sent')
+            'created': meta['headers'].get('created')
         } for meta in [
             json.loads(t) for t in redis.lrange(settings.CELERY_DEFAULT_QUEUE, 0, -1)
         ]
@@ -52,16 +52,17 @@ def get_pending_tasks():
 def get_running_tasks():
     inspect = task_queue.control.inspect()
 
-    active_tasks = [t for y in (inspect.active() or {}).values() for t in y]
-    reserved_tasks = [t for y in (inspect.reserved() or {}).values() for t in y]
-    revoked_tasks = [t for y in (inspect.revoked() or {}).values() for t in y]
+    # FIX: Disabled for performance reasons
+    active_tasks = []       # [t for y in (inspect.active() or {}).values() for t in y]
+    reserved_tasks = []     # [t for y in (inspect.reserved() or {}).values() for t in y]
+    revoked_tasks = []      # [t for y in (inspect.revoked() or {}).values() for t in y]
 
     return [
         {
             'id': t.get('id'),
             'model': eval(t.get('args'))[0] if isinstance(t.get('args'), (basestring,)) else None,
             'status': task_queue.AsyncResult(t.get('id')).state,
-            'created': t.get('time_start')
+            'created': t.get('created')
         } for t in (active_tasks + reserved_tasks + revoked_tasks)
     ]
 
