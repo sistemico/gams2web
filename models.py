@@ -1,23 +1,25 @@
 import codecs
-import json
 from os import listdir, path
 from os.path import isfile
+
+import yaml
 
 
 # Path of model descriptor files
 DATA_PATH = path.join(path.dirname(path.abspath(__file__)), 'data')
 
 # Cached models data
-_models = {}
+_models = []
 
 for filename in listdir(DATA_PATH):
     file_path = path.join(DATA_PATH, filename)
 
-    if isfile(file_path) and filename.endswith('.json'):
-        with codecs.open(file_path, 'rU', 'utf-8') as json_file:
-            model_name = filename[:-5]
-            _models[model_name] = json.load(json_file)
-            _models[model_name]['name'] = model_name
+    if isfile(file_path) and filename.endswith('.yaml'):
+        with codecs.open(file_path, 'rU', 'utf-8') as model_file:
+            model_descriptor = yaml.load(model_file)
+
+            if model_descriptor:
+                _models.append(model_descriptor)
 
 
 # Returns a list of all models available to run
