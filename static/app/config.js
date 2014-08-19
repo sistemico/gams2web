@@ -7,7 +7,9 @@ requirejs.config({
         'angular-cookies': 'vendor/angular-cookies/angular-cookies',
         'angular-translate': 'vendor/angular-translate/angular-translate',
         'angular-translate-loader': 'vendor/angular-translate-loader-static-files/angular-translate-loader-static-files',
-        'socket.io-client': 'vendor/socket.io-client/dist/socket.io'
+        'angular-underscore': 'vendor/angular-underscore/angular-underscore',
+        'socket.io-client': 'vendor/socket.io-client/dist/socket.io',
+        'underscore': 'vendor/underscore/underscore'
     },
     shim: {
         'angular': {
@@ -30,6 +32,9 @@ requirejs.config({
         },
         'angular-translate-loader': {
             deps: ['angular-translate']
+        },
+        'angular-underscore': {
+            deps: ['angular', 'underscore']
         }
     }
 });
