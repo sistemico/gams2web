@@ -1,5 +1,5 @@
 
-$Title {{ title }} (TRNSPORT,SEQ=1)
+$Title {{ model_name|title }} (TRNSPORT,SEQ=1)
 $Ontext
 
 This problem finds a least cost shipping schedule that meets
@@ -62,8 +62,8 @@ $Offtext
 
   demand(j) ..   sum(i, x(i,j))  =g=  b(j) ;
 
-  Model transport /all/ ;
+  Model {{ model_name }} /all/ ;
 
-  Solve transport using lp minimizing z ;
+  Solve {{ model_name }} using lp minimizing z ;
 
   Display x.l, x.m ;

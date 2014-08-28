@@ -9,7 +9,7 @@ SECRET_KEY = '7127af068f0f91471b4125ef2091a664b82d12c85acf7ecc'
 
 # Paths
 APP_ROOT = path.dirname(path.abspath(__file__))
-DATA_ROOT = path.join(APP_ROOT, 'data')
+DATA_ROOT = path.join(APP_ROOT, 'models')
 STATIC_ROOT = path.join(APP_ROOT, 'static')
 
 # Task queue

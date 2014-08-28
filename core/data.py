@@ -50,10 +50,10 @@ def load_model_data():
     for filename in listdir(settings.DATA_ROOT):
         file_path = path.join(settings.DATA_ROOT, filename)
 
-        if isfile(file_path) and filename.endswith('.yaml'):
+        if isfile(file_path) and filename.endswith('.model'):
             with open(file_path, 'rU', 'utf-8') as descriptor_file:
                 model = Model(yaml.load(descriptor_file))
-                model.file = path.join(settings.DATA_ROOT, model.file or filename.replace('.yaml', '.gms'))
+                model.file = path.join(settings.DATA_ROOT, model.file or filename.replace('.model', '.gms'))
 
                 if model.name and isfile(model.file):
                     # Load template

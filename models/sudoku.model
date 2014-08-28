@@ -1,4 +1,4 @@
-model_name: sudoku
+name: sudoku
 parameters:
   - # Board
     id: board
@@ -8,5 +8,5 @@ parameters:
       columns: 9
       min: 1
       max: 9
-options:
-  showInstructions: Yes
+display_options:
+  show_instructions: Yes
