@@ -6,7 +6,7 @@ from flask import Flask
 from flask.ext.socketio import SocketIO
 
 from core.api import rest_api
-from core.signals import task_added, task_complete, worker_before_execution
+from core.signals import task_added, task_completed, worker_before_execution, worker_after_execution, task_deleted
 from core.commands import command_manager
 import settings
 
@@ -35,22 +35,32 @@ def index(path=''):
 
 @socket.on('connect', namespace='/t')
 def on_connect():
-    socket.emit('test', 'WebSocket connected', namespace='/t')
+    socket.emit('message', 'WebSocket connected', namespace='/t')
 
 
 @task_added.connect
-def on_task_added(sender, task):
+def on_task_added(task):
     socket.emit('task:new', task.to_primitive(role='DTO'), namespace='/t')
 
 
 @worker_before_execution.connect
-def on_task_started(sender, worker_id, task):
-    socket.emit('task:status', dict(task_id=task.id, status='RUNNING'), namespace='/t')
+def on_task_started(worker, task):
+    socket.emit('task:status', dict(task_id=task.id, status=task.status, worker_id=worker.id), namespace='/t')
 
 
-@task_complete.connect
-def on_task_completed(sender, task):
-    socket.emit('task:status', dict(task_id=task.id, status='SUCCESS', result=task.result), namespace='/t')
+@worker_after_execution.connect
+def on_task_finished(worker, task):
+    socket.emit('task:status', dict(task_id=task.id, status=task.status, worker_id=worker.id), namespace='/t')
+
+
+@task_completed.connect
+def on_task_completed(task):
+    socket.emit('task:status', dict(task_id=task.id, status=task.status, result=task.result), namespace='/t')
+
+
+@task_deleted.connect
+def on_task_deleted(task):
+    socket.emit('task:delete', dict(task_id=task.id), namespace='/t')
 
 
 if __name__ == "__main__":

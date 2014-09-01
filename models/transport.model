@@ -1,2 +1,10 @@
 name: transport
 file: trnsport.gms
+
+title:
+  es: Problema de Transporte
+  en: Transportation Problem
+
+description:
+  es: Problema de transporte con economías de escala discretizadas
+  en: A transportation problem with discretized economies of scale

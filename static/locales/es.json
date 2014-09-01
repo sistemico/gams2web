@@ -21,10 +21,12 @@
         "go_to_dev": "Ir al sitio web de desarrollo",
         "active_tasks_plural": "{{ count }} tareas activas",
         "active_tasks_singular": "1 tarea activa",
+        "delete_task": "Eliminar tarea",
         "no_active_tasks": "No hay tareas activas",
         "no_recent_tasks": "No hay tareas recientes",
         "run_model": "Ejecutar modelo",
-        "select_model": "Seleccione de la lista el modelo que desea ejecutar"
+        "select_model": "Seleccione de la lista el modelo que desea ejecutar",
+        "show_report": "Ver resultados de ejecución"
     },
 
     "sections": {
@@ -61,36 +63,12 @@
             "status": {
                 "status": "Estado",
                 "pending": "En cola",
-                "started": "En ejecución",
-                "success": "Listo",
-                "failure": "fallida",
-                "retry": "Reintentando",
-                "revoked": "Cancelada"
+                "running": "En ejecución",
+                "success": "Guardando resultado...",
+                "failure": "Ejecución fallida",
+                "canceled": "Cancelada",
+                "completed": "Listo"
             }
-        }
-    },
-
-    "models": {
-        "sudoku": {
-            "title": "Sudoku",
-            "description": "Solución del Sudoku mediante programación lineal",
-            "instructions": {
-                "label": "Instrucciones",
-                "value": "<ul><li>Completar cada casilla vacía con un solo número del 1 al 9.</li><li>En una misma fila no puede haber números repetidos. </li><li>En una misma columna no puede haber números repetidos.</li><li>En una misma región 3x3 no puede haber números repetidos.</li>"
-            },
-            "params": {
-                "board": {
-                    "label": "Tablero",
-                    "helpText": "Rellene las casillas vacías con los números [1-9]"
-                }
-            }
-        },
-
-        "transport": {
-            "title": "Problema de Transporte",
-            "description": "Problema de transporte con economías de escala discretizadas",
-            "flags": ["nuevo"],
-            "params": {}
         }
     }
 }

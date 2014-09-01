@@ -4,7 +4,6 @@ from os.path import isfile
 import ujson as json
 
 from redis import StrictRedis
-from redis.exceptions import ResponseError
 import yaml
 
 from core.domain import Model, Task
@@ -51,17 +50,17 @@ def load_model_data():
         file_path = path.join(settings.DATA_ROOT, filename)
 
         if isfile(file_path) and filename.endswith('.model'):
-            with open(file_path, 'rU', 'utf-8') as descriptor_file:
+            with open(file_path, mode='rU', encoding='utf-8') as descriptor_file:
                 model = Model(yaml.load(descriptor_file))
                 model.file = path.join(settings.DATA_ROOT, model.file or filename.replace('.model', '.gms'))
 
                 if model.name and isfile(model.file):
                     # Load template
-                    with open(model.file, 'rU', 'utf-8') as model_template:
+                    with open(model.file, mode='rU', encoding='utf-8') as model_template:
                         model.template = model_template.read()
 
                     # Save model descriptor
-                    store.set('model:{name}'.format(name=model.name), json.dumps(model.to_primitive()))
+                    store.set('model:{name}'.format(name=model.name), json.dumps(model.to_native()))
 
 
 def model_exists(model_name):
@@ -74,43 +73,48 @@ def model_exists(model_name):
 
 def get_task(task_id):
     try:
-        task_data = store.get(store.scan_iter('task:*:{id}'.format(id=task_id)).next())
+        task_data = json.loads(store.get(store.scan_iter('task:{id}'.format(id=task_id)).next()))
+        model_data = task_data.pop('model')
 
-        return Task(json.loads(task_data)) if task_data else None
+        task = Task(task_data)
+        task.model = get_model(model_data.get('name'))
+        task.status = get_task_status(task_data.get('id'))
+
+        return task if task else None
     except StopIteration:
         return None
+
+
+def get_task_status(task_id):
+    return store.get('task:{id}:status'.format(id=task_id)) or 'UNKNOWN'
 
 
 def get_tasks(count=10, offset=0):
     return [get_task(task_id) for task_id in store.lrange('task:all', offset, offset + count - 1 if count > 0 else -1)]
 
 
-def get_tasks_by_status(status, count=10):
-    tasks = [json.loads(store.get(task)) for task in
-             store.scan_iter('task:{status}:*'.format(status).lower(), count if count > 0 else None)]
+def new_task(model, args):
+    task = Task({'model': model, 'arguments': args, 'status': 'PENDING'})
 
-    return [Task(task) for task in tasks if task]
-
-
-def new_task(**args):
-    task = Task(args)
-
-    store.set('task:{status}:{id}'.format(id=task.id, status='PENDING').lower(), json.dumps(task.to_primitive()))
+    store.set('task:{id}'.format(id=task.id), json.dumps(task.to_primitive()))
+    store.set('task:{id}:status'.format(id=task.id), task.status)
     store.lpush('task:all', task.id)
 
     return task
 
 
-def update_task_status(task_id, new_status):
-    try:
-        current_key = store.scan_iter('task:*:{id}'.format(id=task_id), 1).next()
-        new_key = 'task:{status}:{id}'.format(id=task_id, status=new_status).lower()
-
-        return store.rename(current_key, new_key)
-    except ResponseError:
-        return False
+def update_task_status(task, new_status):
+    task.status = new_status
+    store.set('task:{id}:status'.format(id=task.id), new_status)
 
 
-def save_task_result(task_id, result):
-    update_task_status(task_id, 'COMPLETED')
-    store.set('result:{id}'.format(id=task_id), json.dumps(result))
+def save_task_result(task, result):
+    task.result = result
+    store.set('task:{id}:result'.format(id=task.id), json.dumps(result))
+
+
+def delete_task(task):
+    store.delete('task:{id}'.format(id=task.id))
+    store.delete('task:{id}:status'.format(id=task.id))
+    store.delete('task:{id}:result'.format(id=task.id))
+    store.lrem('task:all', 0, task.id)

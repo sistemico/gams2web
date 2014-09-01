@@ -6,6 +6,7 @@ import ujson as json
 
 from jinja2 import Environment as TemplateEnvironment, TemplateError
 from gams import *
+from gevent import spawn
 import zmq.green as zmq
 
 from core import data, signals
@@ -19,14 +20,25 @@ TASK_SENDER = DEFAULT_CONTEXT.socket(zmq.PUSH)
 TASK_SENDER.bind(TASK_SOCKET)
 
 
-def run_task(model, arguments):
-    task = data.new_task(model=model, arguments=arguments)
+def run_task(model, args):
+    def _send_task():
+        task = data.new_task(model, args)
 
-    # Send new task
-    TASK_SENDER.send_pyobj(task)
+        # Send new task
+        TASK_SENDER.send_pyobj(task)
 
-    # Send signal
-    signals.task_added.send(task=task)
+        # Send signal
+        signals.task_added.send(task)
+
+    spawn(_send_task)
+
+
+def delete_task(task):
+    def _delete_task():
+        data.delete_task(task)
+        signals.task_deleted.send(task)
+
+    spawn(_delete_task)
 
 
 class Worker(object):
@@ -46,18 +58,23 @@ class Worker(object):
             task = self.receiver.recv_pyobj()
 
             # Before run task
-            signals.worker_before_execution.send(self, worker_id=self.id, task=task)
-            data.update_task_status(task.id, 'RUNNING')
+            data.update_task_status(task, 'RUNNING')
+            signals.worker_before_execution.send(self, task=task)
 
-            # Do work
-            result = self.do_work(task)
+            try:
+                # Do work
+                result = self.do_work(task)
+
+                # After run task
+                data.update_task_status(task, 'SUCCESS')
+
+                # Send result
+                self.sender.send_pyobj((task, result))
+            except RuntimeError:
+                data.update_task_status(task, 'FAILURE')
 
             # After run task
-            data.update_task_status(task.id, 'SUCCESS')
-            signals.worker_after_execution.send(self, worker_id=self.id, task=task)
-
-            # Send result
-            self.sender.send_pyobj((task, result))
+            signals.worker_after_execution.send(self, task=task)
 
     def do_work(self, task):
         pass  # To override by subclasses
@@ -74,9 +91,10 @@ class ResultCollector(object):
             task, result = self.receiver.recv_pyobj()
 
             task.result = result
-            data.save_task_result(task.id, result)
+            data.save_task_result(task, result)
+            data.update_task_status(task, 'COMPLETED')
 
-            signals.task_complete.send(self, task=task)
+            signals.task_completed.send(task)
 
 
 #
@@ -102,68 +120,65 @@ class GamsWorker(Worker):
     ]
 
     def do_work(self, task):
-        output, log = [], ''
+        try:
+            output, log = [], ''
+            log = StringIO()
 
-        if task.model:
-            try:
-                log = StringIO()
+            # Process task arguments
+            model_parameters = {field.id: field.to_primitive() for field in task.model.parameters or []}
+            task_arguments = json.loads(task.arguments)
 
-                # Process task arguments
-                model_parameters = {field.id: field.to_primitive() for field in task.model.parameters or []}
-                task_arguments = json.loads(task.arguments)
+            for field_name in set(model_parameters.keys()).intersection(task_arguments.keys()):
+                if model_parameters[field_name].get('type') == 'matrix':
+                    task_arguments[field_name] = [v.split(',') for v in task_arguments[field_name] if v is not None]
 
-                for field_name in set(model_parameters.keys()).intersection(task_arguments.keys()):
-                    if model_parameters[field_name].get('type') == 'matrix':
-                        task_arguments[field_name] = [v.split(',') for v in task_arguments[field_name] if v is not None]
+            # Generate model file from the template
+            model_template = TemplateEnvironment().from_string(task.model.template)
+            model_text = model_template.render(model_name=task.model.name, args=task_arguments)
 
-                # Generate model file from the template
-                model_template = TemplateEnvironment().from_string(task.model.template)
-                model_text = model_template.render(model_name=task.model.name, args=task_arguments)
+            # Run the job with GAMS Python API
+            job = self.GAMS_INSTANCE.add_job_from_string(model_text)
+            job.run(output=log)
 
-                # Run the job with GAMS Python API
-                job = self.GAMS_INSTANCE.add_job_from_string(model_text)
-                job.run(output=log)
+            # Collects the execution data that will be saved as results
+            for symbol in job.out_db:
+                out = dict(
+                    name=symbol.name, description=symbol.text,
+                    type=symbol.__class__.__name__[4:].lower(),
+                    domains=[d if isinstance(d, basestring) else d.name for d in symbol.domains]
+                )
 
-                # Collects the execution data that will be saved as results
-                for symbol in job.out_db:
-                    out = dict(
-                        name=symbol.name, description=symbol.text,
-                        type=symbol.__class__.__name__[4:].lower(),
-                        domains=[d if isinstance(d, basestring) else d.name for d in symbol.domains]
-                    )
+                if isinstance(symbol, GamsEquation):
+                    out['subtype'] = GamsWorker.EQU_TYPE[symbol.equtype]
 
-                    if isinstance(symbol, GamsEquation):
-                        out['subtype'] = GamsWorker.EQU_TYPE[symbol.equtype]
+                elif isinstance(symbol, GamsParameter):
+                    out['values'] = [dict(elements=rec.keys, value=rec.value) for rec in symbol]
 
-                    elif isinstance(symbol, GamsParameter):
-                        out['values'] = [dict(elements=rec.keys, value=rec.value) for rec in symbol]
+                elif isinstance(symbol, GamsSet):
+                    out['elements'] = [x for y in [rec.keys for rec in symbol] for x in y]
 
-                    elif isinstance(symbol, GamsSet):
-                        out['elements'] = [x for y in [rec.keys for rec in symbol] for x in y]
+                elif isinstance(symbol, GamsVariable):
+                    out['subtype'] = GamsWorker.VAR_TYPE[symbol.vartype]
 
-                    elif isinstance(symbol, GamsVariable):
-                        out['subtype'] = GamsWorker.VAR_TYPE[symbol.vartype]
+                if isinstance(symbol, GamsEquation) or isinstance(symbol, GamsVariable):
+                    out['values'] = [dict(
+                        elements=record.keys,
+                        level=record.level,
+                        marginal=record.marginal,
+                        scale=record.scale,
+                        upper=repr(record.upper) if math.isinf(record.upper) else record.upper,
+                        lower=repr(record.lower) if math.isinf(record.lower) else record.lower
+                    ) for record in symbol]
 
-                    if isinstance(symbol, GamsEquation) or isinstance(symbol, GamsVariable):
-                        out['values'] = [dict(
-                            elements=record.keys,
-                            level=record.level,
-                            marginal=record.marginal,
-                            scale=record.scale,
-                            upper=repr(record.upper) if math.isinf(record.upper) else record.upper,
-                            lower=repr(record.lower) if math.isinf(record.lower) else record.lower
-                        ) for record in symbol]
+                output.append(out)
 
-                    output.append(out)
+            # Remove license information from log file (lines 3-4)
+            log = log.getvalue().splitlines(True)
+            log = ''.join(log[:2] + log[4:])
 
-                # Remove license information from log file (lines 3-4)
-                log = log.getvalue().splitlines(True)
-                log = ''.join(log[:2] + log[4:])
+            # Encoding log as Base64
+            log = b64encode(log)
 
-                # Encoding log as Base64
-                log = b64encode(log)
-            except (TemplateError, GamsException), e:
-                # TODO Better error handling
-                pass
-
-        return dict(output=output, log=log)
+            return dict(output=output, log=log)
+        except (TemplateError, GamsException) as error:
+            raise RuntimeError(error.__class__.__name__ + ': ' + error.message)
