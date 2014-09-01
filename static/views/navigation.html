@@ -10,34 +10,19 @@
             <a class="navbar-brand" ui-sref="app.home" translate="site.title"></a>
         </div>
         <div class="navbar-collapse" collapse="!menuVisible">
-            <p class="navbar-text navbar-left visible-md visible-lg">
-                <a ui-sref="app.home" class="navbar-link" title="{{ 'properties.task.status' | translate }}"
-                   ng-switch="tasks.count()">
-                    <span ng-switch-when="0">
-                        {{ 'messages.no_active_tasks' | translate }}
-                    </span>
-                    <span ng-switch-when="1">
-                        {{ 'messages.active_tasks_singular' | translate }}
-                    </span>
-                    <span ng-switch-default>
-                        {{ 'messages.active_tasks_plural' | translate: { count: tasks.count() } }}
-                    </span>
-                </a>
-            </p>
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active">
                     <a ui-sref="app.home" translate="menu.home"></a>
                 </li>
-                <li ng-class="{ 'disabled': data.models.empty() }">
-                    <a class="dropdown-toggle" href ng-class="{ 'disabled': models.empty() }">
+                <li ng-class="{ 'disabled': {{ models | isEmpty }} }" dropdown>
+                    <a class="dropdown-toggle" href ng-class="{ 'disabled': {{ models | isEmpty }} }">
                         <span translate="menu.models"></span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li ui-sref-active="active" ng-repeat="(_, model) in models.all"
-                            role="presentation">
-                            <a tabindex="-1" ui-sref="app.runModel({ model: model.name })">
-                                {{ 'models.' + model.name + '.title' | translate }}
+                        <li ui-sref-active="active" ng-repeat="model in models | orderBy : name" role="presentation">
+                            <a tabindex="-1" ui-sref="app.run_model({ model_name: model.name })">
+                                <span>{{ model.title }}</span>
                             </a>
                         </li>
                     </ul>

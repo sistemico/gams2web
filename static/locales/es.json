@@ -19,11 +19,13 @@
         "cancel_task": "Cancelar tarea",
         "close": "Cerrar",
         "go_to_dev": "Ir al sitio web de desarrollo",
+        "active_tasks": "Tareas activas",
         "active_tasks_plural": "{{ count }} tareas activas",
         "active_tasks_singular": "1 tarea activa",
         "delete_task": "Eliminar tarea",
         "no_active_tasks": "No hay tareas activas",
         "no_recent_tasks": "No hay tareas recientes",
+        "recent_tasks": "Tareas recientes",
         "run_model": "Ejecutar modelo",
         "select_model": "Seleccione de la lista el modelo que desea ejecutar",
         "show_report": "Ver resultados de ejecución"
@@ -36,14 +38,6 @@
             "phone": "Teléfono",
             "fax": "Fax",
             "close": "@:messages.close"
-        },
-
-        "active_tasks": {
-            "title": "Tareas activas"
-        },
-
-        "task_results": {
-            "title": "Resultados"
         },
 
         "task_report": {

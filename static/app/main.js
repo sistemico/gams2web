@@ -1,325 +1,331 @@
-﻿define(['angular', 'socket.io-client', 'angular-cookies', 'angular-ui-router', 'angular-bootstrap', 'angular-translate-loader'], function (angular, io) {
+﻿define([
+    'underscore',
+    'socket.io-client',
+    'angular', 'angular-i18n',
+    'angular-ui-router', 'angular-bootstrap',
+    'angular-cookies', 'angular-translate-loader'],
+
+  function (_, io, angular) {
+
     angular.module('gams2web', ['ngCookies', 'ui.router', 'ui.bootstrap', 'pascalprecht.translate'])
+      .config(function ($locationProvider, $stateProvider, $urlRouterProvider, $translateProvider) {
+        // Multi-language support
+        $translateProvider
+          .useStaticFilesLoader({ prefix: '/assets/locales/', suffix: '.json' })
+          .useStorage('configStorage')
+          .determinePreferredLanguage(function () {
+            var lang = navigator.language || navigator.userLanguage;
+            return lang && lang.substring(0, 2) || 'es';
+          });
 
-        .config(function ($locationProvider, $stateProvider, $urlRouterProvider, $translateProvider) {
-            $stateProvider
-                .state('app', {
-                    abstract: true,
-                    url: '',
-                    resolve: {
-                        config: function ($http, $rootScope, $translate) {
-                            return $http.get('/api/config').then(function (response) {
-                                return response.data;
-                            });
-                        },
-                        models: function ($http, $rootScope, listProvider) {
-                            return $http.get('/api/models').then(function (response) {
-                                return listProvider.create(response.data);
-                            });
-                        },
-                        tasks: function ($http, $rootScope, listProvider) {
-                            return $http.get('/api/tasks').then(function (response) {
-                                return listProvider.create(response.data);
-                            });
-                        }
-                    },
-                    views: {
-                        'header': { templateUrl: '/assets/views/navigation.html' },
-                        'footer': { templateUrl: '/assets/views/footer.html' }
-                    },
-                    onEnter: function ($rootScope, $state, $translate, $modal, config, models, tasks, backend) {
-                        // Data
-                        $rootScope.models = models;
-                        $rootScope.tasks = tasks;
+        // Enabling HTML 5 mode to remove the # prefix from URL's
+        $locationProvider.html5Mode(true);
 
-                        // Bind backend signals
-                        backend.on('connect', function () {
-                            backend.on('new task', function (task) {
-                                tasks.add(task.id, task);
-                            });
+        // URL States (routes)
+        $stateProvider
+          .state('app', {
+            abstract: true,
+            url: '',
+            resolve: {
+              // Gets app configuration
+              config: function ($http, $rootScope, $translate) {
+                return $http.get('/api/config').then(function (response) {
+                  return response.data;
+                });
+              },
+              // Gets models
+              models: function ($http, $rootScope, $sce, $translate) {
+                var locale = $translate.use() || $translate.proposedLanguage();
 
-                            backend.on('task canceled', function (id) {
-                                var task = tasks.getById(id);
+                return $http.get('/api/models', { params: { locale: locale } }).then(function (response) {
+                  var models = response.data['objects'] || [];
 
-                                if (task) {
-                                    task.status = 'REVOKED';
-                                }
-
-                                //TODO: tasks.remove(id);
-                            });
-
-                            backend.on('task status update', function (data) {
-                                var task = tasks.getById(data['task_id']);
-
-                                if (task) {
-                                    task.status = data['status'];
-                                    task.result = data['result'] && atob(data['result'].trim());
-                                }
-                            });
-                        });
-
-                        $rootScope.runModel = function (model) {
-                            backend.runModel(model);
-                            $state.go('app.home');
-                        };
-
-                        $rootScope.cancelTask = function (task) {
-                            backend.cancelTask(task.id);
-                        };
-
-                        // Site config
-                        $rootScope.languages = config.locales;
-
-                        $rootScope.currentLanguage = function () {
-                            return $translate.use();
-                        };
-
-                        $rootScope.changeLanguage = function (lang) {
-                            $translate.use(lang);
-                        };
-
-                        // Other shared methods
-                        $rootScope.toggleModelMenu = function ($event) {
-                            $event.preventDefault();
-                            $event.stopPropagation();
-                            $rootScope.modelMenuVisible = !$rootScope.modelMenuVisible;
-                        };
-
-                        $rootScope.showModelListDialog = function () {
-                            $modal.open({ templateUrl: '/assets/views/model-list-dialog.html' });
-                        };
-
-                        $rootScope.showAboutDialog = function () {
-                            $modal.open({ templateUrl: '/assets/views/about-dialog.html' });
-                        };
+                  _(models).each(function (model) {
+                    if (model.instructions && model.instructions.content) {
+                      model.instructions.content = $sce.trustAsHtml(model.instructions.content);
                     }
-                })
+                  });
 
-                .state('app.home', {
-                    url: '/',
-                    views: {
-                        'content@': { templateUrl: '/assets/views/dashboard.html' }
+                  $rootScope.models = models
+
+                  return $rootScope.models;
+                });
+              },
+              // Gets tasks
+              tasks: function ($http, $rootScope, models) {
+                return $http.get('/api/tasks').then(function (response) {
+                  var tasks = response.data['objects'] || [];
+
+                  _(tasks).each(function (task) {
+                    if (!task.model) {
+                      task.model = _(models).findWhere({ name: task['model_name'] });
                     }
-                })
+                  });
 
-                .state('app.runModel', {
-                    url: '/{model}/run',
-                    resolve: {
-                        model: function ($stateParams, models) {
-                            return models.getById($stateParams.model);
-                        }
-                    },
-                    views: {
-                        'content@': {
-                            templateUrl: '/assets/views/model-run.html',
+                  $rootScope.tasks = tasks;
 
-                            controller: function ($scope, model) {
-                                $scope.model = model;
-                            }
-                        }
-                    },
+                  return $rootScope.tasks;
+                });
+              }
+            },
+            views: {
+              'header': { templateUrl: '/assets/views/navigation.html' },
+              'footer': { templateUrl: '/assets/views/footer.html' }
+            },
+            onEnter: function ($rootScope, $state, $stateParams, $http, $modal, $translate, config, api) {
+              $rootScope.languages = config['locales'];
 
-                    onEnter: function ($state, model) {
-                        if (!model) $state.go('app.home', {}, { location: 'replace' });
-                    }
-                })
+              $rootScope.currentLanguage = function () {
+                return $translate.use();
+              };
 
-                .state('app.report', {
-                    url: '/report/{taskId}',
-                    resolve: {
-                        task: function ($stateParams, tasks) {
-                            return tasks.getById($stateParams.taskId);
-                        }
-                    },
+              $rootScope.changeLanguage = function (lang) {
+                $translate.use(lang);
+              };
 
-                    views: {
-                        'content@': {
-                            templateUrl: '/assets/views/task-report.html',
+              // Reload model i18n on translation change
+              $rootScope.$on('$translateChangeSuccess', function () {
+                $state.transitionTo($state.current, $stateParams, {
+                  reload: true, inherit: true, notify: true
+                });
+              });
 
-                            controller: function ($scope, task) {
-                                $scope.task = task;
-                            }
-                        }
-                    },
+              // Other shared methods
+              $rootScope.toggleModelMenu = function ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                $rootScope.modelMenuVisible = !$rootScope.modelMenuVisible;
+              };
 
-                    onEnter: function ($state, task) {
-                        if (!task) $state.go('app.home', {}, { location: 'replace' });
-                    }
+              $rootScope.showModelListDialog = function () {
+                $modal.open({ templateUrl: '/assets/views/model-list-dialog.html' });
+              };
+
+              $rootScope.showAboutDialog = function () {
+                $modal.open({ templateUrl: '/assets/views/about-dialog.html' });
+              };
+
+              // Bind backend signals
+              $rootScope.api = api;
+
+              api.on('connect', function () {
+                api.on('task:new', function (task) {
+                  task.model = _($rootScope.models).findWhere({ name: task['model_name'] });
+
+                  $rootScope.tasks.unshift(task);
                 });
 
-            // If the path doesn't match any of the configured urls redirect to home
-            $urlRouterProvider.otherwise('/');
+                api.on('task:status', function (data) {
+                  var task = _($rootScope.tasks).findWhere({ id: data['task_id'] })
 
-            // Enabling HTML 5 mode to remove the # prefix from URL's
-            $locationProvider.html5Mode(true);
-
-            // Multi-language support
-            $translateProvider
-                .useStaticFilesLoader({ prefix: '/assets/locales/', suffix: '.json' })
-                .useStorage('configStorage')
-                .determinePreferredLanguage(function () {
-                    var lang = navigator.language || navigator.userLanguage;
-                    return lang && lang.substring(0, 2) || 'es';
+                  if (task) {
+                    task.status = data['status'];
+                    task.result = data['result'];
+                  }
                 });
-        })
 
-        /* WebSocket helper */
-        .factory('socket', function ($rootScope) {
-            var socket = io.connect();
+                api.on('task:delete', function (data) {
+                  var task = _($rootScope.tasks).findWhere({ id: data['task_id'] })
 
-            return {
-                on: function (event, callback) {
-                    socket.on(event, function () {
-                        var args = arguments;
-
-                        $rootScope.$apply(function () {
-                            callback.apply(socket, args);
-                        });
-                    });
-                },
-
-                emit: function (event, data, callback) {
-                    socket.emit(event, data, function () {
-                        var args = arguments;
-
-                        $rootScope.$apply(function () {
-                            if (callback) {
-                                callback.apply(socket, args);
-                            }
-                        });
-                    })
-                }
+                  $rootScope.tasks.splice($rootScope.tasks.indexOf(task), 1);
+                });
+              });
             }
-        })
+          })
 
-        /* Backend API */
-        .factory('backend', function ($q, $timeout, socket) {
-            var request = function (callback, timeout) {
+          /* Home */
+          .state('app.home', {
+            url: '/',
+            views: {
+              'content@': { templateUrl: '/assets/views/dashboard.html' }
+            }
+          })
+
+          /* Run model */
+          .state('app.run_model', {
+            url: '/model/{model_name}',
+            resolve: {
+              model: function ($stateParams, models) {
+                return _(models).findWhere({ name: $stateParams['model_name'] });
+              }
+            },
+            views: {
+              'content@': {
+                templateUrl: '/assets/views/model-run.html',
+                controller: function ($scope, model) {
+                  $scope.model = model;
+                  $scope.formData = {};
+
+                  angular.forEach(model.parameters, function (param) {
+                    $scope.formData[param.id] = {};
+                  });
+                }
+              }
+            },
+            onEnter: function ($state, model) {
+              if (!model) $state.go('app.home', {}, { location: 'replace' });
+            }
+          })
+
+          /* Task report */
+          .state('app.report', {
+            url: '/report/{task_id}',
+            resolve: {
+              task: function ($q, $stateParams, results) {
                 var deferred = $q.defer();
 
-                $timeout(function () {
-                    deferred.resolve(null);
-                }, typeof timeout !== 'undefined' ? timeout : 800);
-
-                callback(deferred);
+                results.forEach((function (result) {
+                  if (result['task_id'] === $stateParams.taskId)
+                    deferred.resolve(result);
+                }));
 
                 return deferred.promise;
-            };
+              }
+            },
+            views: {
+              'content@': {
+                templateUrl: '/assets/views/task-report.html',
 
-            return {
-                on: socket.on,
-
-                runModel: function (model) {
-                    socket.emit('run model', model);
-                },
-
-                cancelTask: function (task) {
-                    socket.emit('cancel task', task);
+                controller: function ($scope, task) {
+                  $scope.task = task;
                 }
-            };
-        })
-
-        /* Utility for easily manipulating dict-based lists */
-        .service('listProvider', function () {
-            this.create = function (items) {
-                return {
-                    all: items,
-
-                    /* Gets all elements in the list. */
-                    list: function () {
-                        return Object.keys(items).map(function (id) {
-                            return items[id];
-                        })
-                    },
-
-                    /* Gets the number of elements in the list. */
-                    count: function () {
-                        return Object.keys(items).length;
-                    },
-
-                    /* Checks if the list contains no elements. */
-                    isEmpty: function () {
-                        return Object.keys(items).length === 0;
-                    },
-
-                    /* Returns the list item with the specified identifier. */
-                    getById: function (id) {
-                        return items[id];
-                    },
-
-                    /* */
-                    add: function (id, task) {
-                        items[id] = task;
-                    },
-
-                    /* */
-                    remove: function (id) {
-                        delete tasks[id];
-                    }
-                };
-            };
-        })
-
-        /* Configuration manager */
-        .factory('configStorage', function ($window, $cookieStore) {
-            return {
-                set: function (name, value) {
-                    try {
-                        $window.localStorage.setItem(name, value);
-                    } catch (e) {
-                        $cookieStore.put(name, value);
-                    }
-                },
-                get: function (name) {
-                    try {
-                        return $window.localStorage.getItem(name);
-                    } catch (e) {
-                        return $cookieStore.get(name);
-                    }
-                }
+              }
+            },
+            onEnter: function ($state, task) {
+              if (!task) $state.go('app.home', {}, { location: 'replace' });
             }
-        })
+          });
 
-        // Filter: Create a copy of the array and reverse the order of the items
-        .filter('reverse', function () {
-            return function (items) {
-                return items && items.slice().reverse() || [];
-            };
-        })
+        // If the path doesn't match any of the configured urls redirect to home
+        $urlRouterProvider.otherwise('/');
+      })
 
-        // Custom field: matrix
-        .directive('matrix', function () {
-            return {
-                templateUrl: '/assets/views/fields/matrix.html',
-                restrict: 'E',
-                replace: true,
-                transclude: true,
-                scope: { nrows: '@', ncols: '@', val: '=value' },
+      /* WebSocket helper */
+      .factory('socket', function ($rootScope) {
+        var socket = io.connect('http://' + document.domain + ':' + location.port + '/t');
 
-                link: function (scope, element, attrs) {
-                    var range = function (upper) {
-                        return Array.apply(null, Array(parseInt(upper))).map(function (_, i) {
-                            return i + 1 + '';
-                        });
-                    };
+        return {
+          on: function (event, callback) {
+            socket.on(event, function () {
+              var args = arguments;
 
-                    scope.rows = range(attrs.nrows);
-                    scope.columns = range(attrs.ncols);
+              $rootScope.$apply(function () {
+                callback.apply(socket, args);
+              });
+            });
+          },
 
-                    scope.value = {};
+          emit: function (event, data, callback) {
+            socket.emit(event, data, function () {
+              var args = arguments;
 
-                    angular.forEach(scope.rows, function (row) {
-                        scope.value[row] = {};
-
-                        angular.forEach(scope.columns, function (column) {
-                            scope.value[row][column] = null;
-                        });
-                    });
+              $rootScope.$apply(function () {
+                if (callback) {
+                  callback.apply(socket, args);
                 }
+              });
+            })
+          }
+        }
+      })
+
+      /* Backend API */
+      .factory('api', function ($q, $http, $state, $timeout, socket) {
+        var request = function (callback, timeout) {
+          var deferred = $q.defer();
+
+          $timeout(function () {
+            deferred.resolve(null);
+          }, typeof timeout !== 'undefined' ? timeout : 800);
+
+          callback(deferred);
+
+          return deferred.promise;
+        };
+
+        return {
+          on: socket.on,
+
+          runModel: function (model, data) {
+            return $http.post('/api/models/' + model.name, data).then(function (response) {
+              if (response.statusText == 'ACCEPTED') $state.go('app.home');
+            });
+          },
+
+          deleteTask: function (task) {
+            return $http.delete('/api/tasks/' + task.id);
+          }
+        };
+      })
+
+      /* Configuration manager */
+      .factory('configStorage', function ($window, $cookieStore) {
+        return {
+          set: function (name, value) {
+            try {
+              $window.localStorage.setItem(name, value);
+            } catch (e) {
+              $cookieStore.put(name, value);
             }
-        });
+          },
+          get: function (name) {
+            try {
+              return $window.localStorage.getItem(name);
+            } catch (e) {
+              return $cookieStore.get(name);
+            }
+          }
+        }
+      })
+
+      //
+      // Filters
+      //
+
+      // Create a copy of the array and reverse the order of the items
+      .filter('reverse', function () {
+        return function (items) {
+          return items && items.slice().reverse() || [];
+        };
+      })
+
+      // Return true or a given text if object has items
+      .filter('isEmpty', function () {
+        return function (items, replaceText) {
+          return items && items.length ? false : replaceText || true;
+        };
+      })
+
+      // Custom field: matrix
+      .directive('matrix', function () {
+        return {
+          templateUrl: '/assets/views/fields/matrix.html',
+          restrict: 'E',
+          replace: true,
+          transclude: false,
+          scope: { value: '=', options: '=' },
+
+          link: function (scope, element, attrs) {
+            scope.range = function (lower, upper, step) {
+              var series = [];
+
+              lower = series[0] = parseInt(lower);
+              upper = parseInt(upper);
+              step = parseInt(step) || 1;
+
+              while (lower + step <= upper) {
+                series[series.length] = lower += step;
+              }
+
+              return series;
+            };
+
+            scope.value = [];
+          }
+        }
+      });
 
     angular.element(document).ready(function () {
-        angular.bootstrap(document, ['gams2web']);
+      angular.bootstrap(document, ['gams2web']);
     });
-});
+  });

@@ -19,11 +19,13 @@
         "cancel_task": "Cancel task",
         "close": "Close",
         "go_to_dev": "Go to development page",
+        "active_tasks": "Active tasks",
         "active_tasks_plural": "{{ count }} active tasks",
         "active_tasks_singular": "1 active task",
         "delete_task": "Remove task",
         "no_active_tasks": "No active tasks",
         "no_recent_tasks": "No recent tasks",
+        "recent_tasks": "Recent tasks",
         "run_model": "Run model",
         "select_model": "Select the model you want to run from the following list",
         "show_report": "Show execution report"
@@ -36,14 +38,6 @@
             "phone": "Phone",
             "fax": "Fax",
             "close": "@:messages.close"
-        },
-
-        "active_tasks": {
-            "title": "Active tasks"
-        },
-
-        "task_results": {
-            "title": "Results"
         },
 
         "task_report": {

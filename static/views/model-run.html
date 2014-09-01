@@ -1,36 +1,31 @@
-<form ng-if="model" class="form-horizontal" role="form" name="form" ng-submit="runModel(model)">
+<form ng-if="model" class="form-horizontal" role="form" name="form" ng-submit="api.runModel(model, formData)">
     <div class="page-header">
-        <h2>
-            <span>{{ 'models.' + model.name + '.title' | translate }}</span>
-        </h2>
+        <h2><span>{{ model.title }}</span></h2>
 
-        <p>{{ 'models.' + model.name + '.description' | translate }}</p>
+        <p>{{ model.description }}</p>
     </div>
-    <div ng-if="model.options.showInstructions" class="form-group">
+    <div ng-if="model.display_options.show_instructions" class="form-group">
         <label class="col-sm-2 control-label">
-            {{ 'models.' + model.name + '.instructions.label' | translate }}
+            {{ model.instructions.label }}
         </label>
 
-        <div class="col-sm-10" translate="{{ 'models.' + model.name + '.instructions.value' }}"></div>
+        <div class="col-sm-10" ng-bind-html="model.instructions.content"></div>
     </div>
-    <hr ng-repeat-start="field in model.params">
+
+    <hr ng-repeat-start="field in model.parameters">
     <div class="form-group" ng-repeat-end>
-        <label class="col-sm-2 control-label">
-            {{ 'models.' + model.name + '.params.' + field.id + '.label' | translate }}
-        </label>
+        <label class="col-sm-2 control-label">{{ field.metadata.label }}</label>
 
         <div class="col-sm-10">
-            <p ng-if="field.type == 'text' && field.options.disabled"
-               class="form-control-static">{{ field.options.default }}</p>
+            <!--<p ng-if="field.type == 'text' && field.options.disabled" class="form-control-static">
+                <span>{{ field.options.default }}</span>
+            </p>-->
 
-            <matrix ng-if="field.type == 'matrix'" nrows="{{ field.options.rows }}"
-                    ncols="{{ field.options.columns }}" val="mat">
-                <input class="form-control input-sm text-center" name="{{ field.id }}[{{ i }}][{{ j }}]"
-                       ng-model="value[i][j]" type="number" min="1" max="9" minlength="{{ field.options.length }}"
-                       maxlength="{{ field.options.length }}"/>
-            </matrix>
+            <div ng-if="field.type == 'matrix'">
+                <matrix value="formData[field.id]" options="field.options"></matrix>
+            </div>
 
-            <span class="help-block">{{ field.helpText }}</span>
+            <span class="help-block">{{ field.metadata.help_text }}</span>
         </div>
     </div>
 
