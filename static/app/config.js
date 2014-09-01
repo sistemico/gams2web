@@ -2,6 +2,7 @@ requirejs.config({
     baseUrl: '/assets',
     paths: {
         'angular': 'vendor/angular/angular',
+        'angular-i18n': 'vendor/angular-i18n/angular-locale_es-ar',
         'angular-ui-router': 'vendor/angular-ui-router/release/angular-ui-router',
         'angular-bootstrap': 'vendor/angular-bootstrap/ui-bootstrap-tpls',
         'angular-cookies': 'vendor/angular-cookies/angular-cookies',
@@ -19,6 +20,9 @@ requirejs.config({
             deps: ['angular']
         },
         'angular-cookies': {
+            deps: ['angular']
+        },
+        'angular-i18n': {
             deps: ['angular']
         },
         'angular-ui-router': {
