@@ -1,12 +1,12 @@
 ﻿define([
     'underscore', 'angular', 'socket.io-client',
     'angular-i18n', 'angular-cookies', 'angular-translate-loader',
-    'angular-ui-router', 'angular-bootstrap'
+    'angular-bootstrap', 'angular-ui-router', 'angular-moment'
   ],
 
   function (_, angular, io) {
 
-    angular.module('gams2web', ['ngCookies', 'ui.router', 'ui.bootstrap', 'pascalprecht.translate'])
+    angular.module('gams2web', ['ngCookies', 'ui.router', 'ui.bootstrap', 'pascalprecht.translate', 'angularMoment'])
       .config(function ($locationProvider, $stateProvider, $urlRouterProvider, $translateProvider) {
         // Multi-language support
         $translateProvider
@@ -71,20 +71,24 @@
               'header': { templateUrl: '/assets/views/navigation.html' },
               'footer': { templateUrl: '/assets/views/footer.html' }
             },
-            onEnter: function ($rootScope, $state, $stateParams, $http, $modal, $translate, config, api) {
+            onEnter: function ($rootScope, $state, $stateParams, $http, $modal, $translate, config, api, amMoment) {
               // Localization
               $rootScope.languages = config['locales'];
 
               $rootScope.currentLanguage = function () {
-                return $translate.use();
+                return $translate.use() || $translate.proposedLanguage();
               };
 
               $rootScope.changeLanguage = function (lang) {
                 $translate.use(lang);
               };
 
+              amMoment.changeLanguage($rootScope.currentLanguage());
+
               // Reload model i18n on translation change
               $rootScope.$on('$translateChangeSuccess', function () {
+                amMoment.changeLanguage($rootScope.currentLanguage());
+
                 $state.transitionTo($state.current, $stateParams, {
                   reload: true, inherit: true, notify: true
                 });
@@ -216,6 +220,10 @@
 
         // If the path doesn't match any of the configured urls redirect to home
         $urlRouterProvider.otherwise('/');
+      })
+
+      .run(function (amMoment) {
+        amMoment.changeLanguage('es');
       })
 
       /* WebSocket helper */

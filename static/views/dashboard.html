@@ -44,8 +44,8 @@
                     <td style="vertical-align: middle">
                         <div>{{ task.model.title }}</div>
                     </td>
-                    <td class="hidden-xs" style="vertical-align: middle">
-                        <span class="text-muted">{{ task.created | date: 'medium' }}</span>
+                    <td class="hidden-xs" style="vertical-align: middle" title="{{ task.created | date: 'medium' }}">
+                        <span class="text-muted" am-time-ago="task.created"></span>
                     </td>
                     <td style="vertical-align: middle" ng-switch="task.status">
                         <div ng-switch-default>
