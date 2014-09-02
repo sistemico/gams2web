@@ -1,68 +1,104 @@
 {
-    "site": {
-        "title": "GAMS Web",
-        "branding": "<small>GAMS<sup>web</sup></small>",
-        "languages": {
-            "en": "English",
-            "es": "Español"
-        }
-    },
-
-    "menu": {
-        "home": "Principal",
-        "about": "Créditos",
-        "models": "Modelos",
-        "toggle_nav": "Mostrar/ocultar menú"
-    },
-
-    "messages": {
-        "cancel_task": "Cancelar tarea",
-        "close": "Cerrar",
-        "go_to_dev": "Ir al sitio web de desarrollo",
-        "active_tasks": "Tareas activas",
-        "active_tasks_plural": "{{ count }} tareas activas",
-        "active_tasks_singular": "1 tarea activa",
-        "delete_task": "Eliminar tarea",
-        "no_active_tasks": "No hay tareas activas",
-        "no_recent_tasks": "No hay tareas recientes",
-        "recent_tasks": "Tareas recientes",
-        "run_model": "Ejecutar modelo",
-        "select_model": "Seleccione de la lista el modelo que desea ejecutar",
-        "show_report": "Ver resultados de ejecución"
-    },
-
-    "sections": {
-        "about": {
-            "title": "Créditos",
-            "subtitle": "Información de contacto",
-            "phone": "Teléfono",
-            "fax": "Fax",
-            "close": "@:messages.close"
-        },
-
-        "task_report": {
-            "title": "Informe de ejecución"
-        }
-    },
-
-    "properties": {
-        "model": {
-            "name": "Nombre",
-            "title": "Título",
-            "description": "Descripción"
-        },
-        "task": {
-            "model_title": "Modelo",
-            "created": "Fecha",
-            "status": {
-                "status": "Estado",
-                "pending": "En cola",
-                "running": "En ejecución",
-                "success": "Guardando resultado...",
-                "failure": "Ejecución fallida",
-                "canceled": "Cancelada",
-                "completed": "Listo"
-            }
-        }
+  "site": {
+    "title": "GAMS Web",
+    "branding": "<small>GAMS<sup>web</sup></small>",
+    "languages": {
+      "en": "English",
+      "es": "Español"
     }
+  },
+
+  "menu": {
+    "home": "Principal",
+    "about": "Créditos",
+    "models": "Modelos",
+    "toggle_nav": "Mostrar/ocultar menú"
+  },
+
+  "messages": {
+    "cancel_task": "Cancelar tarea",
+    "close": "Cerrar",
+    "go_to_dev": "Ir al sitio web de desarrollo",
+    "active_tasks": "Tareas activas",
+    "active_tasks_plural": "{{ count }} tareas activas",
+    "active_tasks_singular": "1 tarea activa",
+    "delete_task": "Eliminar tarea",
+    "no_active_tasks": "No hay tareas activas",
+    "no_recent_tasks": "No hay tareas recientes",
+    "recent_tasks": "Tareas recientes",
+    "run_model": "Ejecutar modelo",
+    "select_model": "Seleccione de la lista el modelo que desea ejecutar",
+    "show_report": "Ver resultados de ejecución"
+  },
+
+  "sections": {
+    "about": {
+      "title": "Créditos",
+      "subtitle": "Información de contacto",
+      "phone": "Teléfono",
+      "fax": "Fax",
+      "close": "@:messages.close"
+    },
+
+    "task_report": {
+      "title": "Informe de ejecución"
+    }
+  },
+
+  "properties": {
+    "model": {
+      "name": "Nombre",
+      "title": "Título",
+      "description": "Descripción"
+    },
+    "task": {
+      "model_title": "Modelo",
+      "created": "Fecha",
+      "status": {
+        "status": "Estado",
+        "pending": "En cola",
+        "running": "En ejecución",
+        "success": "Guardando resultado...",
+        "failure": "Ejecución fallida",
+        "canceled": "Cancelada",
+        "completed": "Listo"
+      }
+    },
+    "result": {
+      "output": "Salida",
+      "log": "Registro",
+      "name": "Nombre",
+      "description": "Descripción",
+      "type": "Tipo",
+      "value": "Valor"
+    },
+    "gams": {
+      "type": {
+        "equation": "Ecuación",
+        "parameter": "Parámetro",
+        "set": "Conjunto",
+        "variable": "Variable"
+      },
+      "equation_type": {
+        "0": "igualdad",
+        "1": "desigualdad de mayor o igual",
+        "2": "desigualdad de menor o igual",
+        "3": "ecuación no obligatoria",
+        "4": "ecuación externa",
+        "5": "ecuación cónica"
+      },
+      "variable_type": {
+        "0": "desconocido",
+        "1": "binaria",
+        "2": "entera",
+        "3": "positiva",
+        "4": "negativa",
+        "5": "libre",
+        "6": "conjunto ordenado 1",
+        "7": "conjunto ordenado 2",
+        "8": "semi-continua",
+        "9": "semi-entera"
+      }
+    }
+  }
 }

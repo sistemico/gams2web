@@ -75,18 +75,8 @@ def remove_task(task_id):
     return '', 202
 
 
-#
-# Results
-#
+@rest_api.route('/tasks/<task_id>/result')
+def get_task_result(task_id):
+    result = data.get_task_result(task_id)
 
-# @rest_api.route('/results')
-# def get_results():
-# results = tasks.get_tasks_results()
-# return jsonify(_paginate(results if results else [], count=5))
-#
-#
-# @rest_api.route('/tasks/<task_id>/result')
-# def get_result(task_id):
-# result = tasks.get_task_result(task_id)
-#
-# return jsonify(result) if result else abort(404)
+    return jsonify(result) if result else abort(404)

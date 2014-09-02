@@ -105,24 +105,9 @@ class ResultCollector(object):
 class GamsWorker(Worker):
     GAMS_INSTANCE = GamsWorkspace()
 
-    VAR_TYPE = [
-        'Unknown', 'Binary', 'Integer', 'Positive', 'Negative', 'Free',
-        'Special ordered set 1', 'Special ordered set 2', 'Semi-continuous', 'Semi-integer'
-    ]
-
-    EQU_TYPE = [
-        'Equality',
-        'Greater or equal than inequality',
-        'Less or equal than inequality',
-        'Non-binding equation',
-        'External equation',
-        'Cone equation'
-    ]
-
     def do_work(self, task):
         try:
-            output, log = [], ''
-            log = StringIO()
+            output, log = [], StringIO()
 
             # Process task arguments
             model_parameters = {field.id: field.to_primitive() for field in task.model.parameters or []}
@@ -149,7 +134,7 @@ class GamsWorker(Worker):
                 )
 
                 if isinstance(symbol, GamsEquation):
-                    out['subtype'] = GamsWorker.EQU_TYPE[symbol.equtype]
+                    out['subtype'] = symbol.equtype
 
                 elif isinstance(symbol, GamsParameter):
                     out['values'] = [dict(elements=rec.keys, value=rec.value) for rec in symbol]
@@ -158,7 +143,7 @@ class GamsWorker(Worker):
                     out['elements'] = [x for y in [rec.keys for rec in symbol] for x in y]
 
                 elif isinstance(symbol, GamsVariable):
-                    out['subtype'] = GamsWorker.VAR_TYPE[symbol.vartype]
+                    out['subtype'] = symbol.vartype
 
                 if isinstance(symbol, GamsEquation) or isinstance(symbol, GamsVariable):
                     out['values'] = [dict(

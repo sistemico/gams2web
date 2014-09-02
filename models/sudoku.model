@@ -1,8 +1,5 @@
 name: sudoku
 
-display_options:
-  show_instructions: Yes
-
 parameters:
   - id: board
     type: matrix
@@ -18,6 +15,12 @@ parameters:
       help_text:
         es: Rellene las casillas vacías con los números [1-9]
         en: Fill empty squares with the numbers [1–9]
+
+display_options:
+  show_instructions: Yes
+
+output_options:
+  exclude_types: ['set', 'equation']
 
 # Model information (multilingual)
 title:

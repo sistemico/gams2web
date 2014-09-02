@@ -55,7 +55,7 @@ def on_task_finished(worker, task):
 
 @task_completed.connect
 def on_task_completed(task):
-    socket.emit('task:status', dict(task_id=task.id, status=task.status, result=task.result), namespace='/t')
+    socket.emit('task:status', dict(task_id=task.id, status=task.status), namespace='/t')
 
 
 @task_deleted.connect

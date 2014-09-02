@@ -24,11 +24,11 @@ class ModelParameter(Entity):
 
 class Model(Entity):
     name = StringType(required=True, deserialize_from=('name', 'model_name'))
+    parameters = ListType(ModelType(ModelParameter), default=None, deserialize_from=('parameters', 'params'))
     file = StringType(deserialize_from=('file', 'model_file', 'filename'))
     template = StringType()
     display_options = DictType(BooleanType, default=None)
-    parameters = ListType(ModelType(ModelParameter), default=None, deserialize_from=('parameters', 'params'))
-    output = ListType(StringType)
+    output_options = DictType(ListType(StringType), default={})
     # Multilingual fields
     title = MultilingualStringType(default_locale=FALLBACK_LOCALE)
     description = MultilingualStringType(default_locale=FALLBACK_LOCALE)

@@ -1,68 +1,104 @@
 {
-    "site": {
-        "title": "GAMS Web",
-        "branding": "<small>GAMS<sup>web</sup></small>",
-        "languages": {
-            "en": "English",
-            "es": "Español"
-        }
-    },
-
-    "menu": {
-        "home": "Home",
-        "about": "About",
-        "models": "Models",
-        "toggle_nav": "Toggle navigation"
-    },
-
-    "messages": {
-        "cancel_task": "Cancel task",
-        "close": "Close",
-        "go_to_dev": "Go to development page",
-        "active_tasks": "Active tasks",
-        "active_tasks_plural": "{{ count }} active tasks",
-        "active_tasks_singular": "1 active task",
-        "delete_task": "Remove task",
-        "no_active_tasks": "No active tasks",
-        "no_recent_tasks": "No recent tasks",
-        "recent_tasks": "Recent tasks",
-        "run_model": "Run model",
-        "select_model": "Select the model you want to run from the following list",
-        "show_report": "Show execution report"
-    },
-
-    "sections": {
-        "about": {
-            "title": "About GAMS Web Interface",
-            "subtitle": "Contact information and credits",
-            "phone": "Phone",
-            "fax": "Fax",
-            "close": "@:messages.close"
-        },
-
-        "task_report": {
-            "title": "Execution report"
-        }
-    },
-
-    "properties": {
-        "model": {
-            "name": "Name",
-            "title": "Title",
-            "description": "Description"
-        },
-        "task": {
-            "model_title": "Model",
-            "created": "Date",
-            "status": {
-                "status": "Status",
-                "pending": "Pending",
-                "running": "In progress",
-                "success": "Saving result...",
-                "failure": "Failed execution",
-                "canceled": "Canceled",
-                "completed": "Ready"
-            }
-        }
+  "site": {
+    "title": "GAMS Web",
+    "branding": "<small>GAMS<sup>web</sup></small>",
+    "languages": {
+      "en": "English",
+      "es": "Español"
     }
+  },
+
+  "menu": {
+    "home": "Home",
+    "about": "About",
+    "models": "Models",
+    "toggle_nav": "Toggle navigation"
+  },
+
+  "messages": {
+    "cancel_task": "Cancel task",
+    "close": "Close",
+    "go_to_dev": "Go to development page",
+    "active_tasks": "Active tasks",
+    "active_tasks_plural": "{{ count }} active tasks",
+    "active_tasks_singular": "1 active task",
+    "delete_task": "Remove task",
+    "no_active_tasks": "No active tasks",
+    "no_recent_tasks": "No recent tasks",
+    "recent_tasks": "Recent tasks",
+    "run_model": "Run model",
+    "select_model": "Select the model you want to run from the following list",
+    "show_report": "Show execution report"
+  },
+
+  "sections": {
+    "about": {
+      "title": "About GAMS Web Interface",
+      "subtitle": "Contact information and credits",
+      "phone": "Phone",
+      "fax": "Fax",
+      "close": "@:messages.close"
+    },
+
+    "task_report": {
+      "title": "Execution report"
+    }
+  },
+
+  "properties": {
+    "model": {
+      "name": "Name",
+      "title": "Title",
+      "description": "Description"
+    },
+    "task": {
+      "model_title": "Model",
+      "created": "Date",
+      "status": {
+        "status": "Status",
+        "pending": "Pending",
+        "running": "In progress",
+        "success": "Saving result...",
+        "failure": "Failed execution",
+        "canceled": "Canceled",
+        "completed": "Ready"
+      }
+    },
+    "result": {
+      "output": "Output",
+      "log": "Log",
+      "name": "Name",
+      "description": "Description",
+      "type": "Type",
+      "value": "Value"
+    },
+    "gams": {
+      "type": {
+        "equation": "Equation",
+        "parameter": "Parameter",
+        "set": "Set",
+        "variable": "Variable"
+      },
+      "equation_subtype": {
+        "0": "equality",
+        "1": "greater or equal than inequality",
+        "2": "less or equal than inequality",
+        "3": "non-binding equation",
+        "4": "external equation",
+        "5": "cone equation"
+      },
+      "var_subtype": {
+        "0": "unknown",
+        "1": "binary",
+        "2": "integer",
+        "3": "positive",
+        "4": "negative",
+        "5": "free",
+        "6": "special ordered set 1",
+        "7": "special ordered set 2",
+        "8": "semi-continuous",
+        "9": "semi-integer"
+      }
+    }
+  }
 }

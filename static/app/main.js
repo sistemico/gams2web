@@ -1,11 +1,10 @@
 ﻿define([
-    'underscore',
-    'socket.io-client',
-    'angular', 'angular-i18n',
-    'angular-ui-router', 'angular-bootstrap',
-    'angular-cookies', 'angular-translate-loader'],
+    'underscore', 'angular', 'socket.io-client',
+    'angular-i18n', 'angular-cookies', 'angular-translate-loader',
+    'angular-ui-router', 'angular-bootstrap'
+  ],
 
-  function (_, io, angular) {
+  function (_, angular, io) {
 
     angular.module('gams2web', ['ngCookies', 'ui.router', 'ui.bootstrap', 'pascalprecht.translate'])
       .config(function ($locationProvider, $stateProvider, $urlRouterProvider, $translateProvider) {
@@ -28,13 +27,13 @@
             url: '',
             resolve: {
               // Gets app configuration
-              config: function ($http, $rootScope, $translate) {
+              config: function ($http) {
                 return $http.get('/api/config').then(function (response) {
                   return response.data;
                 });
               },
               // Gets models
-              models: function ($http, $rootScope, $sce, $translate) {
+              models: function ($http, $rootScope, $translate, $sce) {
                 var locale = $translate.use() || $translate.proposedLanguage();
 
                 return $http.get('/api/models', { params: { locale: locale } }).then(function (response) {
@@ -73,6 +72,7 @@
               'footer': { templateUrl: '/assets/views/footer.html' }
             },
             onEnter: function ($rootScope, $state, $stateParams, $http, $modal, $translate, config, api) {
+              // Localization
               $rootScope.languages = config['locales'];
 
               $rootScope.currentLanguage = function () {
@@ -120,7 +120,6 @@
 
                   if (task) {
                     task.status = data['status'];
-                    task.result = data['result'];
                   }
                 });
 
@@ -168,26 +167,45 @@
           })
 
           /* Task report */
-          .state('app.report', {
-            url: '/report/{task_id}',
+          .state('app.task_report', {
+            url: '/task/{task_id}',
             resolve: {
-              task: function ($q, $stateParams, results) {
-                var deferred = $q.defer();
+              task: function ($stateParams, $http, tasks) {
+                var task = _(tasks).findWhere({ id: $stateParams['task_id'] });
 
-                results.forEach((function (result) {
-                  if (result['task_id'] === $stateParams.taskId)
-                    deferred.resolve(result);
-                }));
+                return $http.get('/api/tasks/' + task.id + '/result').then(function (response) {
+                  var result = task.result = response.data, opts = task.model['output_options'];
 
-                return deferred.promise;
+                  // Apply output options
+                  if (opts) {
+                    var includeFields = opts['fields'], excludeTypes = opts['exclude_types'];
+
+                    if (includeFields) {
+                      result['output'] = _.select(result['output'], function (value) {
+                        return _(includeFields).contains(value.name);
+                      });
+                    }
+
+                    if (excludeTypes) {
+                      result['output'] = _.reject(result['output'], function (value) {
+                        return _(excludeTypes).contains(value.type);
+                      });
+                    }
+                  }
+
+                  return task;
+                });
               }
             },
             views: {
               'content@': {
                 templateUrl: '/assets/views/task-report.html',
-
-                controller: function ($scope, task) {
+                controller: function ($scope, $window, task) {
                   $scope.task = task;
+
+                  $scope.decode = function (input) {
+                    return $window.atob(input);
+                  }
                 }
               }
             },

@@ -1,6 +1,9 @@
 name: transport
 file: trnsport.gms
 
+output_options:
+  exclude_types: ['equation']
+
 title:
   es: Problema de Transporte
   en: Transportation Problem

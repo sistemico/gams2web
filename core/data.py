@@ -71,6 +71,13 @@ def model_exists(model_name):
 # Task
 #
 
+def delete_task(task):
+    store.delete('task:{id}'.format(id=task.id))
+    store.delete('task:{id}:status'.format(id=task.id))
+    store.delete('task:{id}:result'.format(id=task.id))
+    store.lrem('task:all', 0, task.id)
+
+
 def get_task(task_id):
     try:
         task_data = json.loads(store.get(store.scan_iter('task:{id}'.format(id=task_id)).next()))
@@ -89,6 +96,12 @@ def get_task_status(task_id):
     return store.get('task:{id}:status'.format(id=task_id)) or 'UNKNOWN'
 
 
+def get_task_result(task_id):
+    result = store.get('task:{id}:result'.format(id=task_id))
+
+    return json.loads(result) if result else None
+
+
 def get_tasks(count=10, offset=0):
     return [get_task(task_id) for task_id in store.lrange('task:all', offset, offset + count - 1 if count > 0 else -1)]
 
@@ -103,18 +116,11 @@ def new_task(model, args):
     return task
 
 
-def update_task_status(task, new_status):
-    task.status = new_status
-    store.set('task:{id}:status'.format(id=task.id), new_status)
-
-
 def save_task_result(task, result):
     task.result = result
     store.set('task:{id}:result'.format(id=task.id), json.dumps(result))
 
 
-def delete_task(task):
-    store.delete('task:{id}'.format(id=task.id))
-    store.delete('task:{id}:status'.format(id=task.id))
-    store.delete('task:{id}:result'.format(id=task.id))
-    store.lrem('task:all', 0, task.id)
+def update_task_status(task, new_status):
+    task.status = new_status
+    store.set('task:{id}:status'.format(id=task.id), new_status)
