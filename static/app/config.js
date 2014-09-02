@@ -11,6 +11,7 @@ requirejs.config({
     'angular-ui-router': 'vendor/angular-ui-router/release/angular-ui-router',
     'angular-underscore': 'vendor/angular-underscore/angular-underscore',
     'moment': 'vendor/moment/min/moment-with-locales',
+    'moment-timezone': 'vendor/moment-timezone/builds/moment-timezone-with-data',
     'socket.io-client': 'vendor/socket.io-client/dist/socket.io',
     'underscore': 'vendor/underscore/underscore'
   },
@@ -28,7 +29,7 @@ requirejs.config({
       deps: ['angular']
     },
     'angular-moment': {
-      deps: ['angular', 'moment']
+      deps: ['angular', 'moment-timezone']
     },
     'angular-translate': {
       deps: ['angular']
@@ -41,6 +42,9 @@ requirejs.config({
     },
     'angular-underscore': {
       deps: ['angular', 'underscore']
+    },
+    'moment-timezone': {
+      deps: ['moment']
     }
   }
 });

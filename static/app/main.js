@@ -222,8 +222,8 @@
         $urlRouterProvider.otherwise('/');
       })
 
-      .run(function (amMoment) {
-        amMoment.changeLanguage('es');
+      .constant('angularMomentConfig', {
+        timezone: 'America/Argentina/Cordoba'
       })
 
       /* WebSocket helper */
