@@ -7,6 +7,10 @@ SERVER_HOST = '0.0.0.0'
 SERVER_PORT = 5000
 SECRET_KEY = '7127af068f0f91471b4125ef2091a664b82d12c85acf7ecc'
 
+# Localization
+FALLBACK_LOCALE = 'en'
+CURRENT_TIMEZONE = 'America/Argentina/Cordoba'
+
 # Paths
 APP_ROOT = path.dirname(path.abspath(__file__))
 DATA_ROOT = path.join(APP_ROOT, 'models')

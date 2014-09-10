@@ -1,14 +1,14 @@
 from datetime import datetime
 from uuid import uuid4
 
+from pytz import timezone
 from schematics.models import Model as Entity
 from schematics.types import BooleanType, DateTimeType, MultilingualStringType, StringType, UUIDType
 from schematics.types.compound import DictType, ListType, ModelType
 from schematics.types.serializable import serializable
 from schematics.transforms import blacklist
 
-
-FALLBACK_LOCALE = 'en'
+import settings
 
 
 class ModelParameter(Entity):
@@ -16,7 +16,7 @@ class ModelParameter(Entity):
     type = StringType(default='number')
     options = DictType(StringType, default=None)
     # Multilingual fields
-    metadata = DictType(MultilingualStringType(default_locale=FALLBACK_LOCALE))
+    metadata = DictType(MultilingualStringType(default_locale=settings.FALLBACK_LOCALE))
 
     class Options:
         serialize_when_none = False
@@ -30,9 +30,9 @@ class Model(Entity):
     display_options = DictType(BooleanType, default=None)
     output_options = DictType(ListType(StringType), default={})
     # Multilingual fields
-    title = MultilingualStringType(default_locale=FALLBACK_LOCALE)
-    description = MultilingualStringType(default_locale=FALLBACK_LOCALE)
-    instructions = DictType(MultilingualStringType(default_locale=FALLBACK_LOCALE))
+    title = MultilingualStringType(default_locale=settings.FALLBACK_LOCALE)
+    description = MultilingualStringType(default_locale=settings.FALLBACK_LOCALE)
+    instructions = DictType(MultilingualStringType(default_locale=settings.FALLBACK_LOCALE))
 
     class Options:
         roles = {'DTO': blacklist('file', 'template')}
@@ -43,7 +43,7 @@ class Task(Entity):
     id = UUIDType(default=uuid4, required=True)
     model = ModelType(Model, required=True)
     arguments = StringType(default='')  # As JSON serialized object
-    created = DateTimeType(default=datetime.now)
+    created = DateTimeType(default=lambda: datetime.now(timezone(settings.CURRENT_TIMEZONE)))
     result = DictType(StringType, default={})
     status = StringType(default='UNKNOWN', choices=('PENDING', 'RUNNING', 'SUCCESS', 'FAILED', 'COMPLETED'))
 

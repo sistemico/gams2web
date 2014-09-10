@@ -4,6 +4,7 @@ Flask-Script==2.0.5
 Flask-SocketIO==0.3.8
 PyYAML==3.11
 pyzmq==14.3.1
+pytz==2014.7
 redis==2.10.3
 hiredis==0.1.4
 schematics==0.9-5
