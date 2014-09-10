@@ -18,12 +18,18 @@
 
     <script type="text/javascript" src="/assets/vendor/modernizr/modernizr.js"></script>
 </head>
-<body ng-cloak>
-<header role="banner" ui-view="header"></header>
+<body>
+<div class="splash" ng-cloak="">
+    <div id="loading-bar-spinner">
+        <div class="spinner-icon"></div>
+    </div>
+</div>
 
-<section id="content" class="container" role="main" ui-view="content"></section>
-
-<footer role="contentinfo" ui-view="footer" ng-cloak></footer>
+<div id="wrapper" ng-cloak="">
+    <header role="banner" ui-view="header"></header>
+    <section id="content" class="container" role="main" ui-view="content"></section>
+    <footer role="contentinfo" ui-view="footer" ng-cloak></footer>
+</div>
 
 <script type="text/javascript" src="/assets/vendor/requirejs/require.js" data-main="/assets/app/config.js"></script>
 </body>

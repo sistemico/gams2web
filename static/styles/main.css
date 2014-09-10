@@ -14,6 +14,38 @@ html {
     display: none !important;
 }
 
+.splash {
+    display: none;
+}
+
+[ng-cloak].splash {
+    display: block !important;
+}
+
+/* Loading bar */
+#loading-bar-spinner {
+    top: 15px;
+    left: 15px;
+}
+
+#loading-bar-spinner .spinner-icon {
+    width: 20px;
+    height: 20px;
+    border-top-color: #777;
+    border-left-color: #999;
+}
+
+#loading-bar .bar {
+    background: #777;
+}
+
+#loading-bar .peg {
+    -moz-box-shadow: #999 1px 0 6px 1px;
+    -ms-box-shadow: #999 1px 0 6px 1px;
+    -webkit-box-shadow: #999 1px 0 6px 1px;
+    box-shadow: #999 1px 0 6px 1px;
+}
+
 /* Table: Progress bar in cell */
 .table .progress {
     margin-bottom: 0px;
@@ -28,13 +60,13 @@ input.ng-invalid {
 
 /* Modal: Disable slide down animation */
 .modal.fade {
-  opacity: 1;
+    opacity: 1;
 }
 
 .modal.fade .modal-dialog, .modal.in .modal-dialog {
-  -webkit-transform: translate(0, 0);
-  -ms-transform: translate(0, 0);
-  transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0);
 }
 
 /* Modal: custom dialog size */

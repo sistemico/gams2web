@@ -23,6 +23,7 @@
     "active_tasks_plural": "{{ count }} active tasks",
     "active_tasks_singular": "1 active task",
     "delete_task": "Remove task",
+    "loading": "Loading...",
     "no_active_tasks": "No active tasks",
     "no_recent_tasks": "No recent tasks",
     "recent_tasks": "Recent tasks",
