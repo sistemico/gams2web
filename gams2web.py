@@ -33,6 +33,11 @@ def index(path=''):
     return web.send_static_file('views/index.html')
 
 
+@web.route('/favicon.ico')
+def favicon():
+    return web.send_static_file('favicon-flat.ico')
+
+
 @socket.on('connect', namespace='/t')
 def on_connect():
     socket.emit('message', 'WebSocket connected', namespace='/t')
