@@ -1,20 +1,20 @@
 requirejs.config({
   baseUrl: '/assets',
   paths: {
-    'angular': 'vendor/angular/angular',
-    'angular-bootstrap': 'vendor/angular-bootstrap/ui-bootstrap-tpls',
-    'angular-cookies': 'vendor/angular-cookies/angular-cookies',
+    'angular': 'vendor/angular/angular.min',
+    'angular-bootstrap': 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
+    'angular-cookies': 'vendor/angular-cookies/angular-cookies.min',
     'angular-i18n': 'vendor/angular-i18n/angular-locale_es-ar',
-    'angular-loading-bar': 'vendor/angular-loading-bar/build/loading-bar',
-    'angular-moment': 'vendor/angular-moment/angular-moment',
-    'angular-translate': 'vendor/angular-translate/angular-translate',
-    'angular-translate-loader': 'vendor/angular-translate-loader-static-files/angular-translate-loader-static-files',
-    'angular-ui-router': 'vendor/angular-ui-router/release/angular-ui-router',
-    'angular-underscore': 'vendor/angular-underscore/angular-underscore',
-    'moment': 'vendor/moment/min/moment-with-locales',
-    'moment-timezone': 'vendor/moment-timezone/builds/moment-timezone-with-data',
-    'socket.io-client': 'vendor/socket.io-client/dist/socket.io',
-    'underscore': 'vendor/underscore/underscore'
+    'angular-loading-bar': 'vendor/angular-loading-bar/build/loading-bar.min',
+    'angular-moment': 'vendor/angular-moment/angular-moment.min',
+    'angular-translate': 'vendor/angular-translate/angular-translate.min',
+    'angular-translate-loader': 'vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.min',
+    'angular-ui-router': 'vendor/angular-ui-router/release/angular-ui-router.min',
+    'angular-underscore': 'vendor/angular-underscore/angular-underscore.min',
+    'moment': 'vendor/moment/min/moment-with-locales.min',
+    'moment-timezone': 'vendor/moment-timezone/builds/moment-timezone-with-data.min',
+    'socket.io-client': 'vendor/socket.io-client/dist/socket.io.min',
+    'underscore': 'vendor/underscore/underscore-min'
   },
   shim: {
     'angular': {
