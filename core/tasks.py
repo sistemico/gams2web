@@ -157,12 +157,21 @@ class GamsWorker(Worker):
 
                 output.append(out)
 
-            # Remove license information from log file (lines 3-4)
-            log = log.getvalue().splitlines(True)
-            log = ''.join(log[:2] + log[4:])
+            # Clean internal status
+            log_lines = [line for line in log.getvalue().splitlines(True) if not line.startswith('--- ')]
+
+            # Remove license information
+            license_line = next((line for line, text in enumerate(log_lines) if text.startswith('Licensee: ')), -1)
+
+            if license_line >= 0:
+                del log_lines[license_line]
+                del log_lines[license_line]
+
+                if not log_lines[license_line].startswith('\n'):
+                    log_lines.insert(license_line, '\n')
 
             # Encoding log as Base64
-            log = b64encode(log)
+            log = b64encode(''.join(log_lines))
 
             return dict(output=output, log=log)
         except (TemplateError, GamsException) as error:
