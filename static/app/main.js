@@ -1,12 +1,12 @@
 ﻿define([
     'underscore', 'angular', 'socket.io-client',
     'angular-i18n', 'angular-cookies', 'angular-translate-loader',
-    'angular-bootstrap', 'angular-ui-router', 'angular-moment'
+    'angular-bootstrap', 'angular-ui-router', 'angular-loading-bar', 'angular-moment'
   ],
 
   function (_, angular, io) {
 
-    angular.module('gams2web', ['ngCookies', 'ui.router', 'ui.bootstrap', 'pascalprecht.translate', 'angularMoment'])
+    angular.module('gams2web', ['angular-loading-bar', 'ngCookies', 'ui.router', 'ui.bootstrap', 'pascalprecht.translate', 'angularMoment'])
       .config(function ($locationProvider, $stateProvider, $urlRouterProvider, $translateProvider) {
         // Multi-language support
         $translateProvider

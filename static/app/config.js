@@ -5,6 +5,7 @@ requirejs.config({
     'angular-bootstrap': 'vendor/angular-bootstrap/ui-bootstrap-tpls',
     'angular-cookies': 'vendor/angular-cookies/angular-cookies',
     'angular-i18n': 'vendor/angular-i18n/angular-locale_es-ar',
+    'angular-loading-bar': 'vendor/angular-loading-bar/build/loading-bar',
     'angular-moment': 'vendor/angular-moment/angular-moment',
     'angular-translate': 'vendor/angular-translate/angular-translate',
     'angular-translate-loader': 'vendor/angular-translate-loader-static-files/angular-translate-loader-static-files',
@@ -26,6 +27,9 @@ requirejs.config({
       deps: ['angular']
     },
     'angular-i18n': {
+      deps: ['angular']
+    },
+    'angular-loading-bar': {
       deps: ['angular']
     },
     'angular-moment': {
