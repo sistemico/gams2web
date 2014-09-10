@@ -53,7 +53,7 @@ def run_model(model_name):
 
 @rest_api.route('/tasks')
 def get_tasks(count=10, offset=0):
-    tasks = [task.to_primitive(role='DTO') for task in data.get_tasks(count, offset)]
+    tasks = [task.to_primitive(role='DTO') for task in data.get_tasks(count, offset) if task]
 
     return jsonify(dict(objects=tasks, metadata=dict(count=len(tasks), offset=offset)))
 
