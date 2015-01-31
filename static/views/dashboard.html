@@ -1,114 +1,120 @@
 <section class="row">
-    <div classs="col-12">
-        <div class="panel panel-default">
-            <div class="panel-heading clearfix">
-                <div class="pull-left">
-                    <span class="panel-title" translate="messages.recent_tasks"></span>
-                    <!--
-                    <span class="panel-title" ng-switch="tasks.length">
-                        <span ng-switch-when="0">
-                            {{ 'messages.no_active_tasks' | translate }}
-                        </span>
-                        <span ng-switch-when="1">
-                            {{ 'messages.active_tasks_singular' | translate }}
-                        </span>
-                        <span ng-switch-default>
-                            {{ 'messages.active_tasks_plural' | translate: { count: tasks.count() } }}
-                        </span>
-                    </span>
-                    -->
-                </div>
-                <div id="actions" class="pull-right">
-                    <button type="button" class="btn btn-primary btn-xs" title="{{ 'messages.run_model' | translate }}"
-                            ng-click="showModelListDialog()">
-                        <span class="glyphicon glyphicon-play"></span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="panel-body text-center" ng-if="!tasks.length">
-                <button class="btn btn-primary" ng-click="showModelListDialog()">
-                    <span>{{ 'messages.run_model' | translate }}</span>
-                </button>
-            </div>
-
-            <table class="table table-hover" ng-if="tasks.length">
-                <thead>
-                <th translate="properties.task.model_title"></th>
-                <th class="hidden-xs" translate="properties.task.created"></th>
-                <th width="30%" translate="properties.task.status"></th>
-                <th width="1.5em"><!-- Actions --></th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="task in tasks | limitTo: 10 | orderBy: -created">
-                    <td style="vertical-align: middle">
-                        <div>{{ task.model.title }}</div>
-                    </td>
-                    <td class="hidden-xs" style="vertical-align: middle" title="{{ task.created | date: 'medium' }}">
-                        <span class="text-muted" am-time-ago="task.created"></span>
-                    </td>
-                    <td style="vertical-align: middle" ng-switch="task.status">
-                        <div ng-switch-default>
-                            <progressbar type="info" value="100" animate="false">
-                                {{ 'properties.task.status.pending' | translate }}
-                            </progressbar>
-                        </div>
-
-                        <div ng-switch-when="RUNNING">
-                            <progressbar type="warning" value="100" class="progress-striped active">
-                                {{ 'properties.task.status.running' | translate }}
-                                <span ng-if="task.remainingTime" class="hidden-xs">(ETA {{ task.remainingTime }})</span>
-                            </progressbar>
-                        </div>
-
-                        <div ng-switch-when="SUCCESS">
-                            <progressbar type="warning" value="100" animate="false">
-                                {{ 'properties.task.status.success' | translate }}
-                            </progressbar>
-                        </div>
-
-                        <div ng-switch-when="FAILURE">
-                            <progressbar type="danger" value="100" animate="false">
-                                {{ 'properties.task.status.failure' | translate }}
-                            </progressbar>
-                        </div>
-
-                        <div ng-switch-when="CANCELED">
-                            <progressbar type="danger" value="100" animate="false">
-                                {{ 'properties.task.status.canceled' | translate }}
-                            </progressbar>
-                        </div>
-
-                        <div ng-switch-when="COMPLETED">
-                            <progressbar type="success" value="100">
-                                {{ 'properties.task.status.completed' | translate }}
-                            </progressbar>
-                        </div>
-                    </td>
-                    <td style="vertical-align: middle; text-align: right" ng-switch="task.status">
-                        <div ng-switch-default>
-                            <button class="close" title="{{ 'messages.cancel_task' | translate }}" disabled="disabled">
-                                <span>×</span>
-                            </button>
-                        </div>
-
-                        <div ng-switch-when="COMPLETED">
-                            <a class="close" title="{{ 'messages.show_report' | translate }}"
-                               ui-sref="app.task_report({ task_id: task.id })">
-                                <span>+</span>
-                            </a>
-                        </div>
-
-                        <div ng-switch-when="FAILURE">
-                            <button class="close" title="{{ 'messages.delete_task' | translate }}"
-                                    ng-click="api.deleteTask(task)">
-                                <span>×</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+  <div classs="col-12">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <div class="pull-left">
+          <span class="panel-title" translate="messages.recent_tasks"></span>
+          <!--
+            <span class="panel-title" ng-switch="tasks.length">
+                <span ng-switch-when="0">
+                    {{ 'messages.no_active_tasks' | translate }}
+                </span>
+                <span ng-switch-when="1">
+                    {{ 'messages.active_tasks_singular' | translate }}
+                </span>
+                <span ng-switch-default>
+                    {{ 'messages.active_tasks_plural' | translate: { count: tasks.count() } }}
+                </span>
+            </span>
+          -->
         </div>
+        <div id="actions" class="pull-right">
+          <button type="button" class="btn btn-primary btn-xs" title="{{ 'messages.run_model' | translate }}"
+                  ng-click="showModelListDialog()">
+            <span class="glyphicon glyphicon-play"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="panel-body text-center" ng-if="!tasks.length">
+        <button class="btn btn-primary" ng-click="showModelListDialog()">
+          <span>{{ 'messages.run_model' | translate }}</span>
+        </button>
+      </div>
+
+      <table class="table table-hover" ng-if="tasks.length">
+        <thead>
+        <th translate="properties.task.model_title"></th>
+        <th class="hidden-xs" translate="properties.task.created"></th>
+        <th width="30%" translate="properties.task.status"></th>
+        <th width="1.5em"><!-- Actions --></th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="task in tasks | limitTo: 10 | orderBy: -created">
+          <td style="vertical-align: middle">
+            <div>{{ task.model.title }}</div>
+          </td>
+          <td class="hidden-xs" style="vertical-align: middle" title="{{ task.created | date: 'medium' }}">
+            <span class="text-muted" am-time-ago="task.created"></span>
+          </td>
+          <td style="vertical-align: middle" ng-switch="task.status">
+            <div ng-switch-default>
+              <progressbar type="info" value="100" animate="false">
+                <div title="{{ 'properties.task.status.pending' | translate }}">
+                  {{ 'properties.task.status.pending' | translate }}
+                </div>
+              </progressbar>
+            </div>
+
+            <div ng-switch-when="RUNNING">
+              <progressbar type="warning" value="100" class="progress-striped active">
+                <div title="{{ 'properties.task.status.running' | translate }}">
+                  {{ 'properties.task.status.running' | translate }}
+                  <span ng-if="task.remainingTime" class="hidden-xs">(ETA {{ task.remainingTime }})</span>
+                </div>
+              </progressbar>
+            </div>
+
+            <div ng-switch-when="SUCCESS">
+              <progressbar type="warning" value="100" animate="false">
+                <div title="{{ 'properties.task.status.success' | translate }}">
+                  {{ 'properties.task.status.success' | translate }}
+                </div>
+              </progressbar>
+            </div>
+
+            <div ng-switch-when="FAILURE">
+              <progressbar type="danger" value="100" animate="false">
+                <div title="{{ 'properties.task.status.failure' | translate }}">
+                  {{ 'properties.task.status.failure' | translate }}
+                </div>
+              </progressbar>
+            </div>
+
+            <div ng-switch-when="CANCELED">
+              <progressbar type="danger" value="100" animate="false">
+                <div title="{{ 'properties.task.status.canceled' | translate }}">
+                  {{ 'properties.task.status.canceled' | translate }}
+                </div>
+              </progressbar>
+            </div>
+
+            <div ng-switch-when="COMPLETED">
+              <progressbar type="success" value="100">
+                <div title="{{ 'properties.task.status.completed' | translate }}">
+                  <a ui-sref="app.task_report({ task_id: task.id })">
+                    {{ 'messages.show_report' | translate }}
+                  </a>
+                </div>
+              </progressbar>
+            </div>
+          </td>
+          <td style="vertical-align: middle; text-align: right" ng-switch="task.status">
+            <div ng-switch-default>
+              <button class="close" title="{{ 'messages.delete_task' | translate }}" ng-click="api.deleteTask(task)">
+                <span>×</span>
+              </button>
+            </div>
+
+            <div ng-switch-when="RUNNING">
+              <button class="close" title="{{ 'messages.cancel_task' | translate }}" disabled="disabled">
+                <span>×</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </section>

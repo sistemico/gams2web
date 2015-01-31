@@ -51,6 +51,10 @@ html {
     margin-bottom: 0px;
 }
 
+.table .progress a {
+    color: #fff;
+}
+
 /* Form: Invalid fields */
 input.ng-invalid {
     border-color: #a94442 !important;
