@@ -1,24 +1,22 @@
 <div class="modal-title">
-    <alert close="$close()">
-        <h3 translate="messages.run_model"></h3>
+  <alert close="$close()">
+    <h3 translate="messages.run_model"></h3>
 
-        <p translate="messages.select_model"></p>
-    </alert>
+    <p translate="messages.select_model"></p>
+  </alert>
 </div>
 
 <div class="modal-body">
-    <div class="list-group">
-        <a ng-repeat="model in models" ui-sref="app.run_model({ model_name: model.name })" class="list-group-item"
-           ng-click="$close()">
-            <div ng-repeat="flag in model.flags | reverse" class="pull-right hidden-xs">
-                <span class="label label-{{ flag.type || 'default' }}">
-                    {{ flag.label || flag }}
-                </span>
-            </div>
+  <div class="list-group">
+    <a ng-repeat="model in models" ui-sref="app.run_model({ model_name: model.name })" class="list-group-item"
+       ng-click="$close()">
+      <div ng-repeat="flag in model.flags | reverse" class="pull-right hidden-xs">
+        <span class="label label-{{ flag.type || 'default' }}">{{ flag.label || flag }}</span>
+      </div>
 
-            <h4 class="list-group-item-heading">{{ model.title }}</h4>
+      <h4 class="list-group-item-heading">{{ model.title }}</h4>
 
-            <p class="list-group-item-text">{{ model.description }}</p>
-        </a>
-    </div>
+      <p class="list-group-item-text">{{ model.description }}</p>
+    </a>
+  </div>
 </div>

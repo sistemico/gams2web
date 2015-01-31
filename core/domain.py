@@ -7,7 +7,6 @@ from schematics.types import BooleanType, DateTimeType, MultilingualStringType, 
 from schematics.types.compound import DictType, ListType, ModelType
 from schematics.types.serializable import serializable
 from schematics.transforms import blacklist
-
 import settings
 
 

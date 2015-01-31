@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title translate="site.title"></title>
+  <title translate="site.title"></title>
 
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <meta name="format-detection" content="telephone=no"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="format-detection" content="telephone=no"/>
 
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" href="/assets/vendor/normalize-css/normalize.css"/>
-    <link rel="stylesheet" href="/assets/vendor/bootstrap/dist/css/bootstrap.css"/>
-    <link rel="stylesheet" href="/assets/vendor/angular-loading-bar/build/loading-bar.css"/>
+  <link rel="stylesheet" href="/assets/vendor/normalize-css/normalize.css"/>
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/dist/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/assets/vendor/angular-loading-bar/build/loading-bar.css"/>
 
-    <link rel="stylesheet" href="/assets/styles/main.css"/>
+  <link rel="stylesheet" href="/assets/styles/main.css"/>
 
-    <script type="text/javascript" src="/assets/vendor/modernizr/modernizr.js"></script>
+  <script type="text/javascript" src="/assets/vendor/modernizr/modernizr.js"></script>
 </head>
 <body>
 <div class="splash" ng-cloak="">
-    <div id="loading-bar-spinner">
-        <div class="spinner-icon"></div>
-    </div>
+  <div id="loading-bar-spinner">
+    <div class="spinner-icon"></div>
+  </div>
 </div>
 
 <div id="wrapper" ng-cloak="">
-    <header role="banner" ui-view="header"></header>
-    <section id="content" class="container" role="main" ui-view="content"></section>
-    <footer role="contentinfo" ui-view="footer" ng-cloak></footer>
+  <header role="banner" ui-view="header"></header>
+  <section id="content" class="container" role="main" ui-view="content"></section>
+  <footer role="contentinfo" ui-view="footer" ng-cloak></footer>
 </div>
 
 <script type="text/javascript" src="/assets/vendor/requirejs/require.js" data-main="/assets/app/config.js"></script>

@@ -8,7 +8,6 @@ from jinja2 import Environment as TemplateEnvironment, TemplateError
 from gams import *
 from gevent import spawn
 import zmq.green as zmq
-
 from core import data, signals
 
 

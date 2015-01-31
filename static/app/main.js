@@ -12,7 +12,7 @@ define([
         // Multi-language support
         $translateProvider
           .useLocalStorage()
-          .useStaticFilesLoader({ prefix: '/assets/locales/', suffix: '.json' })
+          .useStaticFilesLoader({prefix: '/assets/locales/', suffix: '.json'})
           .determinePreferredLanguage(function () {
             var lang = navigator.language || navigator.userLanguage;
             return lang && lang.substring(0, 2) || 'es';
@@ -37,7 +37,7 @@ define([
               models: function ($http, $rootScope, $translate, $sce) {
                 var locale = $translate.use() || $translate.proposedLanguage();
 
-                return $http.get('/api/models', { params: { locale: locale } }).then(function (response) {
+                return $http.get('/api/models', {params: {locale: locale}}).then(function (response) {
                   var models = response.data['objects'] || [];
 
                   _(models).each(function (model) {
@@ -58,7 +58,7 @@ define([
 
                   _(tasks).each(function (task) {
                     if (!task.model) {
-                      task.model = _(models).findWhere({ name: task['model_name'] });
+                      task.model = _(models).findWhere({name: task['model_name']});
                     }
                   });
 
@@ -69,8 +69,8 @@ define([
               }
             },
             views: {
-              'header': { templateUrl: '/assets/views/navigation.html' },
-              'footer': { templateUrl: '/assets/views/footer.html' }
+              'header': {templateUrl: '/assets/views/navigation.html'},
+              'footer': {templateUrl: '/assets/views/footer.html'}
             },
             onEnter: function ($rootScope, $state, $stateParams, $http, $modal, $translate, config, api, amMoment) {
               // Localization
@@ -103,11 +103,11 @@ define([
               };
 
               $rootScope.showModelListDialog = function () {
-                $modal.open({ templateUrl: '/assets/views/model-list-dialog.html' });
+                $modal.open({templateUrl: '/assets/views/model-list-dialog.html'});
               };
 
               $rootScope.showAboutDialog = function () {
-                $modal.open({ templateUrl: '/assets/views/about-dialog.html' });
+                $modal.open({templateUrl: '/assets/views/about-dialog.html'});
               };
 
               // Bind backend signals
@@ -115,13 +115,13 @@ define([
 
               api.on('connect', function () {
                 api.on('task:new', function (task) {
-                  task.model = _($rootScope.models).findWhere({ name: task['model_name'] });
+                  task.model = _($rootScope.models).findWhere({name: task['model_name']});
 
                   $rootScope.tasks.unshift(task);
                 });
 
                 api.on('task:status', function (data) {
-                  var task = _($rootScope.tasks).findWhere({ id: data['task_id'] })
+                  var task = _($rootScope.tasks).findWhere({id: data['task_id']})
 
                   if (task) {
                     task.status = data['status'];
@@ -129,7 +129,7 @@ define([
                 });
 
                 api.on('task:delete', function (data) {
-                  var task = _($rootScope.tasks).findWhere({ id: data['task_id'] })
+                  var task = _($rootScope.tasks).findWhere({id: data['task_id']})
 
                   $rootScope.tasks.splice($rootScope.tasks.indexOf(task), 1);
                 });
@@ -141,7 +141,7 @@ define([
           .state('app.home', {
             url: '/',
             views: {
-              'content@': { templateUrl: '/assets/views/dashboard.html' }
+              'content@': {templateUrl: '/assets/views/dashboard.html'}
             }
           })
 
@@ -150,7 +150,7 @@ define([
             url: '/model/{model_name}',
             resolve: {
               model: function ($stateParams, models) {
-                return _(models).findWhere({ name: $stateParams['model_name'] });
+                return _(models).findWhere({name: $stateParams['model_name']});
               }
             },
             views: {
@@ -167,7 +167,7 @@ define([
               }
             },
             onEnter: function ($state, model) {
-              if (!model) $state.go('app.home', {}, { location: 'replace' });
+              if (!model) $state.go('app.home', {}, {location: 'replace'});
             }
           })
 
@@ -176,7 +176,7 @@ define([
             url: '/task/{task_id}',
             resolve: {
               task: function ($stateParams, $http, tasks) {
-                var task = _(tasks).findWhere({ id: $stateParams['task_id'] });
+                var task = _(tasks).findWhere({id: $stateParams['task_id']});
 
                 return $http.get('/api/tasks/' + task.id + '/result').then(function (response) {
                   var result = task.result = response.data, opts = task.model['output_options'];
@@ -215,7 +215,7 @@ define([
               }
             },
             onEnter: function ($state, task) {
-              if (!task) $state.go('app.home', {}, { location: 'replace' });
+              if (!task) $state.go('app.home', {}, {location: 'replace'});
             }
           });
 
@@ -330,7 +330,7 @@ define([
           restrict: 'E',
           replace: true,
           transclude: false,
-          scope: { value: '=', options: '=' },
+          scope: {value: '=', options: '='},
 
           link: function (scope, element, attrs) {
             scope.range = function (lower, upper, step) {

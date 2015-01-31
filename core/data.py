@@ -1,11 +1,10 @@
+import ujson as json
+
 from codecs import open
 from os import listdir, path
 from os.path import isfile
-import ujson as json
-
 from redis import StrictRedis
 import yaml
-
 from core.domain import Model, Task
 import settings
 
