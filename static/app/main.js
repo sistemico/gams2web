@@ -1,6 +1,7 @@
-﻿define([
+define([
     'underscore', 'angular', 'socket.io-client',
-    'angular-i18n', 'angular-cookies', 'angular-translate-loader',
+    'angular-i18n', 'angular-cookies',
+    'angular-translate-loader', 'angular-translate-storage-cookie', 'angular-translate-storage-local',
     'angular-bootstrap', 'angular-ui-router', 'angular-loading-bar', 'angular-moment'
   ],
 
@@ -10,8 +11,8 @@
       .config(function ($locationProvider, $stateProvider, $urlRouterProvider, $translateProvider) {
         // Multi-language support
         $translateProvider
+          .useLocalStorage()
           .useStaticFilesLoader({ prefix: '/assets/locales/', suffix: '.json' })
-          .useStorage('configStorage')
           .determinePreferredLanguage(function () {
             var lang = navigator.language || navigator.userLanguage;
             return lang && lang.substring(0, 2) || 'es';
