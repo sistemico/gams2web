@@ -1,4 +1,4 @@
-### Python ###
+# Python
 *.py[cod]
 
 # C extensions
@@ -23,6 +23,9 @@ __pycache__
 # Installer logs
 pip-log.txt
 
+# VirtualEnv
+.venv
+
 # Unit test / coverage reports
 .coverage
 .tox
@@ -40,9 +43,9 @@ nosetests.xml
 .idea
 .iml
 
-### Bower ###
+# Bower
 bower_components
 vendor
 
-### SASS ###
+# SASS
 *.sass-cache
