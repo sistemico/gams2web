@@ -7,14 +7,12 @@
       "es": "Español"
     }
   },
-
   "menu": {
     "home": "Home",
     "about": "About",
     "models": "Models",
     "toggle_nav": "Toggle navigation"
   },
-
   "messages": {
     "cancel_task": "Cancel task",
     "close": "Close",
@@ -29,9 +27,8 @@
     "recent_tasks": "Recent tasks",
     "run_model": "Run model",
     "select_model": "Select the model you want to run from the following list",
-    "show_report": "Show execution report"
+    "show_report": "Show results"
   },
-
   "sections": {
     "about": {
       "title": "About GAMS Web Interface",
@@ -40,12 +37,10 @@
       "fax": "Fax",
       "close": "@:messages.close"
     },
-
     "task_report": {
       "title": "Execution report"
     }
   },
-
   "properties": {
     "model": {
       "name": "Name",

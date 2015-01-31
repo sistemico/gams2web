@@ -7,14 +7,12 @@
       "es": "Español"
     }
   },
-
   "menu": {
     "home": "Principal",
     "about": "Créditos",
     "models": "Modelos",
     "toggle_nav": "Mostrar/ocultar menú"
   },
-
   "messages": {
     "cancel_task": "Cancelar tarea",
     "close": "Cerrar",
@@ -29,9 +27,8 @@
     "recent_tasks": "Tareas recientes",
     "run_model": "Ejecutar modelo",
     "select_model": "Seleccione de la lista el modelo que desea ejecutar",
-    "show_report": "Ver resultados de ejecución"
+    "show_report": "Ver resultados"
   },
-
   "sections": {
     "about": {
       "title": "Créditos",
@@ -40,12 +37,10 @@
       "fax": "Fax",
       "close": "@:messages.close"
     },
-
     "task_report": {
       "title": "Informe de ejecución"
     }
   },
-
   "properties": {
     "model": {
       "name": "Nombre",
