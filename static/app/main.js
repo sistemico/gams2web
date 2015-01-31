@@ -84,11 +84,11 @@ define([
                 $translate.use(lang);
               };
 
-              amMoment.changeLanguage($rootScope.currentLanguage());
+              amMoment.changeLocale($rootScope.currentLanguage());
 
               // Reload model i18n on translation change
               $rootScope.$on('$translateChangeSuccess', function () {
-                amMoment.changeLanguage($rootScope.currentLanguage());
+                amMoment.changeLocale($rootScope.currentLanguage());
 
                 $state.transitionTo($state.current, $stateParams, {
                   reload: true, inherit: true, notify: true
