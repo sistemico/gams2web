@@ -20,7 +20,7 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li ui-sref-active="active" ng-repeat="model in models | orderBy : name" role="presentation">
+            <li ui-sref-active="active" ng-repeat="model in models | orderBy : title" role="presentation">
               <a tabindex="-1" ui-sref="app.run_model({ model_name: model.name })">
                 <span>{{ model.title }}</span>
               </a>
