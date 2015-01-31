@@ -158,7 +158,7 @@ class GamsWorker(Worker):
                 output.append(out)
 
             # Clean internal status
-            log_lines = [line for line in log.getvalue().splitlines(True) if not line.startswith('--- ')]
+            log_lines = [line for line in log.getvalue().splitlines(True) if line[:3] not in ['---', '***']]
 
             # Remove license information
             license_line = next((line for line, text in enumerate(log_lines) if text.startswith('Licensee: ')), -1)
