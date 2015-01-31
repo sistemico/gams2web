@@ -10,8 +10,8 @@ parameters:
       max: 9
     metadata:
       label:
-        es: Board
-        en: Instrucciones
+        es: Instrucciones
+        en: Board
       help_text:
         es: Rellene las casillas vacías con los números [1-9]
         en: Fill empty squares with the numbers [1–9]
