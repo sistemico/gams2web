@@ -2,14 +2,14 @@ from os import path
 
 # Flask
 APP_NAME = 'gams2web'
-DEBUG = True
+DEBUG = False
 SERVER_HOST = '0.0.0.0'
 SERVER_PORT = 5000
 SECRET_KEY = '7127af068f0f91471b4125ef2091a664b82d12c85acf7ecc'
 
 # Localization
-FALLBACK_LOCALE = 'en'
 CURRENT_TIMEZONE = 'America/Argentina/Cordoba'
+FALLBACK_LOCALE = 'en'
 
 # Paths
 APP_ROOT = path.dirname(path.abspath(__file__))
