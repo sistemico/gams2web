@@ -1,9 +1,12 @@
-import ujson as json
+from gevent import monkey, get_hub
+
+monkey.patch_all()
 
 from codecs import open
 from os import listdir, path
 from os.path import isfile
 from redis import StrictRedis
+import ujson as json
 import yaml
 from core.domain import Model, Task
 import settings
@@ -45,21 +48,27 @@ def get_models(count=0):
 
 
 def load_model_data():
-    for filename in listdir(settings.DATA_ROOT):
-        file_path = path.join(settings.DATA_ROOT, filename)
+    hub = get_hub()
+    watcher = hub.loop.stat(settings.DATA_ROOT)
 
-        if isfile(file_path) and filename.endswith('.model'):
-            with open(file_path, mode='rU', encoding='utf-8') as descriptor_file:
-                model = Model(yaml.load(descriptor_file))
-                model.file = path.join(settings.DATA_ROOT, model.file or filename.replace('.model', '.gms'))
+    while True:
+        for filename in listdir(settings.DATA_ROOT):
+            file_path = path.join(settings.DATA_ROOT, filename)
 
-                if model.name and isfile(model.file):
+            if isfile(file_path) and filename.endswith('.model'):
+                with open(file_path, mode='rU', encoding='utf-8') as descriptor_file:
+                    model = Model(yaml.load(descriptor_file))
+                    model_file = path.join(settings.DATA_ROOT, model.file or filename.replace('.model', '.gms'))
+
                     # Load template
-                    with open(model.file, mode='rU', encoding='utf-8') as model_template:
-                        model.template = model_template.read()
+                    if model.name and isfile(model_file):
+                        with open(model_file, mode='rU', encoding='utf-8') as model_template:
+                            model.template = model_template.read()
 
-                    # Save model descriptor
-                    store.set('model:{name}'.format(name=model.name), json.dumps(model.to_native()))
+                        # Save model descriptor
+                        store.set('model:{name}'.format(name=model.name), json.dumps(model.to_native()))
+
+        hub.wait(watcher)
 
 
 def model_exists(model_name):

@@ -1,5 +1,5 @@
 from flask.ext.script import Manager
-from gevent import spawn, spawn_later
+from gevent import spawn, spawn_later, joinall
 
 from core import data
 from core.tasks import GamsWorker, ResultCollector
@@ -15,7 +15,7 @@ def command_manager(app, socket):
 
     @manager.command
     def load_models():
-        data.load_model_data()
+        return spawn(data.load_model_data)
 
     @manager.command
     def start_result_collector():
@@ -28,12 +28,16 @@ def command_manager(app, socket):
     @manager.command
     def run_server():
         try:
-            load_models()
-            start_result_collector()
-            start_workers(settings.NUM_WORKERS)
+            sub_commands = [
+                load_models(),
+                start_result_collector(),
+                start_workers(settings.NUM_WORKERS)
+            ]
 
             socket.run(app, host=settings.SERVER_HOST, port=settings.SERVER_PORT)
         except KeyboardInterrupt:
             pass
+
+        joinall(sub_commands)
 
     return manager

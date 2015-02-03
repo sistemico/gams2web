@@ -1,3 +1,7 @@
+from gevent import monkey, spawn
+
+monkey.patch_all()
+
 from base64 import b64encode
 from cStringIO import StringIO
 import math
@@ -8,7 +12,6 @@ from codecs import open
 from os import path
 from jinja2 import Environment as TemplateEnvironment, TemplateError
 from gams import *
-from gevent import spawn
 import zmq.green as zmq
 from core import data, signals
 
