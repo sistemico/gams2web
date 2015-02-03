@@ -1,0 +1,13 @@
+name: sample
+file: scripts/MezclaCorrientes.gms
+
+output_options:
+  files: [Salida, Resultados.txt]
+
+title:
+  es: Modelo de ejemplo
+  en: Sample model
+
+description:
+  es: Demostración de generación archivos de salida
+  en: Output files generation sample

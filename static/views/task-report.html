@@ -30,6 +30,13 @@
     </div>
     <div ng-if="task.result">
       <tabset>
+        <!-- Log -->
+        <tab heading="{{ 'properties.result.log' | translate }}" disabled="!task.result.log">
+          <br>
+          <pre>{{ decode(task.result.log) }}</pre>
+        </tab>
+
+        <!-- Output table -->
         <tab heading="{{ 'properties.result.output' | translate }}" disabled="!task.result.output">
           <br>
 
@@ -93,9 +100,11 @@
             </table>
           </div>
         </tab>
-        <tab heading="{{ 'properties.result.log' | translate }}" disabled="!task.result.log">
+
+        <!-- Output files (one tab per output file) -->
+        <tab ng-repeat="(filename, content) in task.result.files" heading="{{ filename }}">
           <br>
-          <pre>{{ decode(task.result.log) }}</pre>
+          <pre>{{ decode(content) }}</pre>
         </tab>
       </tabset>
     </div>

@@ -14,6 +14,7 @@ class ModelParameter(Entity):
     id = StringType(required=True)
     type = StringType(default='number')
     options = DictType(StringType, default=None)
+
     # Multilingual fields
     metadata = DictType(MultilingualStringType(default_locale=settings.FALLBACK_LOCALE))
 
@@ -28,6 +29,7 @@ class Model(Entity):
     template = StringType()
     display_options = DictType(BooleanType, default=None)
     output_options = DictType(ListType(StringType), default={})
+
     # Multilingual fields
     title = MultilingualStringType(default_locale=settings.FALLBACK_LOCALE)
     description = MultilingualStringType(default_locale=settings.FALLBACK_LOCALE)
@@ -64,3 +66,4 @@ class Task(Entity):
 class Result(Entity):
     output = DictType(StringType)
     log = StringType(default='')
+    files = DictType(StringType, default={})

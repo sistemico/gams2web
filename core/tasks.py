@@ -4,6 +4,8 @@ import math
 from uuid import uuid4
 import ujson as json
 
+from codecs import open
+from os import path
 from jinja2 import Environment as TemplateEnvironment, TemplateError
 from gams import *
 from gevent import spawn
@@ -172,6 +174,18 @@ class GamsWorker(Worker):
             # Encoding log as Base64
             log = b64encode(''.join(log_lines))
 
-            return dict(output=output, log=log)
+            # Read output files
+            output_files = {}
+
+            if task.model.output_options.get('files'):
+                for output_file in task.model.output_options['files']:
+                    file_path = path.join(job.workspace.working_directory, output_file)
+
+                    if path.isfile(file_path):
+                        with open(file_path, mode='rU', encoding='utf-8') as f:
+                            output_files[output_file] = b64encode(f.read())
+
+            return dict(output=output, log=log, files=output_files)
+
         except (TemplateError, GamsException) as error:
             raise RuntimeError(error.__class__.__name__ + ': ' + error.message)
