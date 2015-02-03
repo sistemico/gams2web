@@ -37,7 +37,7 @@
         </tab>
 
         <!-- Output table -->
-        <tab heading="{{ 'properties.result.output' | translate }}" disabled="!task.result.output">
+        <tab heading="{{ 'properties.result.table' | translate }}" disabled="!task.result.table">
           <br>
 
           <div class="table-responsive">
@@ -49,7 +49,7 @@
               <th translate="properties.result.value"></th>
               </thead>
               <tbody>
-              <tr ng-repeat="value in task.result.output">
+              <tr ng-repeat="value in task.result.table">
                 <td>
                   <em>{{ value.name }}</em>
                 </td>

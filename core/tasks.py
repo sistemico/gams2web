@@ -108,7 +108,7 @@ class GamsWorker(Worker):
 
     def do_work(self, task):
         try:
-            output, log = [], StringIO()
+            output_table, log = [], StringIO()
 
             # Process task arguments
             model_parameters = {field.id: field.to_primitive() for field in task.model.parameters or []}
@@ -156,7 +156,7 @@ class GamsWorker(Worker):
                         lower=repr(record.lower) if math.isinf(record.lower) else record.lower
                     ) for record in symbol]
 
-                output.append(out)
+                output_table.append(out)
 
             # Clean internal status
             log_lines = [line for line in log.getvalue().splitlines(True) if line[:3] not in ['---', '***']]
@@ -185,7 +185,7 @@ class GamsWorker(Worker):
                         with open(file_path, mode='rU', encoding='utf-8') as f:
                             output_files[output_file] = b64encode(f.read())
 
-            return dict(output=output, log=log, files=output_files)
+            return dict(log=log, files=output_files, table=output_table)
 
         except (TemplateError, GamsException) as error:
             raise RuntimeError(error.__class__.__name__ + ': ' + error.message)

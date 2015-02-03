@@ -61,7 +61,7 @@
       }
     },
     "result": {
-      "output": "Output",
+      "table": "Table",
       "log": "Log",
       "name": "Name",
       "description": "Description",

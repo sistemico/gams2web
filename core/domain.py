@@ -64,6 +64,6 @@ class Task(Entity):
 
 
 class Result(Entity):
-    output = DictType(StringType)
     log = StringType(default='')
     files = DictType(StringType, default={})
+    table = DictType(StringType)

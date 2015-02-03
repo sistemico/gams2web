@@ -69,7 +69,7 @@ define([
               }
             },
             views: {
-              'header': {templateUrl: '/assets/views/navigation.html'},
+              'header': {templateUrl: '/assets/views/navigation-menu.html'},
               'footer': {templateUrl: '/assets/views/footer.html'}
             },
             onEnter: function ($rootScope, $state, $stateParams, $http, $modal, $translate, config, api, amMoment) {
@@ -141,7 +141,7 @@ define([
           .state('app.home', {
             url: '/',
             views: {
-              'content@': {templateUrl: '/assets/views/dashboard.html'}
+              'content@': {templateUrl: '/assets/views/task-list.html'}
             }
           })
 

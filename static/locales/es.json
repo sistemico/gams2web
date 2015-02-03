@@ -61,8 +61,8 @@
       }
     },
     "result": {
-      "output": "Salida",
-      "log": "Registro",
+      "table": "Tabla de salida",
+      "log": "Registro de ejecución",
       "name": "Nombre",
       "description": "Descripción",
       "type": "Tipo",
