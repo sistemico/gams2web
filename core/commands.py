@@ -7,7 +7,7 @@ import settings
 
 
 def command_manager(app, socket):
-    manager = Manager(app)
+    manager = Manager(app, with_default_commands=False)
 
     @manager.command
     def flush_data():
@@ -26,7 +26,7 @@ def command_manager(app, socket):
         return [spawn_later(i + 1, GamsWorker().start) for i in xrange(num_workers)]
 
     @manager.command
-    def run_server():
+    def start():
         try:
             sub_commands = [
                 load_models(),
