@@ -6,7 +6,7 @@ PyYAML==3.11
 pyzmq==14.5.0
 pytz==2014.10
 redis
-hiredis
+#hiredis
 schematics
 six
 ujson
