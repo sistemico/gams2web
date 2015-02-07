@@ -4,28 +4,26 @@
 
     <p>{{ model.description }}</p>
   </div>
-  <div ng-if="model.display_options.show_instructions" class="form-group">
-    <label class="col-sm-2 control-label">{{ model.instructions.label }}</label>
 
-    <div class="col-sm-10" ng-bind-html="model.instructions.content"></div>
+  <div ng-if="model.display_options.show_instructions">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{ model.instructions.label }}</label>
+
+      <div class="col-sm-10" ng-bind-html="model.instructions.content"></div>
+    </div>
+    <hr>
   </div>
 
-  <hr ng-repeat-start="field in model.parameters">
-  <div class="form-group" ng-repeat-end>
-    <label class="col-sm-2 control-label">{{ field.metadata.label }}</label>
+  <div class="form-group" ng-repeat-start="field in model.parameters">
+    <label class="col-sm-2 control-label">{{ field.metadata.label || field.id }}</label>
 
     <div class="col-sm-10">
-      <!--<p ng-if="field.type == 'text' && field.options.disabled" class="form-control-static">
-                <span>{{ field.options.default }}</span>
-            </p>-->
+      <field options="field" form-data="formData" fields-data="model.parameters" value="formData[field.id]"/>
 
-      <div ng-if="field.type == 'matrix'">
-        <matrix value="formData[field.id]" options="field.options"></matrix>
-      </div>
-
-      <span class="help-block">{{ field.metadata.help_text }}</span>
+      <div class="help-block" ng-bind-html="field.metadata.help_text"></div>
     </div>
   </div>
+  <hr ng-repeat-end>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">

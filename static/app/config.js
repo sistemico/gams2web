@@ -7,6 +7,7 @@ requirejs.config({
     'angular-i18n': 'vendor/angular-i18n/angular-locale_es-ar',
     'angular-loading-bar': 'vendor/angular-loading-bar/build/loading-bar.min',
     'angular-moment': 'vendor/angular-moment/angular-moment.min',
+    'angular-tags-input': 'vendor/ng-tags-input/ng-tags-input',
     'angular-translate': 'vendor/angular-translate/angular-translate.min',
     'angular-translate-loader': 'vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.min',
     'angular-translate-storage-cookie': 'vendor/angular-translate-storage-cookie/angular-translate-storage-cookie.min',
@@ -36,6 +37,9 @@ requirejs.config({
     },
     'angular-moment': {
       deps: ['angular', 'moment-timezone']
+    },
+    'angular-tags-input': {
+      deps: ['angular']
     },
     'angular-translate': {
       deps: ['angular']

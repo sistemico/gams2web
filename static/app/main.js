@@ -2,12 +2,17 @@ define([
     'underscore', 'angular', 'socket.io-client',
     'angular-i18n', 'angular-cookies',
     'angular-translate-loader', 'angular-translate-storage-cookie', 'angular-translate-storage-local',
-    'angular-bootstrap', 'angular-ui-router', 'angular-loading-bar', 'angular-moment'
+    'angular-bootstrap', 'angular-ui-router',
+    'angular-loading-bar', 'angular-moment', 'angular-tags-input'
   ],
 
   function (_, angular, io) {
 
-    angular.module('gams2web', ['angular-loading-bar', 'ngCookies', 'ui.router', 'ui.bootstrap', 'pascalprecht.translate', 'angularMoment'])
+    angular.module('gams2web', [
+      'angular-loading-bar', 'ui.router', 'ui.bootstrap', 'ngTagsInput',
+      'ngCookies', 'pascalprecht.translate', 'angularMoment'
+    ])
+
       .config(function ($locationProvider, $stateProvider, $urlRouterProvider, $translateProvider) {
         // Multi-language support
         $translateProvider
@@ -44,6 +49,12 @@ define([
                     if (model.instructions && model.instructions.content) {
                       model.instructions.content = $sce.trustAsHtml(model.instructions.content);
                     }
+
+                    _(model.parameters).each(function (field) {
+                      if (field.metadata && field.metadata.help_text) {
+                        field.metadata.help_text = $sce.trustAsHtml(field.metadata.help_text);
+                      }
+                    });
                   });
 
                   $rootScope.models = models
@@ -73,6 +84,8 @@ define([
               'footer': {templateUrl: '/assets/views/footer.html'}
             },
             onEnter: function ($rootScope, $state, $stateParams, $http, $modal, $translate, config, api, amMoment) {
+              $rootScope._ = _;
+
               // Localization
               $rootScope.languages = config['locales'];
 
@@ -161,7 +174,7 @@ define([
                   $scope.formData = {};
 
                   angular.forEach(model.parameters, function (param) {
-                    $scope.formData[param.id] = {};
+                    $scope.formData[param.id] = param.type === 'list' ? [] : {};
                   });
                 }
               }
@@ -323,31 +336,80 @@ define([
         };
       })
 
-      // Custom field: matrix
-      .directive('matrix', function () {
+      // Field
+      .directive('field', function () {
         return {
-          templateUrl: '/assets/views/fields/matrix.html',
           restrict: 'E',
           replace: true,
+          scope: {field: '=options', fieldValue: '=value', fields: '=fieldsData', formData: '='},
+          template: '<div ng-include="getTemplateUrl()"></div>',
           transclude: false,
-          scope: {value: '=', options: '='},
 
           link: function (scope, element, attrs) {
-            scope.range = function (lower, upper, step) {
-              var series = [];
+            scope.field.type = scope.field.type || 'text';
 
-              lower = series[0] = parseInt(lower);
-              upper = parseInt(upper);
-              step = parseInt(step) || 1;
-
-              while (lower + step <= upper) {
-                series[series.length] = lower += step;
-              }
-
-              return series;
+            scope.getTemplateUrl = function () {
+              return '/assets/views/fields/' + scope.field.type + '.html';
             };
 
-            scope.value = [];
+            // List
+            if (scope.field.type === 'list') {
+              var strList = scope.field.options.default ? scope.field.options.default.toString() : '';
+
+              var defaultValue = _.compact(
+                _.map(strList.split(','), function (s) {
+                  return s.trim()
+                })
+              );
+
+              scope.formData[scope.field.id] = _.map(defaultValue, function (v) {
+                  return {text: v.replace(/\s+/g, '-')};
+                }
+              );
+            }
+
+            // Matrix
+            if (scope.field.type === 'matrix') {
+              scope.range = function (lower, upper, step) {
+                var series = [];
+
+                lower = series[0] = parseInt(lower);
+                upper = parseInt(upper);
+                step = parseInt(step) || 1;
+
+                while (lower + step <= upper) {
+                  series[series.length] = lower += step;
+                }
+
+                return series;
+              };
+
+              scope.formData[scope.field.id] = [];
+            }
+
+            // Related field
+            if (scope.field.type === 'related') {
+              var strList = scope.field.options.default ? scope.field.options.default.toString() : '';
+
+              scope.fieldValue = _.map(strList.split(','), function (s) {
+                return scope.field.options.type === 'number' ? Number(s.trim()) : s.trim()
+              });
+            }
+
+            // Text
+            if (scope.field.type === 'text') {
+              scope.fieldValue = scope.field.options.type === 'number' ? Number(0) : '';
+
+              var initial = scope.field.options.default;
+
+              if (initial) {
+                scope.fieldValue = scope.field.options.type === 'number' ? Number(initial) : initial.toString().trim();
+                //scope.formData[scope.field.id] = scope.field.options.default ? Number(scope.field.options.default) : 0;
+              }
+              /*else {
+               scope.formData[scope.field.id] = scope.field.options.default ? scope.field.options.default.toString().trim() : '';
+               }*/
+            }
           }
         }
       });

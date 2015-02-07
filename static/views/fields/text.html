@@ -1,0 +1,12 @@
+<p ng-if="field.options.disabled" class="form-control-static">
+  <span>{{ field.options.default }}</span>
+</p>
+
+<div ng-if="!field.options.disabled">
+  <input class="form-control" name="{{ field.id }}"
+         ng-model="formData[field.id]"
+         type="{{ field.options.type }}" step="{{ field.options.step || 'any' }}"
+         ng-required="{{ field.options.required | lowercase }}"
+         min="{{ field.options.min }}" max="{{ field.options.max }}"
+         placeholder="{{ field.metadata.placeholder }}">
+</div>
