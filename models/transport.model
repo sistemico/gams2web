@@ -1,8 +1,97 @@
 name: transport
 file: trnsport.gms
 
+parameters:
+  # canning plants
+  - id: plants
+    type: list
+    options:
+      default: seattle, san diego
+      min: 2
+    metadata:
+      label:
+        es: Plantas
+        en: Plants
+      placeholder:
+        es: Agregar una planta
+        en: Add a plant
+  # capacity of plants in cases
+  - id: capacity
+    type: related
+    options:
+      related: plants
+      default: 350, 600
+      type: number
+      step: 1
+      min: 0
+      required: yes
+    metadata:
+      label:
+        es: Capacidad
+        en: Capacity
+  # markets
+  - id: markets
+    type: list
+    options:
+      default: new york, chicago, topeka
+      min: 2
+    metadata:
+      label:
+        es: Mercados
+        en: Markets
+      placeholder:
+        es: Agregar un mercado
+        en: Add a market
+  # demand at markets in cases
+  - id: demand
+    type: related
+    options:
+      related: markets
+      default: 325, 300, 275
+      type: number
+      step: 1
+      min: 0
+      required: yes
+      disabled: yes
+    metadata:
+      label:
+        es: Demanda
+        en: Demand
+  # distance in thousands of miles
+  - id: distance
+    type: related
+    options:
+      columns_field: markets
+      rows_field: plants
+      default:  2.5, 1.7, 1.8, 2.5, 1.8, 1.4
+      type: number
+      min: 0
+      required: yes
+      disabled: yes
+    metadata:
+      label:
+        es: Distancia
+        en: Distance
+  # freight in dollars per case per thousand miles
+  - id: freight
+    type: text
+    options:
+      default: 90
+      type: number
+      step: 1
+      min: 0
+      required: yes
+    metadata:
+      label:
+        es: Flete
+        en: Freight
+      help_text:
+        es: Carga en dólares por caso por cada mil millas
+        en: Freight in dollars per case per thousand miles
+
 output_options:
   exclude_types: ['equation']
+  exclude_fields: ['cost', 'demand', 'supply']
 
 title:
   es: Problema de Transporte

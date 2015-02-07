@@ -18,28 +18,41 @@ comments.
 
 $Offtext
 
+{% set cell_width = 15 %}
 
   Sets
-       i   canning plants   / seattle, san-diego /
-       j   markets          / new-york, chicago, topeka / ;
+       i   canning plants   / {{ args.plants | join(', ', attribute='text') }} /
+       j   markets          / {{ args.markets | join(', ', attribute='text') }} / ;
 
   Parameters
 
        a(i)  capacity of plant i in cases
-         /    seattle     350
-              san-diego   600  /
+          /
+            {% for plant in args.plants -%}
+                {{ plant.text.ljust(cell_width) }} {{ args.capacity[loop.index - 1] }}
+            {% endfor %}
+          /
 
        b(j)  demand at market j in cases
-         /    new-york    325
-              chicago     300
-              topeka      275  / ;
+         /
+           {% for market in args.markets -%}
+               {{ market.text.ljust(cell_width) }} {{ args.demand[loop.index - 1] }}
+           {% endfor %}
+         /;
 
   Table d(i,j)  distance in thousands of miles
-                    new-york       chicago      topeka
-      seattle          2.5           1.7          1.8
-      san-diego        2.5           1.8          1.4  ;
 
-  Scalar f  freight in dollars per case per thousand miles  /90/ ;
+  {% for market in args.markets -%}
+      {{ ' ' * cell_width if loop.first }}{{ '{}'.format(market.text).center(cell_width) }}
+  {%- endfor %}
+  {% for row in args.distance|slice(args.plants|length) -%}
+      {{ '{}'.format(args.plants[loop.index - 1].text).rjust(cell_width) }}
+      {%- for value in row -%}
+          {{ '{}'.format(value).center(cell_width) }}
+      {%- endfor -%}{{'  ;' if loop.last}}
+  {% endfor %}
+
+  Scalar f  freight in dollars per case per thousand miles  /{{ args.freight }}/ ;
 
   Parameter c(i,j)  transport cost in thousands of dollars per case ;
 
